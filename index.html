@@ -278,6 +278,16 @@ button { background: none; border: none; cursor: none; font-family: var(--font-b
 .lesson-price { display:block; font-family:var(--font-display); font-size:1.05rem; }
 .lesson-detail { display:block; font-size:.65rem; letter-spacing:.14em; text-transform:uppercase; color:var(--light-grey); margin-top:.35rem; }
 .lessons-cta { margin-top:5rem; }
+.lessons-hero { display:grid; grid-template-columns:1fr 1fr; gap:4rem; margin-bottom:5rem; }
+.lessons-img-wrap { aspect-ratio:3/4; overflow:hidden; }
+.lessons-img-wrap img { width:100%; height:100%; object-fit:cover; object-position:center top; }
+.lessons-hero-text { display:flex; flex-direction:column; gap:1.5rem; justify-content:center; }
+.lessons-hero-text p { font-size:.9rem; line-height:1.9; color:var(--text-mid); }
+.lessons-location { font-size:.65rem; letter-spacing:.2em; text-transform:uppercase; color:var(--light-grey); margin-top:1rem; }
+.lesson-weeks { font-size:.65rem; letter-spacing:.12em; text-transform:uppercase; color:var(--light-grey); margin-top:.8rem; line-height:1.8; }
+.lessons-schedule { margin:4rem 0 2rem; padding:2.5rem 0; border-top:1px solid var(--soft-beige); }
+.lessons-schedule-title { font-size:.65rem; letter-spacing:.22em; text-transform:uppercase; color:var(--light-grey); margin-bottom:1.2rem; }
+.lessons-times { display:flex; gap:2rem 4rem; flex-wrap:wrap; font-size:.83rem; color:var(--text-mid); }
 
 /* CONTACTS */
 .contacts-tag { font-family:var(--font-display); font-style:italic; font-size:1.05rem; color:var(--text-mid); margin-top:-2rem; margin-bottom:6rem; }
@@ -299,6 +309,8 @@ a.c-val:hover { color:var(--dusty-rose); }
   .modal-img { aspect-ratio:4/3; }
   .lesson { flex-direction:column; gap:1rem; }
   .lesson-r { text-align:left; }
+  .lessons-hero { grid-template-columns:1fr; gap:2.5rem; }
+  .lessons-times { gap:1rem 3rem; }
   .contact { gap:2rem; }
 }
 @media(max-width:600px){
@@ -448,14 +460,54 @@ a.c-val:hover { color:var(--dusty-rose); }
   <section class="section" id="lessons">
     <div class="inner-narrow">
       <h2 class="section-headline">Art Lessons</h2>
-      <p class="lessons-intro">A space to look, to mix, to understand colour and form. Small groups. No experience necessary.</p>
-      <div>
-        <div class="lesson"><div class="lesson-left"><h3 class="lesson-name">Evening — Colour Theory</h3><p class="lesson-desc">Three hours. Pigment, perception, and the language of colour.</p></div><div class="lesson-r"><span class="lesson-price">950 €</span><span class="lesson-detail">per person · max 8</span></div></div>
-        <div class="lesson"><div class="lesson-left"><h3 class="lesson-name">Evening — Drawing</h3><p class="lesson-desc">Three hours. Mark-making, proportion, and seeing clearly.</p></div><div class="lesson-r"><span class="lesson-price">950 €</span><span class="lesson-detail">per person · max 8</span></div></div>
-        <div class="lesson"><div class="lesson-left"><h3 class="lesson-name">Course — Four Evenings</h3><p class="lesson-desc">An extended exploration across four sessions. Space to develop a personal practice.</p></div><div class="lesson-r"><span class="lesson-price">3 800 €</span><span class="lesson-detail">per person · max 8</span></div></div>
-        <div class="lesson"><div class="lesson-left"><h3 class="lesson-name">Corporate Workshop</h3><p class="lesson-desc">A session designed for teams. Colour, creativity, and presence — in a room together.</p></div><div class="lesson-r"><span class="lesson-price">15 000 €+</span><span class="lesson-detail">up to 20 people</span></div></div>
+      <p class="lessons-intro">En plats att utforska, blanda och förstå färg och form. Liten grupp. Ingen tidigare erfarenhet krävs.</p>
+      <div class="lessons-hero">
+        <div class="lessons-img-wrap">
+          <img src="images/lessons/course.jpg" alt="Anna Ljungs målarkurs i Alvik" loading="lazy">
+        </div>
+        <div class="lessons-hero-text">
+          <p>Nu kör vi fjärde terminen — i en liten, inspirerande studio i Alvik. Max 3–4 deltagare per tillfälle, ibland bara én, vilket ger en nästan privatundervisning varje gång.</p>
+          <p>Vi arbetar med akrylmåleri, akvarell, teckning och collage — genom experiment och grundläggande tekniker. Kom som du är.</p>
+          <p>Workshops, måla-skåla, kalas eller liknande? Hör gärna av dig så skapar vi något fint tillsammans.</p>
+          <span class="lessons-location">Studio · Porfyrvägen 21A · Alvik, Stockholm</span>
+        </div>
       </div>
-      <div class="lessons-cta"><a href="mailto:studio@annaljung.se?subject=Art Lesson Enquiry" class="btn-enquire">Book a session</a></div>
+      <div>
+        <div class="lesson">
+          <div class="lesson-left">
+            <h3 class="lesson-name">Barn &amp; ungdomar — Upptäck Konst!</h3>
+            <p class="lesson-desc">För 10–15-åringar. Akryl &amp; akvarell, teckning (ansikten, djur, natur, skuggning) och collage &amp; mixed media. Lekfullt och fantasifullt — allt material ingår.</p>
+            <span class="lesson-weeks">5 veckor · akryl &amp; akvarell · teckning · collage</span>
+          </div>
+          <div class="lesson-r">
+            <span class="lesson-price">2 600 kr</span>
+            <span class="lesson-detail">5 tillfällen · 2 tim</span>
+            <span class="lesson-detail">allt material ingår</span>
+          </div>
+        </div>
+        <div class="lesson">
+          <div class="lesson-left">
+            <h3 class="lesson-name">Vuxna — Utforska Måleri</h3>
+            <p class="lesson-desc">Akryl, akvarell, teckning och collage — i din egen takt. För nybörjare och hobbykonstnärer. Basmaterial ingår. Pensionärer och studenter välkomna till rabatterat pris.</p>
+            <span class="lesson-weeks">V. 1–2 Akrylmåleri · V. 3 Akvarell · V. 4 Teckning · V. 5 Collage &amp; mixed media</span>
+          </div>
+          <div class="lesson-r">
+            <span class="lesson-price">2 800 kr</span>
+            <span class="lesson-detail">5 tillfällen · 2 tim</span>
+            <span class="lesson-detail">pensionärer &amp; studenter 2 200 kr</span>
+          </div>
+        </div>
+      </div>
+      <div class="lessons-schedule">
+        <p class="lessons-schedule-title">Tider — välj det som passar dig</p>
+        <div class="lessons-times">
+          <span>Torsdagar 10:00–12:00</span>
+          <span>Torsdagar 17:00–19:00</span>
+          <span>Fredagar 10:00–12:00</span>
+          <span>Söndagar 15:00–17:00</span>
+        </div>
+      </div>
+      <div class="lessons-cta"><a href="mailto:hello@annaljung.se?subject=Bokning målarkurs" class="btn-enquire">Boka din plats</a></div>
     </div>
   </section>
 
