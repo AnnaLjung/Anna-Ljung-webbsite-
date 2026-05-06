@@ -84,7 +84,10 @@ button { background: none; border: none; cursor: none; font-family: var(--font-b
 .nav-logo {
   display: flex; align-items: center; justify-content: center;
   width: 126px; height: 126px; border: 1.5px solid var(--text-dark);
-  background: transparent; transition: opacity .3s;
+  background: rgba(237, 229, 216, 0.20);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  align-self: flex-start; margin-top: 20px;
+  transition: opacity .3s;
 }
 .nav-logo:hover { opacity: .55; }
 .nav-logo span {
