@@ -90,6 +90,15 @@ button { background: none; border: none; cursor: none; font-family: var(--font-b
   transition: opacity .3s;
 }
 .nav-logo:hover { opacity: .55; }
+.panel-logo {
+  position: absolute; top: 20px; left: 2rem;
+  display: flex; align-items: center; justify-content: center;
+  width: 95px; height: 95px; border: 1.5px solid var(--text-dark);
+  background: rgba(237, 229, 216, 0.20);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  transition: opacity .3s;
+}
+.panel-logo:hover { opacity: .55; }
 .hamburger {
   display: flex; flex-direction: column; gap: 6px; padding: 8px; z-index: 102;
 }
@@ -341,6 +350,15 @@ a.c-val:hover { color:var(--dusty-rose); }
 <div class="overlay" id="overlay"></div>
 <div class="panel" id="panel">
   <button class="panel-close" id="panelClose">&#215;</button>
+  <a href="#" class="panel-logo" id="panelLogo">
+    <svg viewBox="0 0 80 80" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 13 66 Q 15 42 34 14" fill="none" stroke="var(--text-dark)" stroke-width="2.2" stroke-linecap="round"/>
+      <line x1="34" y1="14" x2="34" y2="66" stroke="var(--text-dark)" stroke-width="2.2" stroke-linecap="round"/>
+      <line x1="15" y1="56" x2="34" y2="56" stroke="var(--text-dark)" stroke-width="1.8" stroke-linecap="round"/>
+      <line x1="44" y1="14" x2="44" y2="66" stroke="var(--text-dark)" stroke-width="2.2" stroke-linecap="round"/>
+      <line x1="44" y1="66" x2="63" y2="66" stroke="var(--text-dark)" stroke-width="2.2" stroke-linecap="round"/>
+    </svg>
+  </a>
   <nav>
     <ul class="menu-list">
       <li class="menu-item" style="--i:0"><a href="#about"    class="menu-link" data-s="about">   <span class="mlabel">About Anna</span></a></li>
@@ -644,6 +662,12 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   logo.addEventListener('click', function(e) {
+    e.preventDefault();
+    closeMenu();
+    goHome();
+  });
+
+  document.getElementById('panelLogo').addEventListener('click', function(e) {
     e.preventDefault();
     closeMenu();
     goHome();
