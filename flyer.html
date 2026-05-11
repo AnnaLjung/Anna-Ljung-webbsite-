@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>VIP Opening — Anna Ljung × Nordic Mood</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background:#1c1a17;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:40px 20px;
+    font-family:'Jost',sans-serif;
+  }
+  .flyer {
+    width:580px;
+    height:580px;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    position:relative;
+    background-color:#EDE8E0;
+  }
+  .paper-bg {
+    position:absolute;
+    inset:0;
+    opacity:0.55;
+    pointer-events:none;
+    z-index:0;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.15'/%3E%3C/svg%3E");
+    background-repeat:repeat;
+  }
+  .top-strip, .header, .image-strip, .info-section { position:relative; z-index:1; }
+  .top-strip {
+    width:100%;
+    background:#E4DED5;
+    border-bottom:0.5px solid #C8C0B5;
+    padding:10px 28px;
+    display:grid;
+    grid-template-columns:44px 1fr 44px;
+    align-items:center;
+    flex-shrink:0;
+  }
+  .top-center {
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:2px;
+  }
+  .top-main {
+    font-family:'Jost',sans-serif;
+    font-weight:400;
+    font-size:9px;
+    letter-spacing:5px;
+    color:#1B3A5C;
+    text-transform:uppercase;
+  }
+  .top-year {
+    font-family:'Jost',sans-serif;
+    font-weight:300;
+    font-size:8px;
+    letter-spacing:6px;
+    color:#3a5a7a;
+    text-transform:uppercase;
+  }
+  .header {
+    width:100%;
+    padding:13px 40px 10px;
+    text-align:center;
+    background:transparent;
+    flex-shrink:0;
+  }
+  .vip-tag {
+    font-family:'Jost',sans-serif;
+    font-weight:400;
+    font-size:8px;
+    letter-spacing:6px;
+    color:#3a5a7a;
+    text-transform:uppercase;
+    margin-bottom:5px;
+    display:block;
+  }
+  .main-title {
+    font-family:'Cormorant Garamond',serif;
+    font-weight:500;
+    font-size:48px;
+    color:#1B3A5C;
+    letter-spacing:4px;
+    line-height:1;
+    text-transform:uppercase;
+    margin-bottom:4px;
+  }
+  .collection-line {
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-weight:300;
+    font-size:13px;
+    color:#2a4a6a;
+    letter-spacing:2px;
+    margin-bottom:1px;
+  }
+  .by-line {
+    font-family:'Cormorant Garamond',serif;
+    font-weight:400;
+    font-size:10px;
+    color:#3a5a7a;
+    letter-spacing:3px;
+    text-transform:uppercase;
+  }
+  .image-strip {
+    width:100%;
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:2px;
+    flex:1;
+    min-height:0;
+  }
+  .strip-img { overflow:hidden; height:100%; }
+  .strip-img img { width:100%; height:100%; object-fit:cover; display:block; }
+  .strip-img.left img { object-position:center 20%; }
+  .strip-img.center img { object-position:center 15%; }
+  .strip-img.right img { object-position:center center; }
+  .info-section {
+    width:100%;
+    background:transparent;
+    flex-shrink:0;
+    padding:13px 40px 11px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:0;
+    border-top:0.5px solid #C8C0B5;
+  }
+  .info-fortaring {
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:14px;
+    color:#1B3A5C;
+    letter-spacing:1.5px;
+    text-align:center;
+    margin-bottom:7px;
+  }
+  .info-divider { width:180px; height:0.5px; background:#8aA0B8; margin-bottom:7px; }
+  .info-datetime {
+    font-family:'Cormorant Garamond',serif;
+    font-weight:500;
+    font-size:15px;
+    color:#1B3A5C;
+    letter-spacing:2px;
+    text-align:center;
+    margin-bottom:7px;
+  }
+  .info-divider2 { width:180px; height:0.5px; background:#8aA0B8; margin-bottom:7px; }
+  .info-venue-name {
+    font-family:'Cormorant Garamond',serif;
+    font-weight:500;
+    font-size:20px;
+    color:#1B3A5C;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    text-align:center;
+    margin-bottom:4px;
+  }
+  .info-divider3 { width:180px; height:0.5px; background:#8aA0B8; margin-bottom:5px; }
+  .info-address {
+    font-family:'Cormorant Garamond',serif;
+    font-weight:400;
+    font-size:12px;
+    color:#2a4a6a;
+    letter-spacing:1.5px;
+    text-align:center;
+    line-height:1.6;
+  }
+</style>
+</head>
+<body>
+<div class="flyer">
+  <div class="paper-bg"></div>
+  <div class="top-strip">
+    <svg viewBox="0 0 80 80" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
+      <rect x="7" y="7" width="66" height="66" fill="none" stroke="#1B3A5C" stroke-width="1.6" opacity="1"/>
+      <path d="M 14 66 Q 16 43 34 14" fill="none" stroke="#1B3A5C" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="34" y1="14" x2="34" y2="66" stroke="#1B3A5C" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="16" y1="56" x2="34" y2="56" stroke="#1B3A5C" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="44" y1="14" x2="44" y2="66" stroke="#1B3A5C" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="44" y1="66" x2="68" y2="66" stroke="#1B3A5C" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+    <div class="top-center">
+      <div class="top-main">Anna Ljung &nbsp;×&nbsp; Nordic Mood</div>
+      <div class="top-year" style="letter-spacing:6px; margin-left:-13px;">2026</div>
+    </div>
+    <div></div>
+  </div>
+  <div class="header">
+    <span class="vip-tag">VIP Spring Release <span style="font-weight:900; font-size:11px;">·</span> Copenhagen · 30 May</span>
+    <div class="main-title">Kinetic Bloom</div>
+    <div class="collection-line">| The Spring Air Collection |</div>
+    <div class="by-line">by Anna Ljung</div>
+  </div>
+  <div class="image-strip">
+    <div class="strip-img left"><img src="images/flyer/flyer-photo-1.jpg" alt="Anna Ljung in studio"></div>
+    <div class="strip-img center"><img src="images/flyer/flyer-photo-2.jpg" alt="Anna Ljung with work"></div>
+    <div class="strip-img right"><img src="images/flyer/flyer-photo-3.jpg" alt="Kinetic Bloom close-up"></div>
+  </div>
+  <div class="info-section">
+    <div class="info-fortaring">Light refreshments &amp; drinks will be served</div>
+    <div class="info-divider"></div>
+    <div class="info-datetime">Saturday · 30 May · 12–18</div>
+    <div class="info-divider2"></div>
+    <div class="info-venue-name">Nordic Mood</div>
+    <div class="info-divider3"></div>
+    <div class="info-address">Peter Bangs Vej 60 · Frederiksberg · Copenhagen</div>
+  </div>
+</div>
+</body>
+</html>
