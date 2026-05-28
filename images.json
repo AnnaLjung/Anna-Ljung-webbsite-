@@ -1,4 +1,13 @@
 {
+  "_drive_folders": {
+    "root":         "1kETC1vI4Ed0Rf120S0-pZkIpqL7BYDDv",
+    "hero":         "1EaoC0sTx-I327_q0qKiFU-rXG0JUDzL1",
+    "about":        "1a6X68g68OTkz_zFy_lalOvJxUedttuLi",
+    "artworks":     "1_lnmHsXy5r0_G866WfsHkFZXkeipewLa",
+    "shop_kb":      "1H0xD7ikS1zlg3JxxjC3492UQSYzzLyC2",
+    "shop_paint":   "1ClP0aZK-10hx8J2-vSIFIIUA5JqXhsVE",
+    "courses":      "19Cx5dyNfv-DLCP4l0Ah6ZdnkYytjlAa9"
+  },
   "hero": [
     { "drive_id": "", "local": "images/slides/slide-0.jpg" },
     { "drive_id": "", "local": "images/slides/slide-1.jpg" },
