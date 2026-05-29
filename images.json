@@ -31,8 +31,8 @@
     { "id": "kb-2", "drive_id": "", "local": "images/shop/kinetic-bloom/kb-2.jpg", "title": "Still Water",  "status": "available", "price": "€ 3 200", "story": "The largest work from the winter series. Pale blue, almost white." },
     { "id": "kb-3", "drive_id": "", "local": "images/shop/kinetic-bloom/kb-3.jpg", "title": "Nordic Drift", "status": "available", "price": "€ 1 000", "story": "Made for Copenhagen. It found its way back north instead." },
     { "id": "kb-4", "images": [
-        { "drive_id": "1j9HTxsGQSWYK4C9eErcjRilxLFYo-Cr5", "local": "images/shop/kinetic-bloom/kb-4a.jpg" },
-        { "drive_id": "1F2Lemzzwa2am2NFJjqpi4RHwlDupyLrb", "local": "images/shop/kinetic-bloom/kb-4b.jpg" }
+        { "drive_id": "15Ze56z-8BzlMFxMYSv6sSHVWIGdR1YlN", "local": "images/shop/kinetic-bloom/kb-4a.jpg" },
+        { "drive_id": "1vqaV2GJSRzQ9v9FdcSMRq6UFa1NejjDJ", "local": "images/shop/kinetic-bloom/kb-4b.jpg" }
       ], "title": "Between Bloom & Air", "status": "available", "price": "16 000 kr", "story": "" }
   ],
   "lessons": {
