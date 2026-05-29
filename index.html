@@ -249,6 +249,14 @@ button { background: none; border: none; cursor: none; font-family: var(--font-b
 .modal-story { font-size:.92rem; line-height:1.9; color:var(--text-mid); }
 .modal-price { font-size:1rem; letter-spacing:.04em; }
 
+/* Modal image gallery nav */
+.modal-img-col { display:flex; flex-direction:column; gap:.75rem; }
+.modal-img-nav { display:flex; align-items:center; justify-content:center; gap:.55rem; }
+.modal-img-dot { width:6px; height:6px; border-radius:50%; background:var(--text-light); border:none; padding:0; transition:background .3s; }
+.modal-img-dot.on { background:var(--dusty-rose); }
+.modal-img-arr { font-size:.85rem; color:var(--text-mid); padding:0 .15rem; line-height:1; transition:color .3s; }
+.modal-img-arr:hover { color:var(--text-dark); }
+
 /* NEWS */
 .news-feed { display:flex; flex-direction:column; }
 .news-item { padding:3.5rem 0; border-top:1px solid var(--soft-beige); }
@@ -471,6 +479,10 @@ a.c-val:hover { color:var(--dusty-rose); }
             <div class="card-img"><img src="images/shop/kinetic-bloom/kb-3.jpg" alt="Nordic Drift" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><div class="img-placeholder" style="display:none"><span>Kinetic Bloom</span></div></div>
             <div class="card-info"><h3 class="card-title">Nordic Drift</h3><span class="price">€ 1 000</span></div>
           </article>
+          <article class="card" data-title="Between Bloom &amp; Air" data-status="available" data-price="16 000 kr" data-story="">
+            <div class="card-img"><img src="" alt="Between Bloom &amp; Air" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><div class="img-placeholder" style="display:none"><span>Kinetic Bloom</span></div></div>
+            <div class="card-info"><h3 class="card-title">Between Bloom &amp; Air</h3><span class="price">16 000 kr</span></div>
+          </article>
         </div>
       </div>
       <div class="tab-panel hidden" id="tp-paintings">
@@ -554,9 +566,16 @@ a.c-val:hover { color:var(--dusty-rose); }
   <div class="modal" role="dialog" aria-modal="true">
     <button class="modal-x" id="modalX">&#215;</button>
     <div class="modal-layout">
-      <div class="modal-img">
-        <img src="" alt="" id="mImg" />
-        <div class="img-placeholder" id="mPh" style="display:none"><span>Artwork</span></div>
+      <div class="modal-img-col">
+        <div class="modal-img">
+          <img src="" alt="" id="mImg" />
+          <div class="img-placeholder" id="mPh" style="display:none"><span>Artwork</span></div>
+        </div>
+        <div class="modal-img-nav" id="mImgNav" style="display:none">
+          <button class="modal-img-arr" id="mImgPrev">&#8592;</button>
+          <div id="mImgDots" style="display:flex;gap:.45rem;align-items:center;"></div>
+          <button class="modal-img-arr" id="mImgNext">&#8594;</button>
+        </div>
       </div>
       <div class="modal-body">
         <h2 class="modal-title" id="mTitle"></h2>
@@ -595,8 +614,19 @@ document.addEventListener('DOMContentLoaded', function() {
         if (img && item.drive_id) img.src = driveUrl(item.drive_id);
       });
       (cfg.shop_kb || []).forEach(function(item, i) {
-        var img = document.querySelector('#tp-kinetic .grid .card:nth-child(' + (i+1) + ') img');
-        if (img && item.drive_id) img.src = driveUrl(item.drive_id);
+        var card = document.querySelector('#tp-kinetic .grid .card:nth-child(' + (i+1) + ')');
+        if (!card) return;
+        if (item.images && item.images.length) {
+          var urls = item.images.map(function(img) {
+            return img.drive_id ? driveUrl(img.drive_id) : img.local;
+          });
+          var imgEl = card.querySelector('img');
+          if (imgEl) imgEl.src = urls[0];
+          card.dataset.images = JSON.stringify(urls);
+        } else {
+          var imgEl = card.querySelector('img');
+          if (imgEl && item.drive_id) imgEl.src = driveUrl(item.drive_id);
+        }
       });
     })
     .catch(function() {
@@ -715,14 +745,29 @@ document.addEventListener('DOMContentLoaded', function() {
   if (['about','artworks','news','shop','lessons','contacts'].indexOf(hash) > -1) showSection(hash);
 
   /* ---- Modal ---- */
-  var modalBg = document.getElementById('modalBg');
-  var modalX  = document.getElementById('modalX');
-  var mImg    = document.getElementById('mImg');
-  var mPh     = document.getElementById('mPh');
-  var mTitle  = document.getElementById('mTitle');
-  var mStory  = document.getElementById('mStory');
-  var mPrice  = document.getElementById('mPrice');
-  var mEnq    = document.getElementById('mEnq');
+  var modalBg  = document.getElementById('modalBg');
+  var modalX   = document.getElementById('modalX');
+  var mImg     = document.getElementById('mImg');
+  var mPh      = document.getElementById('mPh');
+  var mTitle   = document.getElementById('mTitle');
+  var mStory   = document.getElementById('mStory');
+  var mPrice   = document.getElementById('mPrice');
+  var mEnq     = document.getElementById('mEnq');
+  var mImgNav  = document.getElementById('mImgNav');
+  var mImgPrev = document.getElementById('mImgPrev');
+  var mImgNext = document.getElementById('mImgNext');
+  var mImgDots = document.getElementById('mImgDots');
+  var modalImages = [];
+  var modalImgIdx = 0;
+
+  function setModalImage(idx) {
+    modalImgIdx = idx;
+    mImg.src = modalImages[idx];
+    mImg.style.display = 'block'; mPh.style.display = 'none';
+    mImgDots.querySelectorAll('.modal-img-dot').forEach(function(d, i) {
+      d.classList.toggle('on', i === idx);
+    });
+  }
 
   function openModal(card) {
     var title  = card.dataset.title  || '';
@@ -730,19 +775,40 @@ document.addEventListener('DOMContentLoaded', function() {
     var price  = card.dataset.price  || '';
     var status = card.dataset.status || '';
     var img    = card.querySelector('img');
-    if (img && img.complete && img.naturalWidth > 0) {
-      mImg.src = img.src; mImg.alt = title;
-      mImg.style.display='block'; mPh.style.display='none';
+
+    try { modalImages = card.dataset.images ? JSON.parse(card.dataset.images) : []; }
+    catch(e) { modalImages = []; }
+
+    if (modalImages.length > 1) {
+      mImgNav.style.display = 'flex';
+      mImgDots.innerHTML = '';
+      modalImages.forEach(function(url, i) {
+        var dot = document.createElement('button');
+        dot.className = 'modal-img-dot' + (i === 0 ? ' on' : '');
+        (function(idx) { dot.addEventListener('click', function() { setModalImage(idx); }); })(i);
+        mImgDots.appendChild(dot);
+      });
+      mImg.src = modalImages[0]; mImg.alt = title;
+      mImg.style.display = 'block'; mPh.style.display = 'none';
+      modalImgIdx = 0;
     } else {
-      mImg.style.display='none'; mPh.style.display='flex';
+      mImgNav.style.display = 'none';
+      modalImages = [];
+      if (img && img.complete && img.naturalWidth > 0) {
+        mImg.src = img.src; mImg.alt = title;
+        mImg.style.display = 'block'; mPh.style.display = 'none';
+      } else {
+        mImg.style.display = 'none'; mPh.style.display = 'flex';
+      }
     }
+
     mTitle.textContent = title;
     mStory.textContent = story;
-    mPrice.textContent = status==='sold' ? 'Sold' : price;
-    var subj = encodeURIComponent('Enquiry — '+title);
-    var body = encodeURIComponent('Hello,\n\nI am interested in the work "'+title+'".');
-    mEnq.href = 'mailto:studio@annaljung.se?subject='+subj+'&body='+body;
-    mEnq.style.display = status==='sold' ? 'none' : 'inline-block';
+    mPrice.textContent = status === 'sold' ? 'Sold' : price;
+    var subj = encodeURIComponent('Enquiry — ' + title);
+    var body = encodeURIComponent('Hello,\n\nI am interested in the work "' + title + '".');
+    mEnq.href = 'mailto:studio@annaljung.se?subject=' + subj + '&body=' + body;
+    mEnq.style.display = status === 'sold' ? 'none' : 'inline-block';
     modalBg.classList.add('show');
   }
 
@@ -758,6 +824,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
   modalX.addEventListener('click', closeModal);
   modalBg.addEventListener('click', function(e) { if(e.target===modalBg) closeModal(); });
+  mImgPrev.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (modalImages.length > 1) setModalImage((modalImgIdx - 1 + modalImages.length) % modalImages.length);
+  });
+  mImgNext.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (modalImages.length > 1) setModalImage((modalImgIdx + 1) % modalImages.length);
+  });
 
   /* ---- Shop tabs ---- */
   document.querySelectorAll('.tab-btn').forEach(function(btn) {
