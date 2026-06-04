@@ -42,15 +42,15 @@ button { background: none; border: none; cursor: none; font-family: var(--font-b
 
 /* Cursor */
 #cursor {
-  position: fixed; width: 10px; height: 10px;
-  background: var(--dusty-rose); border-radius: 50%;
+  position: fixed; width: 30px; height: 30px;
   pointer-events: none; z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: opacity .2s, width .25s, height .25s, background .2s, border .2s;
+  transform: translate(-50%, -50%) rotate(0deg) scale(1);
+  transition: opacity .2s, transform .4s cubic-bezier(.34,1.56,.64,1);
   opacity: 0; left: -100px; top: -100px;
+  will-change: transform, left, top;
 }
 #cursor.on { opacity: 1; }
-#cursor.hov { width: 22px; height: 22px; background: transparent; border: 1px solid var(--dusty-rose); }
+#cursor.hov { transform: translate(-50%, -50%) rotate(36deg) scale(1.55); }
 
 /* Shared */
 .section-headline {
@@ -336,7 +336,16 @@ a.c-val:hover { color:var(--dusty-rose); }
 </head>
 <body>
 
-<div id="cursor"></div>
+<div id="cursor">
+  <svg viewBox="0 0 30 30" width="30" height="30" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="15" cy="8.5" rx="3" ry="5.8" fill="rgba(139,80,88,0.60)" transform="rotate(0 15 15)"/>
+    <ellipse cx="15" cy="8.5" rx="3" ry="5.8" fill="rgba(139,80,88,0.60)" transform="rotate(72 15 15)"/>
+    <ellipse cx="15" cy="8.5" rx="3" ry="5.8" fill="rgba(139,80,88,0.60)" transform="rotate(144 15 15)"/>
+    <ellipse cx="15" cy="8.5" rx="3" ry="5.8" fill="rgba(139,80,88,0.60)" transform="rotate(216 15 15)"/>
+    <ellipse cx="15" cy="8.5" rx="3" ry="5.8" fill="rgba(139,80,88,0.60)" transform="rotate(288 15 15)"/>
+    <circle cx="15" cy="15" r="2.8" fill="rgba(27,58,75,0.75)"/>
+  </svg>
+</div>
 
 <!-- NAV -->
 <nav class="nav" id="nav">
@@ -656,17 +665,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
   /* ---- Cursor ---- */
   var cur = document.getElementById('cursor');
-  var mx=0,my=0,cx=-200,cy=-200;
-  document.addEventListener('mousemove', function(e) { mx=e.clientX; my=e.clientY; cur.classList.add('on'); });
+  document.addEventListener('mousemove', function(e) {
+    cur.style.left = e.clientX + 'px';
+    cur.style.top  = e.clientY + 'px';
+    cur.classList.add('on');
+  });
   document.addEventListener('mouseleave', function() { cur.classList.remove('on'); });
   document.addEventListener('mouseover', function(e) { if(e.target.closest('a,button,.card')) cur.classList.add('hov'); });
   document.addEventListener('mouseout',  function(e) { if(e.target.closest('a,button,.card')) cur.classList.remove('hov'); });
   document.documentElement.style.cursor = 'none';
-  (function loop() {
-    cx += (mx-cx)*0.18; cy += (my-cy)*0.18;
-    cur.style.left = cx+'px'; cur.style.top = cy+'px';
-    requestAnimationFrame(loop);
-  })();
 
   /* ---- Hero slideshow ---- */
   var slides = [
