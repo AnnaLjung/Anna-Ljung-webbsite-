@@ -621,11 +621,21 @@ document.addEventListener('DOMContentLoaded', function() {
             return img.drive_id ? driveUrl(img.drive_id) : img.local;
           });
           var imgEl = card.querySelector('img');
-          if (imgEl) imgEl.src = urls[0];
+          if (imgEl) {
+            imgEl.src = urls[0];
+            imgEl.style.display = 'block';
+            var ph = imgEl.nextElementSibling;
+            if (ph) ph.style.display = 'none';
+          }
           card.dataset.images = JSON.stringify(urls);
         } else {
           var imgEl = card.querySelector('img');
-          if (imgEl && item.drive_id) imgEl.src = driveUrl(item.drive_id);
+          if (imgEl && item.drive_id) {
+            imgEl.src = driveUrl(item.drive_id);
+            imgEl.style.display = 'block';
+            var ph = imgEl.nextElementSibling;
+            if (ph) ph.style.display = 'none';
+          }
         }
       });
     })
