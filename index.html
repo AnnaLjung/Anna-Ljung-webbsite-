@@ -591,7 +591,7 @@ a.c-val:hover { color:var(--dusty-rose); }
 document.addEventListener('DOMContentLoaded', function() {
 
   /* ---- Load images from images.json ---- */
-  function driveUrl(id) { return 'https://drive.google.com/uc?export=view&id=' + id; }
+  function driveUrl(id) { return 'https://drive.google.com/thumbnail?id=' + id + '&sz=w1200'; }
   fetch('images.json')
     .then(function(r) { return r.json(); })
     .then(function(cfg) {
