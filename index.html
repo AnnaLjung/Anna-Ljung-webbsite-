@@ -24,15 +24,7 @@
   --ease-fade: cubic-bezier(0.4, 0, 0.2, 1);
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html {
-  font-size: 16px; -webkit-font-smoothing: antialiased; scroll-behavior: smooth;
-  /* ── SCROLL SNAP THRESHOLD ──────────────────────────────────────────
-     'proximity'  = snäll, snappar bara när du är nära en sektion (mjuk känsla)
-     'mandatory'  = hård, snappar alltid oavsett hur lite du scrollar
-     Bolla med dessa två för att hitta rätt känsla.
-  ──────────────────────────────────────────────────────────────────── */
-  scroll-snap-type: y proximity;
-}
+html { font-size: 16px; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
 body {
   background: var(--warm-white);
   color: var(--text-dark);
@@ -172,7 +164,6 @@ button { background: none; border: none; cursor: none; font-family: var(--font-b
 .hero {
   position: relative; height: 100vh; z-index: 1; overflow: hidden;
   background: var(--soft-beige);
-  scroll-snap-align: start;
 }
 .slide {
   position: absolute; inset: 0;
@@ -217,7 +208,6 @@ button { background: none; border: none; cursor: none; font-family: var(--font-b
 .section {
   display: block;
   padding-top: calc(var(--nav-h) + 5rem); padding-bottom: 7rem;
-  scroll-snap-align: start;
   scroll-margin-top: var(--nav-h);
   opacity: 0; transform: translateY(16px);
   transition: opacity .65s var(--ease-fade), transform .65s var(--ease-fade);
@@ -904,6 +894,58 @@ document.addEventListener('DOMContentLoaded', function() {
     e.stopPropagation();
     if (modalImages.length > 1) setModalImage((modalImgIdx + 1) % modalImages.length);
   });
+
+  /* ── Scroll Snap ──────────────────────────────────────────────────
+     SNAP_THRESHOLD = hur mycket av nästa sektion som måste synas (0–1)
+     innan den snappar dit.  0.5 = 50 % av skärmhöjden.
+     Testa t.ex. 0.3 (snappar tidigare) eller 0.7 (snappar senare).
+  ──────────────────────────────────────────────────────────────────── */
+  var SNAP_THRESHOLD = 0.50;
+  var snapTimer  = null;
+  var snapLock   = false;
+  var prevSnapY  = window.scrollY;
+  var snapDir    = 'down';
+  var NAV_H_PX   = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 72;
+
+  function snapPoints() {
+    var pts = [];
+    document.querySelectorAll('.section').forEach(function(s) {
+      pts.push(Math.max(0, s.offsetTop - NAV_H_PX));
+    });
+    return pts;
+  }
+
+  function fireSnap(y) {
+    snapLock = true;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+    setTimeout(function(){ snapLock = false; }, 850);
+  }
+
+  function resolveSnap() {
+    if (snapLock) return;
+    var sy = window.scrollY;
+    var vh = window.innerHeight;
+    if (snapDir !== 'down') return;   // scroll up är fri
+
+    var pts = snapPoints();
+    for (var i = 0; i < pts.length; i++) {
+      var pt = pts[i];
+      // Snap point är nedanför viewport-toppen OCH har kommit in >= (1-threshold)*vh
+      if (pt > sy && pt <= sy + vh * (1 - SNAP_THRESHOLD)) {
+        fireSnap(pt);
+        return;
+      }
+    }
+  }
+
+  window.addEventListener('scroll', function() {
+    if (snapLock) return;
+    var sy = window.scrollY;
+    snapDir   = sy >= prevSnapY ? 'down' : 'up';
+    prevSnapY = sy;
+    clearTimeout(snapTimer);
+    snapTimer = setTimeout(resolveSnap, 110);
+  }, { passive: true });
 
   /* ---- Shop tabs ---- */
   document.querySelectorAll('.tab-btn').forEach(function(btn) {
