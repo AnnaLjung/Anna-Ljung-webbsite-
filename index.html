@@ -195,6 +195,11 @@ button { background: none; border: none; cursor: none; font-family: var(--font-b
 .slide.active:nth-child(2) { animation: kb2 5.8s ease-in-out forwards; }
 .slide.active:nth-child(3) { animation: kb3 5.8s ease-in-out forwards; }
 .slide.active:nth-child(4) { animation: kb4 5.8s ease-in-out forwards; }
+.slide.active:nth-child(5) { animation: kb1 5.8s ease-in-out forwards; }
+.slide.active:nth-child(6) { animation: kb2 5.8s ease-in-out forwards; }
+.slide.active:nth-child(7) { animation: kb3 5.8s ease-in-out forwards; }
+.slide.active:nth-child(8) { animation: kb4 5.8s ease-in-out forwards; }
+.slide.active:nth-child(9) { animation: kb1 5.8s ease-in-out forwards; }
 .vignette {
   position: absolute; bottom: 0; left: 0; right: 0; height: 35%;
   background: linear-gradient(to top, rgba(237,229,216,.2) 0%, transparent 100%);
@@ -430,10 +435,15 @@ a.c-val:hover { color:var(--dusty-rose); }
 
 <!-- HERO -->
 <section class="hero" id="hero">
-  <div class="slide active"  id="s0""></div>
-  <div class="slide inactive" id="s1""></div>
-  <div class="slide inactive" id="s2""></div>
-  <div class="slide inactive" id="s3""></div>
+  <div class="slide active"   id="s0"></div>
+  <div class="slide inactive" id="s1"></div>
+  <div class="slide inactive" id="s2"></div>
+  <div class="slide inactive" id="s3"></div>
+  <div class="slide inactive" id="s4"></div>
+  <div class="slide inactive" id="s5"></div>
+  <div class="slide inactive" id="s6"></div>
+  <div class="slide inactive" id="s7"></div>
+  <div class="slide inactive" id="s8"></div>
   <div class="vignette"></div>
 </section>
 
@@ -712,12 +722,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.documentElement.style.cursor = 'none';
 
   /* ---- Hero slideshow ---- */
-  var slides = [
-    document.getElementById('s0'),
-    document.getElementById('s1'),
-    document.getElementById('s2'),
-    document.getElementById('s3')
-  ];
+  var slides = Array.from(document.querySelectorAll('#hero .slide'));
   var cur_slide = 0;
   setInterval(function() {
     slides[cur_slide].className = 'slide inactive';

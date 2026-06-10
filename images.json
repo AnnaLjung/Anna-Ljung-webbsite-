@@ -9,10 +9,15 @@
     "courses":      "19Cx5dyNfv-DLCP4l0Ah6ZdnkYytjlAa9"
   },
   "hero": [
-    { "drive_id": "", "local": "images/slides/slide-0.jpg" },
-    { "drive_id": "", "local": "images/slides/slide-1.jpg" },
-    { "drive_id": "", "local": "images/slides/slide-2.jpg" },
-    { "drive_id": "", "local": "images/slides/slide-3.jpg" }
+    { "drive_id": "18Ft0lBhrLHKWrR_qsOdmU0TTn91IoJao", "local": "", "title": "Anna_Hannes_working" },
+    { "drive_id": "1IkX0-954FprZacFsuuX8i_KrK13ESDYZ", "local": "", "title": "hanging_woods" },
+    { "drive_id": "1sc-zJXKn_07SOBevhg5Lf0IVn59N1AJ3", "local": "", "title": "In_Studio" },
+    { "drive_id": "17lPMcn_Qo5EijRCVxo171Y8vhg5nqz7X", "local": "", "title": "closeup" },
+    { "drive_id": "1_7O8DCzldTXFkk4jkzK3stuleWgQSs9m", "local": "", "title": "FromUnder" },
+    { "drive_id": "11MgTSqoFrrQIps1NUBeHS84LczJP8_I5", "local": "", "title": "FromUnder_02" },
+    { "drive_id": "1bCUnU_s6Meycicn3Vjyv2PGvZEZ9R88Q", "local": "", "title": "Summer" },
+    { "drive_id": "12uERZxtUalDKwwYZ1p4oRBCmgY1rI_DQ", "local": "", "title": "Yellow" },
+    { "drive_id": "1u1-o7x-jzuQHDw7BUmYYtWPU8cDez4dl", "local": "", "title": "closeup_02" }
   ],
   "about": {
     "drive_id": "",
