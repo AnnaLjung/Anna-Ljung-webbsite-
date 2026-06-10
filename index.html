@@ -24,7 +24,15 @@
   --ease-fade: cubic-bezier(0.4, 0, 0.2, 1);
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 16px; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+html {
+  font-size: 16px; -webkit-font-smoothing: antialiased; scroll-behavior: smooth;
+  /* ── SCROLL SNAP THRESHOLD ──────────────────────────────────────────
+     'proximity'  = snäll, snappar bara när du är nära en sektion (mjuk känsla)
+     'mandatory'  = hård, snappar alltid oavsett hur lite du scrollar
+     Bolla med dessa två för att hitta rätt känsla.
+  ──────────────────────────────────────────────────────────────────── */
+  scroll-snap-type: y proximity;
+}
 body {
   background: var(--warm-white);
   color: var(--text-dark);
@@ -164,6 +172,7 @@ button { background: none; border: none; cursor: none; font-family: var(--font-b
 .hero {
   position: relative; height: 100vh; z-index: 1; overflow: hidden;
   background: var(--soft-beige);
+  scroll-snap-align: start;
 }
 .slide {
   position: absolute; inset: 0;
@@ -208,6 +217,7 @@ button { background: none; border: none; cursor: none; font-family: var(--font-b
 .section {
   display: block;
   padding-top: calc(var(--nav-h) + 5rem); padding-bottom: 7rem;
+  scroll-snap-align: start;
   scroll-margin-top: var(--nav-h);
   opacity: 0; transform: translateY(16px);
   transition: opacity .65s var(--ease-fade), transform .65s var(--ease-fade);
