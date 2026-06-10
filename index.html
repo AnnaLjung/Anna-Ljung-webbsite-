@@ -24,14 +24,14 @@
   --ease-fade: cubic-bezier(0.4, 0, 0.2, 1);
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+html { font-size: 16px; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
 body {
   background: var(--warm-white);
   color: var(--text-dark);
   font-family: var(--font-body);
   font-weight: 300;
   line-height: 1.7;
-  overflow: hidden;
+  overflow-y: auto;
   cursor: none;
 }
 h1,h2,h3,h4 { font-family: var(--font-display); font-weight: 400; line-height: 1.1; }
@@ -162,10 +162,9 @@ button { background: none; border: none; cursor: none; font-family: var(--font-b
 
 /* HERO */
 .hero {
-  position: fixed; inset: 0; z-index: 1; overflow: hidden;
+  position: relative; height: 100vh; z-index: 1; overflow: hidden;
   background: var(--soft-beige);
 }
-.hero.behind { z-index: 0; }
 .slide {
   position: absolute; inset: 0;
   background-size: cover; background-position: center;
@@ -204,17 +203,28 @@ button { background: none; border: none; cursor: none; font-family: var(--font-b
 
 /* SECTIONS WRAPPER */
 .sections-wrapper {
-  position: fixed; inset: 0; z-index: 50;
-  overflow-y: auto; background: var(--warm-white);
-  opacity: 0; pointer-events: none; transition: opacity .35s;
+  position: relative; background: var(--warm-white);
 }
-.sections-wrapper.show { opacity: 1; pointer-events: auto; }
-.section { display: none; min-height: 100vh; padding-top: calc(var(--nav-h) + 5rem); padding-bottom: 7rem; }
-@keyframes secIn {
-  from { opacity:0; transform:translateY(16px); }
-  to   { opacity:1; transform:translateY(0); }
+.section {
+  display: block;
+  padding-top: calc(var(--nav-h) + 5rem); padding-bottom: 7rem;
+  scroll-margin-top: var(--nav-h);
+  opacity: 0; transform: translateY(16px);
+  transition: opacity .65s var(--ease-fade), transform .65s var(--ease-fade);
 }
-.section.active { display: block; animation: secIn .4s var(--ease-fade) both; }
+.section.visible { opacity: 1; transform: translateY(0); }
+
+/* SECTION DIVIDER */
+.section-divider {
+  display: flex; align-items: center; gap: 1.4rem;
+  max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+}
+.section-divider::before,
+.section-divider::after {
+  content: ''; flex: 1; height: 1px;
+  background: rgba(139,80,88,.22);
+}
+.section-divider svg { flex-shrink: 0; }
 .inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
 .inner-narrow { max-width: 760px; margin: 0 auto; padding: 0 2rem; }
 
@@ -351,6 +361,7 @@ a.c-val:hover { color:var(--dusty-rose); }
 @media(max-width:600px){
   .grid { grid-template-columns:1fr; gap:2.5rem; }
   .section { padding-top:calc(var(--nav-h) + 2.5rem); padding-bottom:4rem; }
+  .section-divider { padding: 0 1.5rem; }
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after { animation-duration:.01ms!important; transition-duration:.01ms!important; }
@@ -448,6 +459,8 @@ a.c-val:hover { color:var(--dusty-rose); }
     </div>
   </section>
 
+  <div class="section-divider"><svg viewBox="0 0 18 18" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(0 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(51 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(103 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(154 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(206 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(257 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(309 9 9)"/><circle cx="9" cy="9" r="1.85" fill="rgba(237,229,216,0.96)"/><circle cx="9" cy="9" r="0.9" fill="rgba(27,58,75,0.82)"/></svg></div>
+
   <!-- ARTWORKS -->
   <section class="section" id="artworks">
     <div class="inner">
@@ -461,6 +474,8 @@ a.c-val:hover { color:var(--dusty-rose); }
     </div>
   </section>
 
+  <div class="section-divider"><svg viewBox="0 0 18 18" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(0 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(51 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(103 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(154 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(206 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(257 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(309 9 9)"/><circle cx="9" cy="9" r="1.85" fill="rgba(237,229,216,0.96)"/><circle cx="9" cy="9" r="0.9" fill="rgba(27,58,75,0.82)"/></svg></div>
+
   <!-- NEWS -->
   <section class="section" id="news">
     <div class="inner-narrow">
@@ -472,6 +487,8 @@ a.c-val:hover { color:var(--dusty-rose); }
       </div>
     </div>
   </section>
+
+  <div class="section-divider"><svg viewBox="0 0 18 18" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(0 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(51 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(103 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(154 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(206 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(257 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(309 9 9)"/><circle cx="9" cy="9" r="1.85" fill="rgba(237,229,216,0.96)"/><circle cx="9" cy="9" r="0.9" fill="rgba(27,58,75,0.82)"/></svg></div>
 
   <!-- SHOP -->
   <section class="section" id="shop">
@@ -515,6 +532,8 @@ a.c-val:hover { color:var(--dusty-rose); }
       </div>
     </div>
   </section>
+
+  <div class="section-divider"><svg viewBox="0 0 18 18" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(0 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(51 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(103 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(154 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(206 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(257 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(309 9 9)"/><circle cx="9" cy="9" r="1.85" fill="rgba(237,229,216,0.96)"/><circle cx="9" cy="9" r="0.9" fill="rgba(27,58,75,0.82)"/></svg></div>
 
   <!-- LESSONS -->
   <section class="section" id="lessons">
@@ -570,6 +589,8 @@ a.c-val:hover { color:var(--dusty-rose); }
       <div class="lessons-cta"><a href="mailto:hello@annaljung.se?subject=Bokning målarkurs" class="btn-enquire">Boka din plats</a></div>
     </div>
   </section>
+
+  <div class="section-divider"><svg viewBox="0 0 18 18" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(0 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(51 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(103 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(154 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(206 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(257 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(309 9 9)"/><circle cx="9" cy="9" r="1.85" fill="rgba(237,229,216,0.96)"/><circle cx="9" cy="9" r="0.9" fill="rgba(27,58,75,0.82)"/></svg></div>
 
   <!-- CONTACTS -->
   <section class="section" id="contacts">
@@ -732,57 +753,58 @@ document.addEventListener('DOMContentLoaded', function() {
   overlay.addEventListener('click', closeMenu);
   document.addEventListener('keydown', function(e) { if(e.key==='Escape') { closeMenu(); closeModal(); } });
 
-  /* ---- Section routing ---- */
-  var sw       = document.getElementById('sw');
-  var hero     = document.getElementById('hero');
+  /* ---- Nav lit on scroll ---- */
+  function updateNavLit() {
+    nav.classList.toggle('lit', window.scrollY > (window.innerHeight * 0.85));
+  }
+  window.addEventListener('scroll', updateNavLit, { passive: true });
+
+  /* ---- Section fade-in on scroll ---- */
   var sections = document.querySelectorAll('.section');
-  var links    = document.querySelectorAll('.menu-link');
+  var sectionObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        sectionObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.07 });
+  sections.forEach(function(s) { sectionObs.observe(s); });
 
-  function showSection(id) {
-    sections.forEach(function(s) { s.classList.remove('active'); });
-    var t = document.getElementById(id);
-    if (!t) return;
-    sw.classList.add('show');
-    hero.classList.add('behind');
-    nav.classList.add('lit');
-    sw.scrollTop = 0;
-    t.classList.add('active');
-    history.replaceState(null, '', '#'+id);
-    links.forEach(function(l) { l.classList.toggle('cur', l.dataset.s === id); });
-  }
-
-  function goHome() {
-    sections.forEach(function(s) { s.classList.remove('active'); });
-    sw.classList.remove('show');
-    hero.classList.remove('behind');
-    nav.classList.remove('lit');
-    history.replaceState(null, '', location.pathname);
-  }
-
+  /* ---- Menu links → smooth scroll ---- */
+  var links = document.querySelectorAll('.menu-link');
   links.forEach(function(l) {
     l.addEventListener('click', function(e) {
       e.preventDefault();
       var id = this.dataset.s;
       closeMenu();
-      setTimeout(function() { showSection(id); }, 280);
+      setTimeout(function() {
+        var target = document.getElementById(id);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      }, 280);
     });
   });
 
   logo.addEventListener('click', function(e) {
     e.preventDefault();
     closeMenu();
-    goHome();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
   document.getElementById('panelLogo').addEventListener('click', function(e) {
     e.preventDefault();
     closeMenu();
-    goHome();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
   /* Hash on load */
   var hash = location.hash.replace('#','');
-  if (['about','artworks','news','shop','lessons','contacts'].indexOf(hash) > -1) showSection(hash);
+  if (['about','artworks','news','shop','lessons','contacts'].indexOf(hash) > -1) {
+    setTimeout(function() {
+      var target = document.getElementById(hash);
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    }, 150);
+  }
 
   /* ---- Modal ---- */
   var modalBg  = document.getElementById('modalBg');
