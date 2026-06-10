@@ -19,12 +19,7 @@
     "local": "images/about/portrait.jpg"
   },
   "artworks": [
-    { "id": "artwork-1", "drive_id": "", "local": "images/artworks/artwork-1.jpg", "title": "Mist No. I",     "status": "available", "price": "€ 1 650", "story": "Hand-dyed in a single bath of grey and sage. The colour settled where it wanted. So did the form." },
-    { "id": "artwork-2", "drive_id": "", "local": "images/artworks/artwork-2.jpg", "title": "Dusk Passage",   "status": "sold",      "price": "",         "story": "Rose and amber. An evening in October, held still." },
-    { "id": "artwork-3", "drive_id": "", "local": "images/artworks/artwork-3.jpg", "title": "Still Water",    "status": "available", "price": "€ 3 200", "story": "The largest work from the winter series. Pale blue, almost white. Suspended in the room like breath held before speaking." },
-    { "id": "artwork-4", "drive_id": "", "local": "images/artworks/artwork-4.jpg", "title": "Bone Light",     "status": "available", "price": "€ 600",   "story": "Ivory and dust. A quiet presence." },
-    { "id": "artwork-5", "drive_id": "", "local": "images/artworks/artwork-5.jpg", "title": "Ember Study",    "status": "sold",      "price": "",         "story": "Terracotta and old gold. Sold before it had a wall." },
-    { "id": "artwork-6", "drive_id": "", "local": "images/artworks/artwork-6.jpg", "title": "Nordic Drift",   "status": "available", "price": "€ 1 000", "story": "Made for Copenhagen. It found its way back north instead." }
+    { "id": "artwork-1", "drive_id": "1axEFHH967b4-3JlUJwT69y36gqxoSbfm", "local": "images/artworks/artwork-1.jpg", "title": "Greek Blue Polyptyk", "status": "available", "price": "", "story": "" }
   ],
   "shop_kb": [
     { "id": "kb-1", "drive_id": "1qT9o2TBmGNIiLZnc3io7gc532DF-B5H9", "local": "images/shop/kinetic-bloom/kb-1.jpg", "title": "Solistic Summer",  "status": "available", "price": "", "story": "" },

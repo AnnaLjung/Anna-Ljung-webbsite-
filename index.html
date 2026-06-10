@@ -430,29 +430,9 @@ a.c-val:hover { color:var(--dusty-rose); }
     <div class="inner">
       <h2 class="section-headline">Artworks</h2>
       <div class="grid">
-        <article class="card" data-title="Mist No. I" data-status="available" data-price="€ 1 650" data-story="Hand-dyed in a single bath of grey and sage. The colour settled where it wanted. So did the form.">
-          <div class="card-img"><img src="images/artworks/artwork-1.jpg" alt="Mist No. I" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><div class="img-placeholder" style="display:none"><span>Artwork</span></div></div>
-          <div class="card-info"><h3 class="card-title">Mist No. I</h3><span class="status av">Available</span></div>
-        </article>
-        <article class="card" data-title="Dusk Passage" data-status="sold" data-price="" data-story="Rose and amber. An evening in October, held still.">
-          <div class="card-img"><img src="images/artworks/artwork-2.jpg" alt="Dusk Passage" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><div class="img-placeholder" style="display:none"><span>Artwork</span></div></div>
-          <div class="card-info"><h3 class="card-title">Dusk Passage</h3><span class="status sold">Sold</span></div>
-        </article>
-        <article class="card" data-title="Still Water" data-status="available" data-price="€ 3 200" data-story="The largest work from the winter series. Pale blue, almost white. Suspended in the room like breath held before speaking.">
-          <div class="card-img"><img src="images/artworks/artwork-3.jpg" alt="Still Water" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><div class="img-placeholder" style="display:none"><span>Artwork</span></div></div>
-          <div class="card-info"><h3 class="card-title">Still Water</h3><span class="status av">Available</span></div>
-        </article>
-        <article class="card" data-title="Bone Light" data-status="available" data-price="€ 600" data-story="Ivory and dust. A quiet presence.">
-          <div class="card-img"><img src="images/artworks/artwork-4.jpg" alt="Bone Light" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><div class="img-placeholder" style="display:none"><span>Artwork</span></div></div>
-          <div class="card-info"><h3 class="card-title">Bone Light</h3><span class="status av">Available</span></div>
-        </article>
-        <article class="card" data-title="Ember Study" data-status="sold" data-price="" data-story="Terracotta and old gold. Sold before it had a wall.">
-          <div class="card-img"><img src="images/artworks/artwork-5.jpg" alt="Ember Study" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><div class="img-placeholder" style="display:none"><span>Artwork</span></div></div>
-          <div class="card-info"><h3 class="card-title">Ember Study</h3><span class="status sold">Sold</span></div>
-        </article>
-        <article class="card" data-title="Nordic Drift" data-status="available" data-price="€ 1 000" data-story="Made for Copenhagen. It found its way back north instead.">
-          <div class="card-img"><img src="images/artworks/artwork-6.jpg" alt="Nordic Drift" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><div class="img-placeholder" style="display:none"><span>Artwork</span></div></div>
-          <div class="card-info"><h3 class="card-title">Nordic Drift</h3><span class="status av">Available</span></div>
+        <article class="card" data-title="Greek Blue Polyptyk" data-status="available" data-price="" data-story="">
+          <div class="card-img"><img src="" alt="Greek Blue Polyptyk" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><div class="img-placeholder" style="display:none"><span>Artwork</span></div></div>
+          <div class="card-info"><h3 class="card-title">Greek Blue Polyptyk</h3></div>
         </article>
       </div>
     </div>
@@ -632,8 +612,15 @@ document.addEventListener('DOMContentLoaded', function() {
         if (lImg) lImg.src = cfg.lessons.drive_id ? driveUrl(cfg.lessons.drive_id) : cfg.lessons.local;
       }
       (cfg.artworks || []).forEach(function(item, i) {
-        var img = document.querySelector('#artworks .grid .card:nth-child(' + (i+1) + ') img');
-        if (img && item.drive_id) img.src = driveUrl(item.drive_id);
+        var card = document.querySelector('#artworks .grid .card:nth-child(' + (i+1) + ')');
+        if (!card) return;
+        var imgEl = card.querySelector('img');
+        if (imgEl && item.drive_id) {
+          imgEl.src = driveUrl(item.drive_id);
+          imgEl.style.display = 'block';
+          var ph = imgEl.nextElementSibling;
+          if (ph) ph.style.display = 'none';
+        }
       });
       (cfg.shop_kb || []).forEach(function(item, i) {
         var card = document.querySelector('#tp-kinetic .grid .card:nth-child(' + (i+1) + ')');
