@@ -616,14 +616,14 @@ a.c-val:hover { color:var(--dusty-rose); }
 document.addEventListener('DOMContentLoaded', function() {
 
   /* ---- Load images from images.json ---- */
-  function driveUrl(id, size) { return 'https://drive.google.com/thumbnail?id=' + id + '&sz=w' + (size || 1200); }
+  function driveUrl(id) { return 'https://drive.usercontent.google.com/download?id=' + id + '&export=view&authuser=0'; }
   fetch('images.json')
     .then(function(r) { return r.json(); })
     .then(function(cfg) {
       (cfg.hero || []).forEach(function(item, i) {
         var el = document.getElementById('s' + i);
         if (!el) return;
-        var src = item.drive_id ? driveUrl(item.drive_id, 3840) : item.local;
+        var src = item.drive_id ? driveUrl(item.drive_id) : item.local;
         if (src) el.style.backgroundImage = "url('" + src + "')";
       });
       if (cfg.about) {
