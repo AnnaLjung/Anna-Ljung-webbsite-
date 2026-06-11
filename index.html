@@ -646,11 +646,12 @@ a.c-val:hover { color:var(--dusty-rose); }
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
-  /* ---- Load images from images.json ---- */
-  function driveUrl(id) { return 'https://drive.usercontent.google.com/download?id=' + id + '&export=view&authuser=0'; }
-  /* Hero: lh3-endpoint — Drive serverar AVIF som octet-stream (renderas ej),
-     lh3 ger WebP i rätt storlek med korrekt content-type */
-  function heroUrl(id) { return 'https://lh3.googleusercontent.com/d/' + id + '=w2560-rw'; }
+  /* ---- Load images from images.json ----
+     lh3-endpoint: funkar med alla källformat (AVIF/PNG/JPEG),
+     serverar WebP i angiven bredd med korrekt content-type.
+     Hero = w2560 (fullskärm), kort/modal = w1200 (räcker för 3-kolumnsgrid + modal) */
+  function driveUrl(id) { return 'https://lh3.googleusercontent.com/d/' + id + '=w1200-rw'; }
+  function heroUrl(id)  { return 'https://lh3.googleusercontent.com/d/' + id + '=w2560-rw'; }
   fetch('images.json')
     .then(function(r) { return r.json(); })
     .then(function(cfg) {
