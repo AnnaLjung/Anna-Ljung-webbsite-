@@ -200,6 +200,9 @@ button { background: none; border: none; cursor: none; font-family: var(--font-b
 .slide.active:nth-child(7) { animation: kb3 5.8s ease-in-out forwards; }
 .slide.active:nth-child(8) { animation: kb4 5.8s ease-in-out forwards; }
 .slide.active:nth-child(9) { animation: kb1 5.8s ease-in-out forwards; }
+.slide.active:nth-child(10) { animation: kb2 5.8s ease-in-out forwards; }
+.slide.active:nth-child(11) { animation: kb3 5.8s ease-in-out forwards; }
+.slide.active:nth-child(12) { animation: kb4 5.8s ease-in-out forwards; }
 .vignette {
   position: absolute; bottom: 0; left: 0; right: 0; height: 35%;
   background: linear-gradient(to top, rgba(237,229,216,.2) 0%, transparent 100%);
@@ -444,6 +447,9 @@ a.c-val:hover { color:var(--dusty-rose); }
   <div class="slide inactive" id="s6"></div>
   <div class="slide inactive" id="s7"></div>
   <div class="slide inactive" id="s8"></div>
+  <div class="slide inactive" id="s9"></div>
+  <div class="slide inactive" id="s10"></div>
+  <div class="slide inactive" id="s11"></div>
   <div class="vignette"></div>
 </section>
 
@@ -661,6 +667,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var src = item.drive_id ? heroUrl(item.drive_id) : item.local;
         if (src) el.style.backgroundImage = "url('" + src + "')";
       });
+      slideCount = Math.min((cfg.hero || []).length, slides.length) || slides.length;
       if (cfg.about) {
         var aImg = document.querySelector('#about .about-img-wrap img');
         if (aImg) aImg.src = cfg.about.drive_id ? driveUrl(cfg.about.drive_id) : cfg.about.local;
@@ -727,10 +734,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
   /* ---- Hero slideshow ---- */
   var slides = Array.from(document.querySelectorAll('#hero .slide'));
+  var slideCount = slides.length;   // sätts om av images.json-loadern
   var cur_slide = 0;
   setInterval(function() {
     slides[cur_slide].className = 'slide inactive';
-    cur_slide = (cur_slide + 1) % slides.length;
+    cur_slide = (cur_slide + 1) % slideCount;
     slides[cur_slide].className = 'slide active';
   }, 5000);
 
