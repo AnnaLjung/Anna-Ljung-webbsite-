@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="sv">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Redaktionen · Anna Ljung Studio</title>
+<style>
+  body { margin: 0; background: #f2eadf; color: #1f3a45; font: 16px/1.6 system-ui, sans-serif; }
+  main { width: min(540px, 100% - 48px); margin: clamp(48px, 12vw, 130px) auto; }
+  h1 { font: 400 clamp(44px, 9vw, 76px)/1 Georgia, serif; }
+  a { display: inline-block; padding: .65em 1em; background: #1f3a45; color: #f8f3eb; }
+</style>
+<main>
+  <p>Anna Ljung Studio</p>
+  <h1>Redaktionen</h1>
+  <p id="status">Redaktionen öppnas när studions Google-konto har kopplats.</p>
+  <a id="login" hidden>Logga in med Google</a>
+</main>
+<script src="../studio-config.js"></script>
+<script>
+  if (window.studioAdminUrl) {
+    const login = document.getElementById("login");
+    login.href = window.studioAdminUrl;
+    login.hidden = false;
+    document.getElementById("status").textContent = "Använd studions Google-konto.";
+  }
+</script>
+</html>

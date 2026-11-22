@@ -1,980 +1,1899 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Anna Ljung — Studio</title>
-  <meta name="description" content="Anna Ljung. Sculptural textile works, shaped by hand. Stockholm." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet" />
-<style>
-:root {
-  --warm-white: #EDE5D8;
-  --soft-beige: #E8E3DC;
-  --dusty-rose: #8B5058;
-  --light-grey: #8B5058;
-  --text-dark:  #1B3A4B;
-  --text-mid:   #3D6478;
-  --text-light: #7BA5B5;
-  --font-display: 'Playfair Display', Georgia, serif;
-  --font-body: 'Jost', Helvetica, Arial, sans-serif;
-  --nav-h: 72px;
-  --ease-smooth: cubic-bezier(0.77, 0, 0.175, 1);
-  --ease-fade: cubic-bezier(0.4, 0, 0.2, 1);
-}
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 16px; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
-body {
-  background: var(--warm-white);
-  color: var(--text-dark);
-  font-family: var(--font-body);
-  font-weight: 300;
-  line-height: 1.7;
-  overflow-y: auto;
-  cursor: none;
-}
-h1,h2,h3,h4 { font-family: var(--font-display); font-weight: 400; line-height: 1.1; }
-a { color: inherit; text-decoration: none; }
-img { display: block; max-width: 100%; height: auto; }
-ul { list-style: none; }
-button { background: none; border: none; cursor: none; font-family: var(--font-body); }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1f3a45">
+  <meta name="description" content="Anna Ljung — textile art, sculptural forms, and painting courses in Stockholm.">
+  <title>Anna Ljung — Artist &amp; Spatial Designer</title>
+  <style>
+    @font-face {
+      font-family: "Tritopani Preview";
+      src: url("Tritopani.woff") format("woff");
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Quicksand Preview";
+      src: url("Quicksand_Light.otf") format("opentype");
+      font-weight: 300;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Quicksand Preview";
+      src: url("Quicksand_Book.otf") format("opentype");
+      font-weight: 400;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Quicksand Preview";
+      src: url("Quicksand_Bold.otf") format("opentype");
+      font-weight: 700;
+      font-display: swap;
+    }
+    :root {
+      --paper: #f2eadf;
+      --paper-light: #f8f3eb;
+      --blue: #1f3a45;
+      --blue-soft: #3a5660;
+      --rose: #f23350;
+      --muted: #506b74;
+      --sand: #ded5c7;
+      --line: rgba(31,58,69,.24);
+      --body: "Quicksand Preview", "Trebuchet MS", sans-serif;
+      --script: "Tritopani Preview", cursive;
+      --page-gutter: clamp(24px, 6.2vw, 112px);
+      --header-height: 78px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: var(--header-height); }
+    body { margin: 0; color: var(--blue); background: var(--paper); font-family: var(--body); font-size: 16px; font-weight: 400; line-height: 1.7; }
+    body.menu-open, body.modal-open { overflow: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button { color: inherit; font: inherit; }
+    img { display: block; width: 100%; height: 100%; object-fit: cover; dynamic-range-limit: no-limit; }
+    .hdr-picture { display: block; width: 100%; height: 100%; }
+    button:focus-visible, a:focus-visible { outline: 2px solid var(--rose); outline-offset: 5px; }
+    .site-header { position: fixed; inset: 0 0 auto; z-index: 40; height: var(--header-height); display: flex; align-items: center; justify-content: space-between; padding: 0 var(--page-gutter); background: rgba(242,234,223,.30); -webkit-backdrop-filter: blur(16px) saturate(125%); backdrop-filter: blur(16px) saturate(125%); border-bottom: 1px solid rgba(31,58,69,.10); }
+    .site-header { transition: color .45s ease; }
+    .site-header.over-works { color: #fff; }
+    .wordmark { font-size: 13px; font-weight: 400; letter-spacing: .24em; white-space: nowrap; }
+    a.wordmark { display: inline-flex; align-items: center; gap: 11px; }
+    .wordmark img { width: 33px; height: 34px; object-fit: contain; transition: filter .45s ease; }
+    .site-header.over-works .wordmark img { filter: brightness(0) invert(1); }
+    .primary-nav { display: flex; align-items: center; gap: clamp(18px, 3vw, 46px); font-size: 13px; letter-spacing: .08em; }
+    .primary-nav a, .menu-links a { transition: color .2s ease; }
+    .primary-nav a { position: relative; padding: 7px 0; }
+    .primary-nav a::after { content: ""; position: absolute; right: 0; bottom: 0; left: 0; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left center; transition: transform .36s cubic-bezier(.2,.7,.2,1); }
+    .primary-nav a:hover::after, .primary-nav a.is-active::after { transform: scaleX(1); }
+    .primary-nav a:hover { color: var(--rose); }
+    .menu-toggle { width: 42px; height: 42px; border: 0; padding: 0; background: transparent; cursor: pointer; display: grid; place-content: center; gap: 7px; }
+    .menu-toggle span { height: 1px; width: 26px; background: currentColor; transition: transform .25s ease, opacity .25s ease; }
+    .menu-toggle[aria-expanded="true"] span:first-child { transform: translateY(8px) rotate(45deg); }
+    .menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .menu-toggle[aria-expanded="true"] span:last-child { transform: translateY(-8px) rotate(-45deg); }
+    .menu-scrim { position: fixed; inset: 0; z-index: 49; background: rgba(31,58,69,.32); opacity: 0; pointer-events: none; transition: opacity .3s ease; }
+    .menu-scrim.is-open { opacity: 1; pointer-events: auto; }
+    .menu-panel { position: fixed; z-index: 50; inset: 0 0 0 auto; width: min(540px, 88vw); padding: 34px clamp(28px,6vw,76px); background: var(--blue); color: var(--paper-light); transform: translateX(102%); transition: transform .38s cubic-bezier(.22,.72,.21,1); display: flex; flex-direction: column; }
+    .menu-panel.is-open { transform: translateX(0); }
+    .menu-panel-top { display: flex; align-items: center; justify-content: space-between; padding-bottom: 60px; }
+    .menu-close { border: 0; background: transparent; color: inherit; font-size: 30px; line-height: 1; cursor: pointer; padding: 8px; }
+    .menu-links { display: grid; }
+    .menu-links a { padding: 11px 0 13px; border-bottom: 1px solid rgba(248,243,235,.22); font: 400 clamp(34px,6vw,58px)/1.15 var(--script); }
+    .menu-links a:hover { color: var(--rose); }
+    .menu-contact { margin-top: auto; padding-top: 42px; font-size: 15px; line-height: 1.7; }
+    .menu-contact a { text-decoration: underline; text-underline-offset: 4px; }
+    .script { font-family: var(--script); font-weight: 400; letter-spacing: -.02em; }
+    .eyebrow { margin: 0 0 24px; color: var(--blue-soft); font-size: 12px; font-weight: 400; letter-spacing: .17em; text-transform: uppercase; }
+    .hero { display: grid; grid-template-columns: 48.2fr 51.8fr; padding-top: var(--header-height); background: #f3eae0; }
+    .hero-copy { position: relative; padding: clamp(74px,11vh,144px) 5vw 70px var(--page-gutter); display: flex; flex-direction: column; justify-content: center; }
+    .hero-slide-copy { display: flex; flex-direction: column; align-items: flex-start; min-height: var(--hero-text-height, 0px); }
+    .hero-slide-copy > * { transition: opacity 220ms ease; }
+    #heroCta { transition: opacity 260ms ease 465ms; }
+    .hero.is-changing .hero-slide-copy > *, .hero.is-changing #heroCta { opacity: 0; transition: opacity var(--slide-fade-out) ease; }
+    .hero h1 { max-width: 720px; margin: 0 0 32px -5px; font-size: clamp(64px,7.3vw,100px); font-weight: 400; line-height: .84; letter-spacing: -.04em; }
+    .hero h1 span { color: var(--rose); }
+    .hero h1.has-title-art { width: min(100%, 540px); }
+    .hero-title-svg { display: block; width: 100%; height: auto; overflow: visible; }
+    .managed-design { display: block; width: min(100%, 720px); height: auto; max-height: 260px; margin: 16px auto; }
+    .manifesto-art { width: min(78vw, 620px); max-height: 170px; margin: auto; }
+    .hero-lede { max-width: 440px; margin: 0; color: var(--muted); font-size: 17px; line-height: 1.7; letter-spacing: .025em; }
+    .text-link { display: inline-flex; gap: 24px; align-items: center; margin-top: 34px; padding: 0 0 7px; border: 0; border-bottom: 1px solid var(--blue); background: none; font-size: 14px; letter-spacing: .06em; cursor: pointer; }
+    .text-link .arrow { font-size: 18px; line-height: 1; transition: transform .2s ease; }
+    .text-link:hover .arrow, .text-link:focus-visible .arrow { transform: translateX(4px); }
+    .hero-image { display: block; min-height: 610px; height: 47.4vw; max-height: 800px; overflow: hidden; background: #e8ded4; }
+    .hero-image img { object-position: center var(--hero-photo-focus, 82%); transform: translate3d(0,var(--parallax-y,0px),0) scale(1.04); will-change: transform; transition: opacity .35s ease, transform .7s ease; }
+    .hero.is-changing .hero-image img { transition-duration: var(--slide-fade-out), .7s; }
+    .hero-image:hover img { transform: translate3d(0,var(--parallax-y,0px),0) scale(1.06); }
+    .work-image img, .about-image img, .courses-image img, .product-image img { transform: translate3d(0,var(--parallax-y,0px),0) scale(1.04); will-change: transform; }
+    .hero-controls { position: absolute; inset: auto 0 18px; display: flex; align-items: center; justify-content: center; gap: 18px; }
+    .hero-pagination { display: flex; justify-content: center; gap: 8px; }
+    .hero-step { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; background: transparent; color: var(--blue); cursor: pointer; }
+    .hero-step:hover { color: var(--rose); }
+    .hero-step svg { width: 13px; height: 32px; }
+    .hero-pagination button { display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 0; background: transparent; cursor: pointer; }
+    .hero-pagination button::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: rgba(31,58,69,.38); transition: transform .2s ease, background .2s ease; }
+    .hero-pagination button:hover::before { background: rgba(31,58,69,.72); transform: scale(1.15); }
+    .hero-pagination button.is-active::before { background: var(--blue); transform: scale(1.1); }
+    .hero-pagination button:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; border-radius: 50%; }
+    .hero-note { align-self: flex-end; margin-top: 54px; color: var(--muted); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+    .manifesto { min-height: 280px; display: grid; place-items: center; padding: 55px 24px 64px; background: var(--blue); color: #fff; text-align: center; }
+    .manifesto p { max-width: 1000px; margin: 0; font-size: clamp(44px,7vw,88px); line-height: 1.08; }
+    .manifesto button { border: 0; background: transparent; padding: 0; font: inherit; color: inherit; letter-spacing: inherit; cursor: pointer; }
+    #heroNext { min-height: var(--hero-quote-height, 0px); transition: opacity 360ms ease 70ms; }
+    #heroNext.is-changing { opacity: 0; transition: opacity var(--slide-fade-out) ease; }
+    .manifesto em { color: var(--rose); font-style: normal; }
+    .section { padding: clamp(86px,12vw,160px) var(--page-gutter); }
+    .section-intro { display: flex; align-items: end; justify-content: space-between; gap: 30px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+    .section-intro h2 { margin: 0; font-size: clamp(42px,5.4vw,72px); font-weight: 400; line-height: 1.02; letter-spacing: -.025em; }
+    .section-intro p { max-width: 330px; margin: 0 0 4px; color: var(--muted); font-size: 16px; line-height: 1.65; }
+    .works-grid { display: grid; grid-template-columns: 1.08fr .78fr; gap: clamp(52px,9vw,130px) 10vw; align-items: start; padding-top: 74px; }
+    .work-item { min-width: 0; }
+    .work-item:nth-child(2) { margin-top: 140px; }
+    .work-item:nth-child(3) { width: 76%; margin: -55px 0 0 13%; }
+    .work-image { overflow: hidden; background: var(--sand); aspect-ratio: 1.08 / 1; }
+    .work-item:nth-child(2) .work-image { aspect-ratio: .82 / 1; }
+    .work-item:nth-child(3) .work-image { aspect-ratio: 1.2 / 1; }
+    .work-image img { transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+    .work-item:hover .work-image img { transform: translate3d(0,var(--parallax-y,0px),0) scale(1.06); }
+    .work-meta { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding-top: 14px; }
+    .work-meta h3 { margin: 0; font-size: 22px; font-weight: 400; }
+    .work-meta span { color: var(--muted); font-size: 10px; letter-spacing: .15em; text-transform: uppercase; }
+    .works-action { display: flex; justify-content: center; margin-top: 76px; }
+    .selected-works { padding-top: 40px; padding-bottom: 52px; }
+    .selected-works .section-intro .eyebrow { max-width: none; font-size: 18px; }
+    .selected-works #worksTitle { width: min(100%,360px); margin-top: 30px; }
+    .selected-works .works-grid { grid-template-columns: 1fr; gap: 0; padding-top: 24px; }
+    .selected-works .work-item { width: 100%; margin: 0; }
+    .selected-works .work-image img { transform: none; }
+    @media (min-width: 901px) {
+      .selected-works .works-grid { position: relative; height: 84vw; max-height: 1450px; }
+      .selected-works .work-item { position: absolute; }
+      .selected-works .work-item:nth-child(1) { width: 37.15%; left: 0; top: 24px; }
+      .selected-works .work-item:nth-child(2) { width: 39.09%; right: 0; top: 24px; }
+      .selected-works .work-item:nth-child(3) { width: 51.43%; right: 0; top: 38.65vw; }
+    }
+    .selected-works .work-item:nth-child(1) .work-image { aspect-ratio: 468.63 / 571.48; }
+    .selected-works .work-item:nth-child(2) .work-image { aspect-ratio: 493.11 / 410.92; }
+    .selected-works .work-item:nth-child(3) .work-image { aspect-ratio: 648.84 / 600.78; }
+    .selected-works .works-action { margin-top: 38px; }
+    .news { padding-top: clamp(58px,8vw,105px); background: var(--paper-light); }
+    .section.news { padding-bottom: 0; }
+    .news:has(.news-controls[hidden]) { padding-bottom: clamp(80px,10vw,130px); }
+    .news-heading { margin-bottom: 0; padding-bottom: 34px; border-bottom: 1px solid var(--line); }
+    .news-heading h2 { margin: 0; color: var(--blue); font: 400 clamp(48px,6vw,72px)/1.05 var(--script); letter-spacing: -.02em; }
+    .news-list { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: clamp(12px,2vw,26px); margin-top: 24px; }
+    .news-entry { display: grid; align-content: start; gap: 9px; padding: clamp(18px,2.5vw,30px); border: 1px solid var(--line); background: var(--paper); position: relative; overflow-wrap: anywhere; transition: background .2s ease; }
+    .news-entry .news-read { background: #eee5d8; }
+    .news-entry:hover, .news-entry:focus-within { background: #fff; }
+    .news-entry .news-read::after { content: ""; position: absolute; inset: 0; }
+    .news-entry:has(.news-read:focus-visible) { outline: 2px solid var(--rose); outline-offset: 3px; }
+    .news-entry time { color: var(--rose); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; }
+    .news-entry h3 { margin: 0; color: var(--blue); font: 700 19px/1.35 var(--body); }
+    .news-entry p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.6; }
+    .news-entry { grid-template-rows: auto auto 1fr auto; }
+    .news-read { justify-self: end; margin-top: 8px; padding: 6px 12px; border: 1px solid var(--line); background: transparent; cursor: pointer; font-size: 14px; }
+    .news-entry:hover .news-read, .news-entry:focus-within .news-read, .news-read:hover { background: var(--blue); color: var(--paper-light); }
+    .news-dialog { position: fixed; width: min(640px,calc(100% - 32px)); max-height: 85vh; padding: clamp(24px,5vw,48px); border: 1px solid var(--line); background: var(--paper-light); color: var(--blue); }
+    .news-dialog::backdrop { background: rgba(31,58,69,.55); }
+    .news-dialog p { white-space: pre-wrap; overflow-wrap: anywhere; }
+    .news-dialog.has-photo { width: min(920px,calc(100% - 32px)); }
+    .news-dialog > form { display: flex; justify-content: flex-end; margin-bottom: 14px; }
+    .news-dialog > form button { margin: 0; }
+    .news-dialog.has-photo .news-dialog-layout { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); align-items: start; gap: clamp(18px,4vw,36px); }
+    .news-dialog-photo { margin: 0; }
+    .news-dialog-photo img { width: 100%; height: auto; max-height: 60vh; object-fit: contain; object-position: left top; }
+    .news-dialog-copy h2 { margin: .45em 0; }
+    @media (max-width: 620px) {
+      .news-dialog.has-photo .news-dialog-layout { grid-template-columns: 1fr; }
+      .news-dialog-photo img { max-height: 44vh; }
+    }
+    .header-actions, .site-language { display: flex; align-items: center; gap: 8px; }
+    .header-actions { gap: clamp(15px,2.5vw,40px); }
+    .site-language button { padding: 4px 3px; border: 0; border-bottom: 1px solid transparent; background: transparent; cursor: pointer; font-size: 12px; }
+    .site-language button[aria-pressed="true"] { border-color: currentColor; }
+    #newsSubscribe[hidden], .news-controls[hidden] { display: none; }
+    .news-controls { min-height: clamp(140px,14vw,200px); display: flex; align-items: center; justify-content: center; gap: 18px; }
+    .news-pagination { display: flex; justify-content: center; gap: 10px; }
+    .news-pagination button { display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 0; background: transparent; cursor: pointer; }
+    .news-pagination button::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: rgba(31,58,69,.28); transition: transform .2s ease, background .2s ease; }
+    .news-pagination button.is-active::before, .news-pagination button:hover::before { background: var(--blue); transform: scale(1.15); }
+    .news-pagination button:focus-visible { outline: 2px solid var(--rose); outline-offset: 1px; border-radius: 50%; }
+    .about { display: grid; grid-template-columns: .95fr 1.05fr; min-height: 670px; padding: 0; background: var(--sand); }
+    .about-image { min-height: 560px; overflow: hidden; background: #cfad9a; }
+    .about-image img { object-position: 36% center; }
+    .about-copy { padding: clamp(70px,9vw,130px) clamp(34px,7vw,110px); display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
+    .about-copy h2 { max-width: 650px; margin: 0 0 30px; font-size: clamp(42px,5.4vw,72px); line-height: 1.03; font-weight: 400; }
+    .about-copy h2, .contact h2 { width: 100%; }
+    .workshop-intro { margin-top: 42px; padding-top: 26px; border-top: 1px solid var(--line); }
+    .workshop-intro h3 { margin: 0 0 12px; font-size: 22px; font-weight: 600; }
+    .workshop-intro .text-link { margin-top: 8px; }
+    .about-copy p { max-width: 520px; margin: 0 0 20px; color: var(--blue-soft); font-size: 16px; line-height: 1.75; }
+    .about-facts { display: flex; gap: 35px; margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--line); width: 100%; color: var(--blue-soft); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+    .shop { background: var(--paper-light); }
+    .section.shop { padding-top: clamp(48px,5vw,72px); }
+    .shop-top { display: flex; align-items: end; justify-content: space-between; gap: 25px; margin-bottom: 55px; padding-bottom: 25px; border-bottom: 1px solid var(--line); }
+    .shop-top h2 { margin: 0; font-size: clamp(42px,5.4vw,72px); font-weight: 400; line-height: 1.04; }
+    .shop-top p { max-width: 320px; margin: 0 0 5px; color: var(--muted); font-size: 16px; line-height: 1.65; }
+    .shop-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 52px 24px; }
+    .product { border: 0; padding: 0; text-align: left; background: transparent; cursor: pointer; }
+    .product-image { display: block; overflow: hidden; aspect-ratio: .88 / 1; background: var(--sand); }
+    .product-image img { transition: transform .4s ease; }
+    .product:hover .product-image img { transform: translate3d(0,var(--parallax-y,0px),0) scale(1.06); }
+    .product-info { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; padding-top: 13px; }
+    .product-name { font-size: 16px; font-weight: 400; }
+    .product-price { color: var(--muted); font-size: 14px; white-space: nowrap; }
+    .product-note { margin: 5px 0 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+    .paintings-note { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-top: 70px; padding-top: 20px; border-top: 1px solid var(--line); }
+    .paintings-note h3 { margin: 0; font: 400 34px var(--script); }
+    .paintings-note p { margin: 0; color: var(--muted); font-size: 16px; line-height: 1.65; }
+    .courses { display: grid; grid-template-columns: 1.02fr .98fr; gap: clamp(42px,8vw,110px); align-items: center; }
+    .courses-image { min-height: 570px; aspect-ratio: .88 / 1; overflow: hidden; background: var(--sand); }
+    .courses-image img { object-position: center; }
+    .courses-copy h2 { margin: 0 0 28px; font-size: clamp(42px,5.4vw,72px); font-weight: 400; line-height: 1.03; }
+    .courses-copy > p { max-width: 520px; margin: 0 0 28px; color: var(--muted); font-size: 16px; line-height: 1.75; }
+    .course-location { margin: 28px 0; padding: 16px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 16px; font-size: 14px; line-height: 1.5; }
+    .course-location span:first-child { color: var(--muted); }
+    .course-types { margin-top: 35px; }
+    .course-type { border-top: 1px solid var(--line); }
+    .course-type:last-child { border-bottom: 1px solid var(--line); }
+    .course-type-link { display: block; padding: 22px 16px; color: inherit; transition: background .2s ease; }
+    .course-description { display: block; margin-top: 7px; color: var(--muted); font-size: 15px; line-height: 1.65; }
+    .course-card-hint { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; color: var(--muted); font-size: 13px; }
+    .course-card-hint span:last-child { color: var(--blue); font-size: 19px; transition: transform .2s ease; }
+    .course-type-link:hover .course-card-hint span:last-child, .course-type-link:focus-visible .course-card-hint span:last-child { transform: translate(3px,-3px); }
+    .course-schedule-note { margin: 24px 0 0; color: var(--muted); font-size: 15px; line-height: 1.65; }
+    .course-type-top { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; }
+    .course-title { margin: 0; font-size: 18px; font-weight: 400; }
+    .course-price { font-size: 15px; white-space: nowrap; }
+    .course-type p { margin: 7px 0 0; color: var(--muted); font-size: 15px; line-height: 1.65; }
+    .schedule { margin: 32px 0 0; }
+    .schedule h3 { margin: 0 0 14px; font-size: 12px; font-weight: 400; letter-spacing: .1em; text-transform: uppercase; }
+    .schedule ul { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px; padding: 0; margin: 0; list-style: none; color: var(--muted); font-size: 15px; line-height: 1.55; }
+    .courses-copy .text-link { margin-top: 30px; }
+    .courses { padding-top: 35px; padding-bottom: 76px; grid-template-columns: 1.07fr 1fr; column-gap: 6.5vw; row-gap: 30px; align-items: start; }
+    .courses-label { grid-column: 1 / -1; margin: 0; font-size: 18px; color: var(--muted); letter-spacing: .17em; }
+    .courses-image { width: 100%; min-height: 0; aspect-ratio: 602.94 / 788.1; }
+    .courses-image img { transform: none; }
+    .courses-copy h2 { width: 100%; margin: 0 0 26px; }
+    @media (min-width: 901px) {
+      .courses-copy h2 { margin-top: -16px; }
+    }
+    .courses-copy > .eyebrow { margin: 0 0 28px; font-size: 18px; }
+    .courses-copy h2 + .eyebrow { margin-top: 22px; }
+    .courses-copy .course-location { min-height: 72px; align-items: center; margin: 24px 0 0; padding: 16px; border-bottom: 0; }
+    .course-location-label { display: flex; align-items: center; gap: 12px; }
+    .course-icon { display: block; width: 25px; height: 32px; flex-shrink: 0; }
+    .course-calendar { display: flex; justify-content: space-between; align-items: center; padding: 26px 16px; gap: 24px; }
+    .courses-copy .course-calendar .text-link { margin-top: 0; }
+    .courses .course-types { margin-top: 0; }
+    .courses .course-type-link { min-height: 180px; background: rgba(255,255,255,.3); padding: 24px 16px; }
+    .courses .course-type-link:hover, .courses .course-type-link:focus-visible,
+    .courses .workshop-intro:has(.workshop-card:hover), .courses .workshop-intro:has(.workshop-card:focus-visible) { background: rgba(255,255,255,.65); }
+    .courses .course-card-hint { justify-content: flex-start; gap: 5px; margin-top: 42px; }
+    .courses .course-type:nth-child(2) .course-card-hint { margin-top: 25px; }
+    .courses .workshop-intro { margin-top: 0; padding: 0; border-bottom: 1px solid var(--line); background: rgba(255,255,255,.3); transition: background .2s ease; }
+    .workshop-card { display: block; padding: 24px 16px; }
+    .workshop-card:hover .arrow, .workshop-card:focus-visible .arrow { transform: translate(3px,-3px); }
+    .courses .workshop-intro h3 { font-size: 18px; letter-spacing: .17em; font-weight: 400; color: var(--muted); text-transform: uppercase; }
+    .courses .workshop-intro p { font-size: 15px; color: var(--muted); margin: 0 0 12px; }
+    .courses .workshop-intro .text-link { font-size: 14px; letter-spacing: 0; margin-top: 0; border-bottom: 0; padding: 0; gap: 5px; }
+    .contact { min-height: calc((100svh - var(--header-height)) / 2); display: grid; grid-template-rows: 1fr auto; padding: 0 var(--page-gutter) clamp(22px,2.2vw,32px); background: #233f4d; color: #fff; text-align: center; }
+    .contact-copy { align-self: center; padding: 32px 0 24px; }
+    .contact .eyebrow { color: inherit; }
+    .contact h2 { max-width: min(62vw, 920px); margin: 0 auto clamp(16px,2vw,29px); font-size: clamp(44px,6.4vw,82px); line-height: 1.08; font-weight: 400; }
+    .contact h2 span { color: var(--rose); }
+    .contact-links { display: flex; align-items: center; justify-content: center; gap: 12px; }
+    .contact-email { display: inline-flex; align-items: baseline; gap: 8px; padding-bottom: 4px; border-bottom: 0; text-decoration: none; font: 400 clamp(32px,3.6vw,52px)/1 var(--script); }
+    .contact-email span { font: 400 18px/1 var(--body); }
+    .contact-email:hover, .contact-email:focus-visible { color: var(--rose); }
+    .instagram-link { display: grid; place-items: center; width: 44px; height: 44px; }
+    .instagram-link { color: #fff; transition: color .2s ease; }
+    .instagram-link img { display: block; width: 24px; height: 24px; object-fit: contain; filter: brightness(0) invert(1); transition: filter .2s ease; }
+    .instagram-link:hover img, .instagram-link:focus-visible img { filter: brightness(0) saturate(100%) invert(32%) sepia(96%) saturate(2856%) hue-rotate(331deg) brightness(100%) contrast(91%); }
+    .instagram-link:hover, .instagram-link:focus-visible { color: var(--rose); }
+    #coursesTitle .accent { color: var(--rose); }
+    .course-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; }
+    .course-tabs[hidden] { display: none; }
+    .course-tabs button { padding: 9px 12px; border: 0; background: #eee5d8; color: var(--blue); cursor: pointer; font: inherit; font-size: 13px; }
+    .course-tabs button:hover { background: #fff; }
+    .course-tabs button[aria-pressed="true"] { background: var(--blue); color: #fff; }
+    #courseBookingLink { width: 100%; display: flex; justify-content: space-between; padding: 14px 16px; border: 0; background: #f2ede5; font-size: 15px; letter-spacing: 0; }
+    #courseBookingLink:hover { background: #fff; }
+    #courseEmailLink { font-size: 14px; letter-spacing: 0; }
+    #courseModal .modal { height: min(88svh,820px); }
+    @media (min-width: 621px) {
+      #courseModal .modal { overflow: hidden; grid-template-rows: minmax(0,1fr); }
+      #courseModal .modal-image { min-height: 0; overflow: hidden; }
+      #courseModal .modal-copy { min-height: 0; overflow-y: auto; scrollbar-gutter: stable; justify-content: safe center; }
+      #courseModal .modal-copy > * { flex-shrink: 0; }
+    }
+    @media (max-width: 620px) {
+      #courseModal .modal { height: 92svh; scrollbar-gutter: stable; grid-template-rows: auto auto; align-content: start; }
+    }
+    #courseModal .modal-image img { width: 100%; height: 100%; object-fit: cover; object-position: left center; }
 
-/* Cursor */
-#cursor {
-  position: fixed; width: 34px; height: 34px;
-  pointer-events: none; z-index: 9999;
-  transform: translate(-50%, -50%) rotate(0deg) scale(1);
-  transition: opacity .2s, transform .45s cubic-bezier(.34,1.56,.64,1);
-  opacity: 0; left: -100px; top: -100px;
-  will-change: transform, left, top;
-}
-#cursor.on { opacity: 1; }
-#cursor.hov { transform: translate(-50%, -50%) rotate(36deg) scale(1.6); }
+    .contact .copyright { margin: 0; text-align: right; font-size: 10px; letter-spacing: .04em; text-transform: uppercase; }
+    .modal-backdrop { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: 24px; background: rgba(9,30,38,.68); opacity: 0; visibility: hidden; transition: opacity .2s ease, visibility .2s ease; }
+    .modal-backdrop.is-open { opacity: 1; visibility: visible; }
+    .modal { position: relative; width: min(920px,100%); max-height: min(88vh,820px); overflow: auto; display: grid; grid-template-columns: 1.05fr .95fr; background: var(--paper-light); }
+    .modal-image { min-height: 420px; background: var(--sand); }
+    .modal-copy { padding: clamp(34px,5vw,70px); display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
+    .modal-copy h2 { margin: 0 0 15px; font: 400 clamp(38px,5vw,60px)/1.1 var(--script); }
+    .modal-copy p { color: var(--muted); font-size: 16px; line-height: 1.7; }
+    .modal-close { position: absolute; top: 12px; right: 12px; z-index: 2; width: 44px; height: 44px; border: 0; background: var(--paper-light); font-size: 28px; cursor: pointer; }
+    .modal-copy .text-link { margin-top: 24px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    @media (min-width: 901px) {
+      .site-header { padding-inline: clamp(20px, 1.5vw, 36px); }
+      .hero-image { position: relative; height: auto; min-height: clamp(610px,47.4vw,800px); max-height: none; }
+      .hero-image .hdr-picture { position: absolute; inset: 0; }
+    }
+    @media (max-width: 900px) {
+      .selected-works .works-grid { gap: 48px 26px; }
+      .selected-works .work-item:nth-child(2), .selected-works .work-item:nth-child(3) { width: 100%; margin: 0; }
+      .primary-nav { display: none; }
+      .hero { min-height: auto; grid-template-columns: 1fr; }
+      .hero-copy { min-height: 520px; padding: 80px var(--page-gutter) 70px; }
+      .hero h1 { font-size: clamp(58px,9vw,78px); }
+      .hero-image { height: min(105vw,700px); min-height: 400px; max-height: none; }
+      .hero-note { margin-top: 30px; }
+      .works-grid { grid-template-columns: 1fr 1fr; gap: 56px 26px; }
+      .work-item:nth-child(2) { margin-top: 100px; }
+      .work-item:nth-child(3) { grid-column: 1 / -1; width: 70%; margin: 0 auto; }
+      .about { grid-template-columns: 1fr; }
+      .about-image { min-height: 0; height: 92vw; max-height: 700px; }
+      .about-copy { padding: 70px var(--page-gutter) 82px; }
+      .courses { grid-template-columns: 1fr; }
+      .courses-image { min-height: 0; height: 80vw; max-height: 650px; aspect-ratio: auto; }
+    }
+    @media (max-width: 620px) {
+      :root { --header-height: 66px; }
+      .site-header { padding-inline: 22px; }
+      .wordmark { font-size: 11px; letter-spacing: .2em; }
+      .hero-copy { min-height: 485px; padding: 66px 25px 65px; }
+      .hero-controls { bottom: 10px; }
+      .eyebrow { font-size: 11px; letter-spacing: .14em; margin-bottom: 24px; }
+      .hero h1 { margin-left: -3px; font-size: clamp(56px,14vw,78px); line-height: .82; }
+      .hero-lede { font-size: 16px; line-height: 1.65; }
+      .hero-image { height: 112vw; min-height: 370px; }
+      .hero-note { margin-top: 22px; font-size: 11px; }
+      .manifesto { min-height: 205px; padding: 40px 22px; }
+      .manifesto p { font-size: clamp(40px,10vw,58px); }
+      .section { padding: 82px 25px; }
+      .section-intro { display: block; }
+      .section-intro h2 { font-size: clamp(40px,9vw,54px); }
+      .section-intro p { margin-top: 15px; font-size: 16px; }
+      .works-grid { grid-template-columns: 1fr; padding-top: 38px; gap: 42px; }
+      .work-item:nth-child(2) { width: 83%; margin: 0 0 0 auto; }
+      .work-item:nth-child(3) { grid-column: auto; width: 92%; margin: 0 auto 0 0; }
+      .work-image, .work-item:nth-child(2) .work-image, .work-item:nth-child(3) .work-image { aspect-ratio: .98 / 1; }
+      .work-meta h3 { font-size: 20px; }
+      .works-action { justify-content: flex-start; margin-top: 45px; }
+      .news { padding-top: 62px; }
+      .news-heading h2 { font-size: 54px; }
+      .news-list { grid-template-columns: 1fr; }
+      .about-image { height: 112vw; }
+      .about-copy { padding: 62px 25px 70px; }
+      .about-copy h2 { font-size: clamp(40px,9vw,54px); }
+      .about-copy p { font-size: 16px; }
+      .about-facts { flex-direction: column; gap: 10px; }
+      .shop-top { display: block; margin-bottom: 34px; }
+      .shop-top h2 { font-size: clamp(40px,9vw,54px); }
+      .shop-top p { margin-top: 12px; }
+      .shop-grid { grid-template-columns: 1fr 1fr; gap: 30px 13px; }
+      .product-info { display: block; }
+      .product-name { display: block; font-size: 16px; }
+      .product-price { display: block; margin-top: 3px; font-size: 14px; }
+      .product-note { font-size: 14px; }
+      .paintings-note { align-items: flex-start; flex-direction: column; margin-top: 42px; }
+      .courses { gap: 34px; }
+      .courses-image { height: 105vw; }
+      .courses-copy h2 { font-size: clamp(40px,9vw,54px); }
+      .courses-copy > p { font-size: 16px; }
+      .course-location { font-size: 14px; }
+      .course-type-top { align-items: flex-start; }
+      .course-title { font-size: 17px; }
+      .course-price { font-size: 15px; }
+      .course-type p { font-size: 15px; }
+      .schedule ul { grid-template-columns: 1fr; font-size: 15px; }
+      .contact h2 { max-width: 100%; font-size: clamp(40px,9vw,56px); }
+      .contact h2 span { display: block; }
+      .contact-email { font-size: 30px; }
+      .modal-backdrop { padding: 14px; }
+      .modal { grid-template-columns: 1fr; max-height: 92vh; }
+      .modal-image { min-height: 0; height: 65vw; }
+      .modal-copy { padding: 28px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+      #heroCta, #heroNext { transition-delay: 0s; }
+    }
 
-/* Shared */
-.section-headline {
-  font-family: var(--font-display); font-weight: 400;
-  font-size: clamp(2.2rem, 5vw, 3.8rem);
-  letter-spacing: .05em; text-transform: uppercase;
-  color: var(--text-dark); line-height: 1.05; margin-bottom: 4rem;
-}
-.btn-enquire {
-  display: inline-block; font-family: var(--font-body); font-weight: 300;
-  font-size: .78rem; letter-spacing: .22em; text-transform: uppercase;
-  color: var(--text-dark); border-bottom: 1px solid var(--dusty-rose);
-  padding-bottom: 3px; transition: color .4s;
-}
-.btn-enquire:hover { color: var(--dusty-rose); }
-.img-placeholder {
-  display: flex; align-items: center; justify-content: center;
-  width: 100%; height: 100%; background: var(--soft-beige);
-  color: var(--light-grey); font-size: .7rem; letter-spacing: .18em;
-  text-transform: uppercase; position: absolute; inset: 0; min-height: 260px;
-}
+    .workshop-overlay { padding: 38px 76px 60px; }
+    .workshop-shell { position: relative; width: min(1100px,100%); min-width: 0; }
+    .workshop-dialog { width: 100%; max-height: calc(100dvh - 110px); grid-template-columns: 41% 59%; }
+    .workshop-photo { width:100%; height:100%; min-height:700px; object-fit:cover; }
+    .workshop-copy { padding:40px 48px; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; }
+    .workshop-category { font-size:12px; letter-spacing:.16em; margin:0 0 16px; }
+    .workshop-title { margin:0 0 14px; width:100%; height:175px; font-weight:400; font-synthesis:none; }
+    .workshop-title svg { display:block; height:100%; width:100%; overflow:visible; }
+    .workshop-title text { font-family:"Tritopani Preview"; font-weight:400; stroke:none; }
+    .workshop-subtitle { font-size:17px; margin:0 0 14px; color:var(--muted); }
+    .workshop-description { font-size:16px; line-height:1.7; color:var(--muted); margin:0 0 24px; }
+    .workshop-features { list-style:none; display:flex; flex-wrap:wrap; gap:8px 18px; margin:0; padding:18px 0 0; border-top:1px solid var(--line); width:100%; font-size:14px; }
+    .workshop-price { margin:14px 0 18px; color:var(--rose); font-size:28px; }
+    .workshop-enquire { display:inline-flex; align-items:center; gap:24px; background:#f6f0e9; color:var(--blue); padding:13px 22px; font-size:15px; width:100%; justify-content:space-between; transition:background .2s; }
+    .workshop-enquire:hover, .workshop-enquire:focus-visible { background:#fff; }
+    .workshop-address { font-size:12px; color:var(--muted); margin:16px 0 0; }
+    .workshop-side { position:absolute; top:50%; transform:translateY(-50%); width:48px; height:64px; display:grid; place-items:center; border:0; background:transparent; color:#fff; cursor:pointer; }
+    .workshop-side svg { width:18px; height:34px; fill:none; stroke:currentColor; stroke-width:1.2; transition:transform .2s; }
+    .workshop-prev { left:-60px; } .workshop-next { right:-60px; }
+    .workshop-prev:hover svg { transform:translateX(-3px); } .workshop-next:hover svg { transform:translateX(3px); }
+    .workshop-dots { position:absolute; top:calc(100% + 16px); left:0; width:100%; display:flex; justify-content:center; gap:10px; }
+    .workshop-dots button { text-transform: uppercase; font-weight:400; min-height:42px; flex:1; padding:9px 8px; border:0; background:#f6f0e9; color:var(--blue); font:400 10px/1.5 var(--body); letter-spacing:.13em; cursor:pointer; transition:background .2s,color .2s; }
+    .workshop-dots button:hover, .workshop-dots button:focus-visible { background:#fff; color:var(--blue); }
+    .workshop-dots button[aria-current="true"] { background:var(--blue); color:#fff; }
+    .workshop-image-wrap { position:relative; overflow:hidden; min-height:0; }
+    .upcoming-ribbon { position:absolute; top:170px; left:-110px; width:650px; padding:14px 0; background:var(--blue); color:white; font-size:12px; letter-spacing:.25em; text-align:center; transform:rotate(-40deg); pointer-events:none; }
+    .workshop-description { white-space:pre-line; }
+    .signup-overlay { z-index:80; padding:24px; }
+    .signup-frame { width:min(620px,100%); height:min(780px,calc(100dvh - 48px)); border:0; background:var(--paper); }
+    @media(max-width:700px) {
+      .workshop-overlay { padding-bottom:124px; }
+      .workshop-dialog { max-height:calc(100dvh - 150px); }
+      .workshop-dots { display:grid; grid-template-columns:repeat(3,1fr); gap:5px; top:calc(100% + 10px); }
+      .workshop-dots button { min-height:36px; font-size:8px; padding:6px; letter-spacing:.07em; }
+      .workshop-side { display:none; }
+      .upcoming-ribbon { top:85px; left:-80px; width:450px; font-size:10px; }
+      .signup-overlay { padding:12px; }
+      .signup-frame { height:calc(100dvh - 24px); }
+    }
+    .workshop-overlay button:focus-visible, .workshop-overlay a:focus-visible { outline:2px solid currentColor; outline-offset:3px; }
+    @media(max-width:700px) {
+      .workshop-overlay { padding:18px 14px 72px; }
+      .workshop-dialog { grid-template-columns:1fr; max-height:calc(100dvh - 100px); }
+      .workshop-photo { min-height:0; height:240px; object-position:center 42%; }
+      .workshop-copy { padding:28px 24px; }
+      .workshop-title { height:150px; }
+      .workshop-description { font-size:15px; }
+      .workshop-side { top:calc(100% + 12px); transform:none; height:34px; }
+      .workshop-prev { left:0; } .workshop-next { right:0; }
+      .workshop-side svg { height:26px; }
+      .workshop-price { font-size:25px; }
+    }
+    @media(max-width:700px){.workshop-overlay{padding:18px 14px 116px}.workshop-dialog{max-height:calc(100dvh - 144px)}.workshop-side{display:none}.workshop-image-wrap .workshop-photo{height:240px;min-height:0}}
 
-/* NAV */
-.nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  height: var(--nav-h); display: flex; align-items: center;
-  justify-content: space-between; padding: 0 2rem;
-  background: transparent; transition: background .4s;
-}
-.nav.lit { background: var(--warm-white); }
-.nav-logo {
-  display: flex; align-items: center; justify-content: center;
-  width: 95px; height: 95px; border: 1.5px solid var(--text-dark);
-  background: rgba(237, 229, 216, 0.20);
-  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  align-self: flex-start; margin-top: 20px;
-  transition: opacity .3s;
-}
-.nav-logo:hover { opacity: .55; }
-.panel-logo {
-  position: absolute; top: 20px; left: 2rem;
-  display: flex; align-items: center; justify-content: center;
-  width: 95px; height: 95px; border: 1.5px solid var(--text-dark);
-  background: rgba(237, 229, 216, 0.20);
-  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  transition: opacity .3s;
-}
-.panel-logo:hover { opacity: .55; }
-.hamburger {
-  display: flex; flex-direction: column; gap: 6px; padding: 8px; z-index: 102;
-}
-.hamburger span {
-  display: block; width: 26px; height: 1px; background: var(--text-dark);
-  transition: transform .4s var(--ease-smooth), opacity .3s, width .3s;
-  transform-origin: center;
-}
-.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.hamburger.open span:nth-child(2) { opacity: 0; width: 0; }
-.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    /* Workshop layout follows the shared 1200 × 840 SVG artboard. */
+    .workshop-dialog { background: var(--paper); }
+    .workshop-title { height: auto; aspect-ratio: 590 / 210; }
+    .workshop-title svg { width: 100%; height: 100%; }
+    .workshop-category[hidden], .workshop-subtitle[hidden] { display: none; }
+    @media (min-width: 701px) {
+      .workshop-shell { width: min(1100px, calc((100dvh - 150px) * 10 / 7), 100%); container-type: inline-size; }
+      .workshop-dialog { height: 70cqw; max-height: none; grid-template-columns: 40.833333% 59.166667%; grid-template-rows: minmax(0,1fr); overflow: hidden; }
+      .workshop-photo { min-height: 0; height: 100%; display: block; }
+      .workshop-copy { display: block; padding: 0; position: relative; min-width: 0; }
+      .workshop-copy > :is(.workshop-title,.workshop-category,.workshop-subtitle,.workshop-description,.workshop-features,.workshop-price,.workshop-enquire,.workshop-address) { position: absolute; left: 5cqw; width: 49.166667cqw; margin: 0; }
+      .workshop-copy .workshop-title { top: 5cqw; height: 17.5cqw; }
+      .workshop-category { top: 24.3cqw; font-size: 1cqw; line-height: 1.2; letter-spacing: .166667cqw; }
+      .workshop-subtitle { top: 24.1cqw; font-size: 1.416667cqw; line-height: 1.4; }
+      .workshop-description { top: 27.6cqw; font-size: 1.5cqw; line-height: 2.583333cqw; color: #233f4d; }
+      .workshop-features { top: 45.833333cqw; padding-top: 1.5cqw; font-size: 1.333333cqw; line-height: 2.25cqw; gap: 0; justify-content: space-between; flex-wrap: nowrap; color: #233f4d; }
+      .workshop-features li:nth-child(2) { position: absolute; left: var(--feature-offset); }
+      .workshop-features li:last-child { position: absolute; right: 0; }
+      .workshop-features li { white-space: nowrap; }
+      html[lang="en"] .workshop-features { gap: 1.5cqw; }
+      html[lang="en"] .workshop-features li { position: static; }
+      .workshop-price { top: 51.583333cqw; font-size: 2.916667cqw; line-height: 1.4; }
+      .workshop-enquire { top: 58.416667cqw; height: 5.083333cqw; padding: 0 2cqw; font-size: 1.416667cqw; }
+      .workshop-address { top: 65.6cqw; font-size: 1.083333cqw; line-height: 1.4; }
+      .workshop-dialog .modal-close { top: 1.5cqw; right: 1.5cqw; width: 3.5cqw; height: 3.5cqw; background: var(--paper); font-size: 2.333333cqw; }
+      .upcoming-ribbon { top: 14.166667cqw; left: -9.166667cqw; width: 54.166667cqw; padding: 1.166667cqw 0; font-size: 1cqw; }
+    }
+    @media (max-width: 700px) {
+      .workshop-title { margin-bottom: 18px; }
+      .workshop-description { white-space: normal; }
+      .workshop-category { margin-bottom: 18px; }
+      .workshop-subtitle { font-size: 15px; }
+    }
 
-/* MENU */
-.overlay {
-  position: fixed; inset: 0; z-index: 200;
-  background: rgba(60,54,50,.32); opacity: 0; pointer-events: none;
-  transition: opacity .5s var(--ease-smooth);
-}
-.overlay.open { opacity: 1; pointer-events: auto; }
-.panel {
-  position: fixed; top: 0; left: 0; bottom: 0; z-index: 201;
-  width: 60%; background: var(--soft-beige);
-  display: flex; flex-direction: column; justify-content: center;
-  padding: 7rem 5rem;
-  transform: translateX(-100%); transition: transform .5s var(--ease-smooth);
-}
-.panel.open { transform: translateX(0); }
-.panel-close {
-  position: absolute; top: 1.8rem; right: 1.8rem;
-  font-size: 1.6rem; color: var(--text-mid); line-height: 1;
-  transition: color .3s, transform .3s;
-}
-.panel-close:hover { color: var(--text-dark); transform: rotate(90deg); }
-.menu-list { display: flex; flex-direction: column; gap: .25rem; }
-.menu-item { overflow: hidden; }
-.menu-link {
-  display: flex; align-items: baseline; gap: 1.2rem;
-  padding: .55rem 0; transition: opacity .3s;
-}
-.menu-link:hover { opacity: .42; }
-.mlabel {
-  font-family: var(--font-display);
-  font-size: clamp(1.8rem, 3.5vw, 2.7rem);
-  color: var(--text-dark); line-height: 1.1;
-}
-@keyframes menuIn {
-  from { opacity:0; transform:translateY(14px); }
-  to   { opacity:1; transform:translateY(0); }
-}
-.panel.open .menu-item {
-  animation: menuIn .4s var(--ease-smooth) both;
-  animation-delay: calc(180ms + var(--i) * 70ms);
-}
-.panel:not(.open) .menu-item { animation: none; opacity: 0; }
-.panel-foot {
-  position: absolute; bottom: 2rem; left: 5rem;
-  font-size: .7rem; letter-spacing: .1em; color: var(--text-light);
-  line-height: 2.1; opacity: 0; transition: opacity .4s .55s;
-}
-.panel.open .panel-foot { opacity: 1; }
-
-/* HERO */
-.hero {
-  position: relative; height: 100vh; z-index: 1; overflow: hidden;
-  background: var(--soft-beige);
-}
-.slide {
-  position: absolute; inset: 0;
-  background-size: cover; background-position: center;
-  transition: opacity 1.6s ease;
-  will-change: transform, opacity;
-}
-.slide.active  { opacity: 1; }
-.slide.inactive { opacity: 0; }
-
-/* Ken Burns — 4 varianter, en per slide */
-@keyframes kb1 {
-  from { transform: scale(1)    translate(0,      0); }
-  to   { transform: scale(1.08) translate(-1.5%, -1%); }
-}
-@keyframes kb2 {
-  from { transform: scale(1.07) translate(1%,    0.5%); }
-  to   { transform: scale(1)    translate(-0.5%, -0.5%); }
-}
-@keyframes kb3 {
-  from { transform: scale(1)    translate(0.5%,  1%); }
-  to   { transform: scale(1.08) translate(-1%,   0); }
-}
-@keyframes kb4 {
-  from { transform: scale(1.06) translate(-1%,  -0.5%); }
-  to   { transform: scale(1)    translate(1%,    0.5%); }
-}
-.slide.active:nth-child(1) { animation: kb1 5.8s ease-in-out forwards; }
-.slide.active:nth-child(2) { animation: kb2 5.8s ease-in-out forwards; }
-.slide.active:nth-child(3) { animation: kb3 5.8s ease-in-out forwards; }
-.slide.active:nth-child(4) { animation: kb4 5.8s ease-in-out forwards; }
-.slide.active:nth-child(5) { animation: kb1 5.8s ease-in-out forwards; }
-.slide.active:nth-child(6) { animation: kb2 5.8s ease-in-out forwards; }
-.slide.active:nth-child(7) { animation: kb3 5.8s ease-in-out forwards; }
-.slide.active:nth-child(8) { animation: kb4 5.8s ease-in-out forwards; }
-.slide.active:nth-child(9) { animation: kb1 5.8s ease-in-out forwards; }
-.slide.active:nth-child(10) { animation: kb2 5.8s ease-in-out forwards; }
-.slide.active:nth-child(11) { animation: kb3 5.8s ease-in-out forwards; }
-.slide.active:nth-child(12) { animation: kb4 5.8s ease-in-out forwards; }
-.vignette {
-  position: absolute; bottom: 0; left: 0; right: 0; height: 35%;
-  background: linear-gradient(to top, rgba(237,229,216,.2) 0%, transparent 100%);
-  z-index: 3; pointer-events: none;
-}
-
-/* SECTIONS WRAPPER */
-.sections-wrapper {
-  position: relative; background: var(--warm-white);
-}
-.section {
-  display: block;
-  padding-top: calc(var(--nav-h) + 5rem); padding-bottom: 7rem;
-  scroll-margin-top: var(--nav-h);
-  opacity: 0; transform: translateY(16px);
-  transition: opacity .65s var(--ease-fade), transform .65s var(--ease-fade);
-}
-.section.visible { opacity: 1; transform: translateY(0); }
-
-/* SECTION DIVIDER */
-.section-divider {
-  display: flex; align-items: center; gap: 1.4rem;
-  max-width: 1200px; margin: 0 auto; padding: 0 2rem;
-}
-.section-divider::before,
-.section-divider::after {
-  content: ''; flex: 1; height: 1px;
-  background: rgba(139,80,88,.22);
-}
-.section-divider svg { flex-shrink: 0; }
-.inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-.inner-narrow { max-width: 760px; margin: 0 auto; padding: 0 2rem; }
-
-/* ABOUT */
-.about-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 6rem; max-width: 1100px; margin: 0 auto; padding: 0 2rem;
-}
-.about-img-wrap { position: relative; aspect-ratio: 3/4; overflow: hidden; }
-.about-img-wrap img { width:100%; height:100%; object-fit:cover; object-position: center top; }
-.about-text { padding-top: 1rem; padding-right: 2rem; }
-.about-body { font-size:.96rem; line-height:1.95; color:var(--text-mid); margin-bottom:1.8rem; max-width:38ch; }
-.about-loc { font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; color:var(--light-grey); margin-top:3rem; }
-
-/* ARTWORK GRID */
-.grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 4rem 2.5rem; }
-.card { cursor: none; transition: opacity .3s; }
-.card-img { position:relative; aspect-ratio:3/4; overflow:hidden; background:var(--soft-beige); }
-.card-img img { width:100%; height:100%; object-fit:cover; transition: transform .5s cubic-bezier(.25,.46,.45,.94); }
-.card:hover .card-img img { transform: scale(1.022); }
-.card-info { display:flex; align-items:baseline; justify-content:space-between; padding:.8rem 0 0; }
-.card-title { font-family:var(--font-display); font-size:.95rem; letter-spacing:.04em; color:var(--text-dark); }
-.status { font-size:.62rem; letter-spacing:.16em; text-transform:uppercase; }
-.status.av { color:var(--dusty-rose); }
-.status.sold { color:var(--light-grey); }
-.price { font-size:.75rem; letter-spacing:.08em; color:var(--text-mid); }
-.card[data-status="sold"] .card-img { opacity:.68; }
-.grid:hover .card:not(:hover) { opacity:.6; }
-
-/* MODAL */
-.modal-bg {
-  position:fixed; inset:0; z-index:500;
-  background:rgba(58,54,51,.42);
-  display:flex; align-items:center; justify-content:center;
-  padding:2rem; opacity:0; pointer-events:none; transition:opacity .35s;
-}
-.modal-bg.show { opacity:1; pointer-events:auto; }
-.modal {
-  position:relative; background:var(--warm-white);
-  max-width:880px; width:100%; max-height:88vh; overflow-y:auto; padding:4rem;
-}
-@keyframes modIn { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
-.modal-bg.show .modal { animation: modIn .38s var(--ease-smooth) both; }
-.modal-x {
-  position:absolute; top:1.2rem; right:1.5rem;
-  font-size:1.5rem; color:var(--text-mid); line-height:1;
-  transition:color .3s, transform .3s;
-}
-.modal-x:hover { color:var(--text-dark); transform:rotate(90deg); }
-.modal-layout { display:grid; grid-template-columns:1.2fr 1fr; gap:4rem; align-items:start; }
-.modal-img { position:relative; aspect-ratio:3/4; overflow:hidden; background:var(--soft-beige); }
-.modal-img img { width:100%; height:100%; object-fit:cover; }
-.modal-body { display:flex; flex-direction:column; gap:1.8rem; padding-top:.5rem; }
-.modal-title { font-family:var(--font-display); font-size:1.75rem; letter-spacing:.05em; text-transform:uppercase; }
-.modal-story { font-size:.92rem; line-height:1.9; color:var(--text-mid); }
-.modal-price { font-size:1rem; letter-spacing:.04em; }
-
-/* Modal image gallery nav */
-.modal-img-col { display:flex; flex-direction:column; gap:.75rem; }
-.modal-img-nav { display:flex; align-items:center; justify-content:center; gap:.55rem; }
-.modal-img-dot { width:6px; height:6px; border-radius:50%; background:var(--text-light); border:none; padding:0; transition:background .3s; }
-.modal-img-dot.on { background:var(--dusty-rose); }
-.modal-img-arr { font-size:.85rem; color:var(--text-mid); padding:0 .15rem; line-height:1; transition:color .3s; }
-.modal-img-arr:hover { color:var(--text-dark); }
-
-/* NEWS */
-.news-feed { display:flex; flex-direction:column; }
-.news-item { padding:3.5rem 0; border-top:1px solid var(--soft-beige); }
-.news-item:last-child { border-bottom:1px solid var(--soft-beige); }
-.news-date { display:block; font-size:.65rem; letter-spacing:.2em; text-transform:uppercase; color:var(--light-grey); margin-bottom:.8rem; }
-.news-title { font-family:var(--font-display); font-size:1.2rem; letter-spacing:.03em; margin-bottom:.8rem; }
-.news-text { font-size:.88rem; line-height:1.9; color:var(--text-mid); max-width:54ch; }
-
-/* SHOP */
-.shop-tabs { display:flex; align-items:center; gap:1.2rem; margin-bottom:4rem; margin-top:-2rem; }
-.tab-btn {
-  font-size:.72rem; letter-spacing:.2em; text-transform:uppercase;
-  color:var(--text-light); padding-bottom:2px;
-  border-bottom:1px solid transparent; transition:color .3s;
-}
-.tab-btn.on { color:var(--text-dark); border-bottom-color:var(--dusty-rose); }
-.tab-btn:hover:not(.on) { color:var(--text-mid); }
-.tab-div { color:var(--light-grey); font-size:.8rem; }
-.tab-panel { }
-.tab-panel.hidden { display:none; }
-.coming { padding:7rem 0; }
-.coming p { font-family:var(--font-display); font-style:italic; font-size:1.1rem; color:var(--light-grey); }
-
-/* LESSONS */
-.lessons-intro { font-size:.95rem; line-height:1.9; color:var(--text-mid); max-width:44ch; margin-top:-2rem; margin-bottom:5rem; }
-.lesson { display:flex; justify-content:space-between; align-items:flex-start; gap:4rem; padding:3.5rem 0; border-top:1px solid var(--soft-beige); }
-.lesson:last-of-type { border-bottom:1px solid var(--soft-beige); }
-.lesson-name { font-family:var(--font-display); font-size:1.1rem; letter-spacing:.03em; margin-bottom:.5rem; }
-.lesson-desc { font-size:.83rem; line-height:1.75; color:var(--text-mid); max-width:40ch; }
-.lesson-r { text-align:right; flex-shrink:0; }
-.lesson-price { display:block; font-family:var(--font-display); font-size:1.05rem; }
-.lesson-detail { display:block; font-size:.65rem; letter-spacing:.14em; text-transform:uppercase; color:var(--light-grey); margin-top:.35rem; }
-.lessons-cta { margin-top:5rem; }
-.lessons-hero { display:grid; grid-template-columns:1fr 1fr; gap:4rem; margin-bottom:5rem; }
-.lessons-img-wrap { aspect-ratio:3/4; overflow:hidden; }
-.lessons-img-wrap img { width:100%; height:100%; object-fit:cover; object-position:center top; }
-.lessons-hero-text { display:flex; flex-direction:column; gap:1.5rem; justify-content:center; }
-.lessons-hero-text p { font-size:.9rem; line-height:1.9; color:var(--text-mid); }
-.lessons-location { font-size:.65rem; letter-spacing:.2em; text-transform:uppercase; color:var(--light-grey); margin-top:1rem; }
-.lesson-weeks { font-size:.65rem; letter-spacing:.12em; text-transform:uppercase; color:var(--light-grey); margin-top:.8rem; line-height:1.8; }
-.lessons-schedule { margin:4rem 0 2rem; padding:2.5rem 0; border-top:1px solid var(--soft-beige); }
-.lessons-schedule-title { font-size:.65rem; letter-spacing:.22em; text-transform:uppercase; color:var(--light-grey); margin-bottom:1.2rem; }
-.lessons-times { display:flex; gap:2rem 4rem; flex-wrap:wrap; font-size:.83rem; color:var(--text-mid); }
-
-/* CONTACTS */
-.contacts-tag { font-family:var(--font-display); font-style:italic; font-size:1.05rem; color:var(--text-mid); margin-top:-2rem; margin-bottom:6rem; }
-.contact { display:flex; align-items:baseline; gap:4rem; padding:1.8rem 0; border-top:1px solid var(--soft-beige); }
-.contact:last-child { border-bottom:1px solid var(--soft-beige); }
-.c-label { font-size:.62rem; letter-spacing:.22em; text-transform:uppercase; color:var(--light-grey); min-width:75px; }
-.c-val { font-size:.88rem; color:var(--text-dark); transition:color .3s; }
-a.c-val:hover { color:var(--dusty-rose); }
-
-/* RESPONSIVE */
-@media(max-width:1024px){ .grid { grid-template-columns:repeat(2,1fr); } }
-@media(max-width:768px){
-  .panel { width:85%; padding:5rem 2rem; }
-  .panel-foot { left:2rem; }
-  .about-grid { grid-template-columns:1fr; gap:2.5rem; padding:0 1.5rem; }
-  .about-text { padding-right:0; }
-  .modal-layout { grid-template-columns:1fr; gap:2rem; }
-  .modal { padding:2.5rem 1.5rem; }
-  .modal-img { aspect-ratio:4/3; }
-  .lesson { flex-direction:column; gap:1rem; }
-  .lesson-r { text-align:left; }
-  .lessons-hero { grid-template-columns:1fr; gap:2.5rem; }
-  .lessons-times { gap:1rem 3rem; }
-  .contact { gap:2rem; }
-}
-@media(max-width:600px){
-  .grid { grid-template-columns:1fr; gap:2.5rem; }
-  .section { padding-top:calc(var(--nav-h) + 2.5rem); padding-bottom:4rem; }
-  .section-divider { padding: 0 1.5rem; }
-}
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after { animation-duration:.01ms!important; transition-duration:.01ms!important; }
-}
-</style>
+    .workshop-decoration { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+    .workshop-decoration svg { display: block; width: 100%; height: 100%; }
+    .workshop-mobile-detail { display: none; }
+    @media(min-width:701px) { .upcoming-ribbon { display: none; } }
+    @media(max-width:700px) {
+      .workshop-decoration { display: none; }
+      .workshop-mobile-detail:not([hidden]) { display: block; width: 120px; height: 85px; object-fit: contain; align-self: flex-end; margin: -8px 0 14px; }
+      .workshop-dialog.is-upcoming .workshop-image-wrap::after { content: ""; position: absolute; top: 0; right: 28px; width: 24px; height: 52px; background: #233f4d; clip-path: polygon(0 0,100% 0,100% 100%,50% 75%,0 100%); }
+    }
+  </style>
 </head>
 <body>
-
-<div id="cursor">
-  <svg viewBox="0 0 34 34" width="34" height="34" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- 7 pointed petals — 360/7 ≈ 51.4° apart -->
-    <path d="M17 17 C14.5 12,15 7,17 4.5 C19 7,19.5 12,17 17Z" fill="rgba(139,80,88,0.68)" stroke="rgba(139,80,88,0.22)" stroke-width="0.5" transform="rotate(0 17 17)"/>
-    <path d="M17 17 C14.5 12,15 7,17 4.5 C19 7,19.5 12,17 17Z" fill="rgba(139,80,88,0.52)" stroke="rgba(139,80,88,0.22)" stroke-width="0.5" transform="rotate(51 17 17)"/>
-    <path d="M17 17 C14.5 12,15 7,17 4.5 C19 7,19.5 12,17 17Z" fill="rgba(139,80,88,0.68)" stroke="rgba(139,80,88,0.22)" stroke-width="0.5" transform="rotate(103 17 17)"/>
-    <path d="M17 17 C14.5 12,15 7,17 4.5 C19 7,19.5 12,17 17Z" fill="rgba(139,80,88,0.52)" stroke="rgba(139,80,88,0.22)" stroke-width="0.5" transform="rotate(154 17 17)"/>
-    <path d="M17 17 C14.5 12,15 7,17 4.5 C19 7,19.5 12,17 17Z" fill="rgba(139,80,88,0.68)" stroke="rgba(139,80,88,0.22)" stroke-width="0.5" transform="rotate(206 17 17)"/>
-    <path d="M17 17 C14.5 12,15 7,17 4.5 C19 7,19.5 12,17 17Z" fill="rgba(139,80,88,0.52)" stroke="rgba(139,80,88,0.22)" stroke-width="0.5" transform="rotate(257 17 17)"/>
-    <path d="M17 17 C14.5 12,15 7,17 4.5 C19 7,19.5 12,17 17Z" fill="rgba(139,80,88,0.68)" stroke="rgba(139,80,88,0.22)" stroke-width="0.5" transform="rotate(309 17 17)"/>
-    <!-- Center — cream ring + dark core -->
-    <circle cx="17" cy="17" r="3.5" fill="rgba(237,229,216,0.96)"/>
-    <circle cx="17" cy="17" r="1.7" fill="rgba(27,58,75,0.82)"/>
-  </svg>
-</div>
-
-<!-- NAV -->
-<nav class="nav" id="nav">
-  <a href="#" class="nav-logo" id="logo">
-    <svg viewBox="0 0 80 80" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-      <path d="M 13 66 Q 15 42 34 14" fill="none" stroke="var(--text-dark)" stroke-width="2.2" stroke-linecap="round"/>
-      <line x1="34" y1="14" x2="34" y2="66" stroke="var(--text-dark)" stroke-width="2.2" stroke-linecap="round"/>
-      <line x1="15" y1="56" x2="34" y2="56" stroke="var(--text-dark)" stroke-width="1.8" stroke-linecap="round"/>
-      <line x1="44" y1="14" x2="44" y2="66" stroke="var(--text-dark)" stroke-width="2.2" stroke-linecap="round"/>
-      <line x1="44" y1="66" x2="63" y2="66" stroke="var(--text-dark)" stroke-width="2.2" stroke-linecap="round"/>
-    </svg>
-  </a>
-  <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-
-<!-- MENU -->
-<div class="overlay" id="overlay"></div>
-<div class="panel" id="panel">
-  <button class="panel-close" id="panelClose">&#215;</button>
-  <a href="#" class="panel-logo" id="panelLogo">
-    <svg viewBox="0 0 80 80" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-      <path d="M 13 66 Q 15 42 34 14" fill="none" stroke="var(--text-dark)" stroke-width="2.2" stroke-linecap="round"/>
-      <line x1="34" y1="14" x2="34" y2="66" stroke="var(--text-dark)" stroke-width="2.2" stroke-linecap="round"/>
-      <line x1="15" y1="56" x2="34" y2="56" stroke="var(--text-dark)" stroke-width="1.8" stroke-linecap="round"/>
-      <line x1="44" y1="14" x2="44" y2="66" stroke="var(--text-dark)" stroke-width="2.2" stroke-linecap="round"/>
-      <line x1="44" y1="66" x2="63" y2="66" stroke="var(--text-dark)" stroke-width="2.2" stroke-linecap="round"/>
-    </svg>
-  </a>
-  <nav>
-    <ul class="menu-list">
-      <li class="menu-item" style="--i:0"><a href="#about"    class="menu-link" data-s="about">   <span class="mlabel">About Anna</span></a></li>
-      <li class="menu-item" style="--i:1"><a href="#artworks" class="menu-link" data-s="artworks"><span class="mlabel">Artworks</span></a></li>
-      <li class="menu-item" style="--i:2"><a href="#news"     class="menu-link" data-s="news">    <span class="mlabel">News</span></a></li>
-      <li class="menu-item" style="--i:3"><a href="#shop"     class="menu-link" data-s="shop">    <span class="mlabel">Shop</span></a></li>
-      <li class="menu-item" style="--i:4"><a href="#lessons"  class="menu-link" data-s="lessons"> <span class="mlabel">Courses</span></a></li>
-      <li class="menu-item" style="--i:5"><a href="#contacts" class="menu-link" data-s="contacts"><span class="mlabel">Contacts</span></a></li>
-    </ul>
-  </nav>
-  <div class="panel-foot"><p>studio@annaljung.se</p><p>Stockholm, Sweden</p></div>
-</div>
-
-<!-- HERO -->
-<section class="hero" id="hero">
-  <div class="slide active"   id="s0"></div>
-  <div class="slide inactive" id="s1"></div>
-  <div class="slide inactive" id="s2"></div>
-  <div class="slide inactive" id="s3"></div>
-  <div class="slide inactive" id="s4"></div>
-  <div class="slide inactive" id="s5"></div>
-  <div class="slide inactive" id="s6"></div>
-  <div class="slide inactive" id="s7"></div>
-  <div class="slide inactive" id="s8"></div>
-  <div class="slide inactive" id="s9"></div>
-  <div class="slide inactive" id="s10"></div>
-  <div class="slide inactive" id="s11"></div>
-  <div class="vignette"></div>
-</section>
-
-<!-- SECTIONS -->
-<main class="sections-wrapper" id="sw">
-
-  <!-- ABOUT -->
-  <section class="section" id="about">
-    <div class="about-grid">
-      <div class="about-img-wrap">
-        <img src="images/about/portrait.jpg" alt="Anna Ljung" loading="lazy"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
-        <div class="img-placeholder" style="display:none"><span>Portrait</span></div>
-      </div>
-      <div class="about-text">
-        <h1 class="section-headline">Anna<br/>Ljung</h1>
-        <p class="about-body">Anna Ljung is a Swedish artist and creative director whose work exists at the intersection of sculpture, textile art, spatial design, and poetic movement.</p>
-        <p class="about-body">Known for her refined organic aesthetic and deeply tactile approach, she creates work where Scandinavian minimalism meets emotional depth. With decades of experience across interiors, craftsmanship, visual storytelling, and design — shaped between Stockholm and the Pacific coast of Costa Rica — she has worked as an interior designer, stylist, and featured talent in television productions focused on design and interiors.</p>
-        <p class="about-body">Today, her practice is primarily centered around textile-based artworks, sculptural installations, and kinetic objects exploring the relationship between nature, light, movement, and atmosphere.</p>
-        <p class="about-body">Working from her studio in Stockholm, Anna co-develops Kinetic Bloom — a contemporary sculptural practice where textile, form, and motion merge into immersive and poetic spatial experiences.</p>
-        <p class="about-loc">Studio — Stockholm</p>
-      </div>
+  <header class="site-header">
+    <a class="wordmark" href="#top" aria-label="Anna Ljung, home"><img src="hero-test/signature_90px.png" alt="" width="33" height="34">ANNA LJUNG</a>
+    <nav class="primary-nav" aria-label="Main navigation">
+      <a href="#works">Works</a><a href="#shop">Shop</a><a href="#courses">Courses</a><a href="#news">News</a><a href="#about">About</a><a href="#contact">Contact</a>
+    </nav>
+    <div class="header-actions"><div class="site-language" role="group" aria-label="Language / Språk">
+      <button type="button" data-language="sv" lang="sv" aria-label="Svenska">SV</button>
+      <button type="button" data-language="en" lang="en" aria-label="English">EN</button>
     </div>
-  </section>
+    <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menuPanel">
+      <span></span><span></span><span></span>
+    </button>
+    </div>
+  </header>
 
-  <div class="section-divider"><svg viewBox="0 0 18 18" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(0 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(51 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(103 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(154 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(206 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(257 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(309 9 9)"/><circle cx="9" cy="9" r="1.85" fill="rgba(237,229,216,0.96)"/><circle cx="9" cy="9" r="0.9" fill="rgba(27,58,75,0.82)"/></svg></div>
+  <div class="menu-scrim" id="menuScrim" aria-hidden="true"></div>
+  <aside class="menu-panel" id="menuPanel" aria-label="Site menu" aria-hidden="true" inert>
+    <div class="menu-panel-top"><span class="wordmark">ANNA LJUNG</span><button class="menu-close" id="menuClose" type="button" aria-label="Close menu">×</button></div>
+    <nav class="menu-links" aria-label="Full navigation">
+      <a href="#works">Works</a><a href="#shop">Shop</a><a href="#courses">Courses</a><a href="#news">News</a><a href="#about">About Anna</a><a href="#contact">Contact</a>
+    </nav>
+    <div class="menu-contact">Stockholm, Sweden<br><a href="mailto:hello@annaljung.se">hello@annaljung.se</a></div>
+  </aside>
 
-  <!-- ARTWORKS -->
-  <section class="section" id="artworks">
-    <div class="inner">
-      <h2 class="section-headline">Artworks</h2>
-      <div class="grid">
-        <article class="card" data-title="Greek Blue Polyptyk" data-status="available" data-price="" data-story="">
-          <div class="card-img"><img src="" alt="Greek Blue Polyptyk" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><div class="img-placeholder" style="display:none"><span>Artwork</span></div></div>
-          <div class="card-info"><h3 class="card-title">Greek Blue Polyptyk</h3></div>
+  <main id="top">
+    <section class="hero" aria-labelledby="heroTitle">
+      <div class="hero-copy">
+        <div class="hero-slide-copy">
+          <p class="eyebrow" id="heroEyebrow">Painting · Stockholm</p>
+          <h1 class="script" id="heroTitle">A quieter study<br>in <span>colour.</span></h1>
+          <p class="hero-lede" id="heroLede">Paintings and studies in colour are taking shape in the studio. New works will be added soon.</p>
+          <a class="text-link" id="heroCta" href="#paintings">Explore paintings <span class="arrow" aria-hidden="true">↗</span></a>
+          <p class="hero-note" id="heroNote">Painting · colour · gesture</p>
+        </div>
+        <nav class="hero-controls" aria-label="Explore studio highlights">
+          <button type="button" class="hero-step" data-step="-1" aria-label="Previous slide" aria-controls="heroTitle">
+            <svg viewBox="43 681 13 32" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="54.83 712.22 44.24 697.24 54.83 682.27"/></svg>
+          </button>
+          <div class="hero-pagination" id="heroPagination"></div>
+          <button type="button" class="hero-step" data-step="1" aria-label="Next slide" aria-controls="heroTitle">
+            <svg viewBox="638 681 13 32" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="639.38 682.27 649.97 697.24 639.38 712.22"/></svg>
+          </button>
+        </nav>
+      </div>
+      <a class="hero-image" id="heroImageLink" href="#paintings" aria-label="Explore paintings">
+        <picture class="hdr-picture">
+          <source id="heroHdrSource" media="(dynamic-range: high)" type="image/jpeg">
+          <source id="heroMobileSource" media="(max-width: 760px)" type="image/webp" srcset="hero-test/block-paintings-mobile.webp">
+          <img id="heroImage" src="hero-test/block-paintings.webp" alt="Anna Ljung’s studio, where new paintings are taking shape" fetchpriority="high">
+        </picture>
+      </a>
+    </section>
+
+    <section class="manifesto" aria-label="Studio philosophy">
+      <p class="script"><button id="heroNext" type="button" aria-label="Next slide" aria-controls="heroTitle">Every piece begins with <em>stillness.</em></button></p>
+    </section>
+
+    <section class="section selected-works" id="works" aria-labelledby="worksTitle">
+      <div class="section-intro">
+        <div><p class="eyebrow">Selected works · 2024–2026</p><h2 class="script" id="worksTitle">Living forms</h2></div>
+        <p>One-of-a-kind textile sculptures and spatial installations, shaped by hand in Stockholm.</p>
+      </div>
+      <div class="works-grid">
+        <article class="work-item">
+          <div class="work-image"><img src="hero-test/work-summer.webp" alt="Solistic Summer, sculptural textile work" loading="lazy"></div>
+          <div class="work-meta"><h3>Solistic Summer</h3><span>Kinetic Bloom</span></div>
+        </article>
+        <article class="work-item">
+          <div class="work-image"><img src="hero-test/work-lagoon.webp" alt="Blue Lagoon, sculptural textile work" loading="lazy"></div>
+          <div class="work-meta"><h3>Blue Lagoon</h3><span>Kinetic Bloom</span></div>
+        </article>
+        <article class="work-item">
+          <div class="work-image"><img src="hero-test/work-azulejo.webp" alt="Azulejo Azul, textile artwork" loading="lazy"></div>
+          <div class="work-meta"><h3>Azulejo Azul</h3><span>Textile artwork</span></div>
         </article>
       </div>
-    </div>
-  </section>
+      <div class="works-action"><a class="text-link" href="#shop">View available works <span class="arrow" aria-hidden="true">↗</span></a></div>
+    </section>
 
-  <div class="section-divider"><svg viewBox="0 0 18 18" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(0 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(51 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(103 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(154 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(206 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(257 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(309 9 9)"/><circle cx="9" cy="9" r="1.85" fill="rgba(237,229,216,0.96)"/><circle cx="9" cy="9" r="0.9" fill="rgba(27,58,75,0.82)"/></svg></div>
+    <section class="section shop" id="shop" aria-labelledby="shopTitle">
+      <div class="shop-top"><div><p class="eyebrow">One work, one story</p><h2 class="script" id="shopTitle">The shop</h2></div><p>Each work is unique. Enquire for availability and details.</p></div>
+      <div class="shop-grid" id="shopGrid" aria-live="polite"></div>
+        <div class="paintings-note" id="paintings"><h3 class="script">Paintings</h3><p>Coming soon.</p></div>
+    </section>
 
-  <!-- NEWS -->
-  <section class="section" id="news">
-    <div class="inner-narrow">
-      <h2 class="section-headline">News</h2>
-      <div class="news-feed">
-        <article class="news-item"><time class="news-date">May 2026</time><h3 class="news-title">Nordic Mood, Copenhagen</h3><p class="news-text">Anna's work will be shown at Nordic Mood, Copenhagen, from 22 May. A selection of Kinetic Bloom pieces — each unique, each in the room for the first time.</p></article>
-        <article class="news-item"><time class="news-date">April 2026</time><h3 class="news-title">New works in preparation</h3><p class="news-text">The studio has been quiet. New pieces are forming — some already named, some still deciding what colour they want to be.</p></article>
-        <article class="news-item"><time class="news-date">March 2026</time><h3 class="news-title">A quiet acquisition</h3><p class="news-text">A piece found its home with a collector in Stockholm. No announcement — only a note that it has left the studio.</p></article>
+    <section class="section courses" id="courses" aria-labelledby="coursesTitle">
+      <p class="courses-label">Courses and workshops</p>
+      <div class="courses-image">
+        <picture class="hdr-picture">
+          <img src="hero-test/course-workshop.webp" alt="Creative workshop in Anna Ljung’s studio" loading="lazy">
+        </picture>
       </div>
-    </div>
-  </section>
-
-  <div class="section-divider"><svg viewBox="0 0 18 18" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(0 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(51 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(103 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(154 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(206 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(257 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(309 9 9)"/><circle cx="9" cy="9" r="1.85" fill="rgba(237,229,216,0.96)"/><circle cx="9" cy="9" r="0.9" fill="rgba(27,58,75,0.82)"/></svg></div>
-
-  <!-- SHOP -->
-  <section class="section" id="shop">
-    <div class="inner">
-      <h2 class="section-headline">Shop</h2>
-      <div class="shop-tabs">
-        <button class="tab-btn on" data-tab="kinetic">Kinetic Bloom</button>
-        <span class="tab-div">|</span>
-        <button class="tab-btn" data-tab="paintings">Paintings</button>
+      <div class="courses-copy">
+        <h2 class="script" id="coursesTitle">Find your own visual language.</h2>
+        <p class="eyebrow">Courses</p>
+        <p>Small painting groups for curious beginners and hobby artists. Explore colour, composition, drawing, and collage at your own pace.</p>
+        <div class="course-location"><span class="course-location-label"><span class="course-icon" data-course-icon="Location-2" aria-hidden="true"></span></span><span>Timmermansgatan 8 · Stockholm</span></div>
+        <div class="course-types">
+          <article class="course-type"><a class="course-type-link" href="#courseModal" data-course="young" aria-haspopup="dialog">
+            <span class="course-type-top"><span class="course-title">Children &amp; young people · ages 10–15</span><span class="course-price">3 600 kr</span></span>
+            <span class="course-description">Five sessions · 2 hours each · all materials included</span>
+            <span class="course-card-hint"><span>Open course details</span><span aria-hidden="true">↗</span></span>
+          </a></article>
+          <article class="course-type"><a class="course-type-link" href="#courseModal" data-course="adult" aria-haspopup="dialog">
+            <span class="course-type-top"><span class="course-title">Adults · explore painting</span><span class="course-price">3 800 kr</span></span>
+            <span class="course-description">Five sessions · 2 hours each · basic materials included<br>Students and pensioners · 2 200 kr</span>
+            <span class="course-card-hint"><span>Open course details</span><span aria-hidden="true">↗</span></span>
+          </a></article>
+        </div>
+        <div class="course-calendar">
+          <span class="course-icon" data-course-icon="Calendar" aria-hidden="true"></span>
+          <a class="text-link" id="allCourseBookingLink" href="./courses/index.html">View all course dates <span class="arrow" aria-hidden="true">↗</span></a>
+        </div>
+        <section class="workshop-intro" id="workshops" aria-labelledby="selectedWorkshopTitle">
+          <a class="workshop-card" href="#workshopModal" id="selectedWorkshopsLink" aria-haspopup="dialog">
+            <h3 id="selectedWorkshopTitle">Selected workshops</h3>
+            <p>Explore painting, botanical watercolour, collage and seasonal crafts. A few creative hours in the studio, with guidance, materials and room to try something new.</p>
+            <span class="text-link">See current workshops <span class="arrow" aria-hidden="true">↗</span></span>
+          </a>
+        </section>
+        <section class="workshop-intro" aria-labelledby="workshopTitle">
+          <a class="workshop-card" href="#courseModal" data-course="workshop" aria-haspopup="dialog">
+          <h3 id="workshopTitle">Workshops and events</h3>
+          <p>Come together for a guided painting workshop. Come for a cozy hen party, stag do, team event or just a paint-and-sip with friends. We also organize and setup remote events.</p>
+          <span class="text-link">Plan your workshop <span class="arrow" aria-hidden="true">↗</span></span>
+          </a>
+        </section>
       </div>
-      <div class="tab-panel" id="tp-kinetic">
-        <div class="grid">
-          <article class="card" data-title="Solistic Summer" data-status="available" data-price="" data-story="">
-            <div class="card-img"><img src="" alt="Solistic Summer" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><div class="img-placeholder" style="display:none"><span>Kinetic Bloom</span></div></div>
-            <div class="card-info"><h3 class="card-title">Solistic Summer</h3></div>
-          </article>
-          <article class="card" data-title="Solistic Indigo" data-status="available" data-price="" data-story="">
-            <div class="card-img"><img src="" alt="Solistic Indigo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><div class="img-placeholder" style="display:none"><span>Kinetic Bloom</span></div></div>
-            <div class="card-info"><h3 class="card-title">Solistic Indigo</h3></div>
-          </article>
-          <article class="card" data-title="Blue Lagoon" data-status="available" data-price="" data-story="">
-            <div class="card-img"><img src="" alt="Blue Lagoon" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><div class="img-placeholder" style="display:none"><span>Kinetic Bloom</span></div></div>
-            <div class="card-info"><h3 class="card-title">Blue Lagoon</h3></div>
-          </article>
-          <article class="card" data-title="Resting in Paris" data-status="available" data-price="" data-story="">
-            <div class="card-img"><img src="" alt="Resting in Paris" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><div class="img-placeholder" style="display:none"><span>Kinetic Bloom</span></div></div>
-            <div class="card-info"><h3 class="card-title">Resting in Paris</h3></div>
-          </article>
-          <article class="card" data-title="Air de Fleur" data-status="available" data-price="" data-story="">
-            <div class="card-img"><img src="" alt="Air de Fleur" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><div class="img-placeholder" style="display:none"><span>Kinetic Bloom</span></div></div>
-            <div class="card-info"><h3 class="card-title">Air de Fleur</h3></div>
-          </article>
-          <article class="card" data-title="Between Bloom &amp; Air" data-status="available" data-price="16 000 kr" data-story="">
-            <div class="card-img"><img src="" alt="Between Bloom &amp; Air" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><div class="img-placeholder" style="display:none"><span>Kinetic Bloom</span></div></div>
-            <div class="card-info"><h3 class="card-title">Between Bloom &amp; Air</h3><span class="price">16 000 kr</span></div>
-          </article>
+    </section>
+
+    <section class="section news" aria-labelledby="newsTitle">
+      <div class="news-heading" id="news"><h2 id="newsTitle">News</h2></div>
+      <div class="news-list" id="newsList" aria-live="polite"></div>
+      <nav class="news-controls" id="newsControls" aria-label="News pages" hidden>
+        <button class="hero-step" id="newsPrevious" type="button" aria-label="Previous news page" aria-controls="newsList">
+          <svg viewBox="43 681 13 32" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="54.83 712.22 44.24 697.24 54.83 682.27"/></svg>
+        </button>
+        <div class="news-pagination" id="newsPagination"></div>
+        <button class="hero-step" id="newsNext" type="button" aria-label="Next news page" aria-controls="newsList">
+          <svg viewBox="638 681 13 32" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="639.38 682.27 649.97 697.24 639.38 712.22"/></svg>
+        </button>
+      </nav>
+      <a class="text-link" id="newsSubscribe" hidden>Subscribe to Studio News</a>
+    </section>
+
+    <section class="about" aria-labelledby="aboutTitle">
+      <div class="about-image" id="about"><picture class="hdr-picture">
+        <source media="(max-width: 760px)" type="image/webp" srcset="hero-test/block-anna-mobile.webp">
+        <img src="hero-test/block-anna.webp" alt="Anna Ljung in her Stockholm studio" loading="lazy">
+      </picture></div>
+      <div class="about-copy">
+        <p class="eyebrow">About the artist</p>
+        <h2 class="script" id="aboutTitle">A poetic approach to color, space and material.</h2>
+        <p>Anna Ljung is a Swedish artist whose work exists at the intersection of painting, sculpture, textile art, spatial design, and poetic movement.</p>
+        <p>Her practice brings Scandinavian restraint together with emotional depth. Each work begins with a tactile conversation — colour, cloth, air, and the space surrounding it.</p>
+        <div class="about-facts"><span>Based in Stockholm</span><span>Works internationally</span></div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact" aria-labelledby="contactTitle">
+      <div class="contact-copy">
+        <p class="eyebrow">Commissions · collaborations · courses</p>
+        <h2 class="script" id="contactTitle">Let’s make space for something new.</h2>
+        <div class="contact-links">
+          <a class="instagram-link" href="https://www.instagram.com/art_by_anna_ljung" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><img src="hero-test/insta_90.png" alt="" width="24" height="24" loading="lazy"></a>
+          <a class="contact-email" href="mailto:hello@annaljung.se">hello@annaljung.se</a>
         </div>
       </div>
-      <div class="tab-panel hidden" id="tp-paintings">
-        <div class="coming"><p>Coming soon.</p></div>
-      </div>
-    </div>
-  </section>
+      <p class="copyright">© 2026 Anna Ljung Studio</p>
+    </section>
+  </main>
 
-  <div class="section-divider"><svg viewBox="0 0 18 18" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(0 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(51 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(103 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(154 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(206 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(257 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(309 9 9)"/><circle cx="9" cy="9" r="1.85" fill="rgba(237,229,216,0.96)"/><circle cx="9" cy="9" r="0.9" fill="rgba(27,58,75,0.82)"/></svg></div>
+  <div class="modal-backdrop" id="productModal" aria-hidden="true">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="modalClose" type="button" aria-label="Close artwork details">×</button>
+      <div class="modal-image"><img id="modalImage" src="" alt=""></div>
+      <div class="modal-copy"><p class="eyebrow">Kinetic Bloom</p><h2 id="modalTitle" class="script"></h2><p id="modalPrice"></p><a id="modalEnquire" class="text-link" href="#">Enquire about this work <span class="arrow" aria-hidden="true">↗</span></a></div>
+    </section>
+  </div>
 
-  <!-- LESSONS -->
-  <section class="section" id="lessons">
-    <div class="inner-narrow">
-      <h2 class="section-headline">Courses</h2>
-      <p class="lessons-intro">En plats att utforska, blanda och förstå färg och form. Liten grupp. Ingen tidigare erfarenhet krävs.</p>
-      <div class="lessons-hero">
-        <div class="lessons-img-wrap">
-          <img src="images/lessons/course.jpg" alt="Anna Ljungs målarkurs i Alvik" loading="lazy">
+  <div class="modal-backdrop signup-overlay" id="signupOverlay" role="dialog" aria-modal="true" aria-label="Anmälan" aria-hidden="true"><button id="signupClose" type="button" aria-label="Stäng anmälan" style="position:absolute;top:12px;right:18px;border:0;background:transparent;color:white;font-size:28px;width:44px;height:44px;cursor:pointer">×</button><iframe class="signup-frame" id="signupFrame" title="Anmälan" src="about:blank"></iframe></div>
+  <div class="modal-backdrop workshop-overlay" id="workshopModal" aria-hidden="true">
+    <div class="workshop-shell" role="dialog" aria-modal="true" aria-labelledby="workshopModalTitle" aria-describedby="workshopDescription">
+      <section class="modal workshop-dialog">
+        <button class="modal-close" id="workshopClose" type="button" aria-label="Close workshop details">×</button>
+        <div class="workshop-decoration" id="workshopDecoration" aria-hidden="true"></div>
+        <div class="workshop-image-wrap"><img class="workshop-photo" id="workshopPhoto" src="hero-test/workshop-1.webp" alt=""><span class="upcoming-ribbon" id="workshopRibbon" hidden></span></div>
+        <div class="workshop-copy">
+          <h2 class="workshop-title" id="workshopModalTitle"></h2>
+          <p class="workshop-category" id="workshopCategory"></p>
+          <p class="workshop-subtitle" id="workshopSubtitle" hidden></p>
+          <img class="workshop-mobile-detail" id="workshopMobileDetail" alt="" hidden>
+          <p class="workshop-description" id="workshopDescription"></p>
+          <ul class="workshop-features" id="workshopFeatures"></ul>
+          <p class="workshop-price" id="workshopPrice"></p>
+          <a class="workshop-enquire" id="workshopEnquire" href="./courses/index.html"><span>Book a place</span><span aria-hidden="true">↗</span></a>
+          <p class="workshop-address">Timmermansgatan 8 · Stockholm</p>
         </div>
-        <div class="lessons-hero-text">
-          <p>Nu kör vi fjärde terminen — i en liten, inspirerande studio i Alvik. Max 3–4 deltagare per tillfälle, ibland bara én, vilket ger en nästan privatundervisning varje gång.</p>
-          <p>Vi arbetar med akrylmåleri, akvarell, teckning och collage — genom experiment och grundläggande tekniker. Kom som du är.</p>
-          <p>Workshops, måla-skåla, kalas eller liknande? Hör gärna av dig så skapar vi något fint tillsammans.</p>
-          <span class="lessons-location">Venue · Timmermansgatan 8</span>
-        </div>
-      </div>
-      <div>
-        <div class="lesson">
-          <div class="lesson-left">
-            <h3 class="lesson-name">Barn &amp; ungdomar — Upptäck Konst!</h3>
-            <p class="lesson-desc">För 10–15-åringar. Akryl &amp; akvarell, teckning (ansikten, djur, natur, skuggning) och collage &amp; mixed media. Lekfullt och fantasifullt — allt material ingår.</p>
-            <span class="lesson-weeks">5 veckor · akryl &amp; akvarell · teckning · collage</span>
-          </div>
-          <div class="lesson-r">
-            <span class="lesson-price">2 600 kr</span>
-            <span class="lesson-detail">5 tillfällen · 2 tim</span>
-            <span class="lesson-detail">allt material ingår</span>
-          </div>
-        </div>
-        <div class="lesson">
-          <div class="lesson-left">
-            <h3 class="lesson-name">Vuxna — Utforska Måleri</h3>
-            <p class="lesson-desc">Akryl, akvarell, teckning och collage — i din egen takt. För nybörjare och hobbykonstnärer. Basmaterial ingår. Pensionärer och studenter välkomna till rabatterat pris.</p>
-            <span class="lesson-weeks">V. 1–2 Akrylmåleri · V. 3 Akvarell · V. 4 Teckning · V. 5 Collage &amp; mixed media</span>
-          </div>
-          <div class="lesson-r">
-            <span class="lesson-price">2 800 kr</span>
-            <span class="lesson-detail">5 tillfällen · 2 tim</span>
-            <span class="lesson-detail">pensionärer &amp; studenter 2 200 kr</span>
-          </div>
-        </div>
-      </div>
-      <div class="lessons-schedule">
-        <p class="lessons-schedule-title">Tider — välj det som passar dig</p>
-        <div class="lessons-times">
-          <span>Torsdagar 10:00–12:00</span>
-          <span>Torsdagar 17:00–19:00</span>
-          <span>Fredagar 10:00–12:00</span>
-          <span>Söndagar 15:00–17:00</span>
-        </div>
-      </div>
-      <div class="lessons-cta"><a href="mailto:hello@annaljung.se?subject=Bokning målarkurs" class="btn-enquire">Boka din plats</a></div>
-    </div>
-  </section>
-
-  <div class="section-divider"><svg viewBox="0 0 18 18" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(0 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(51 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(103 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(154 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(206 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.45)" transform="rotate(257 9 9)"/><path d="M9 9 C7.8 6.2,8 3.5,9 2.2 C10 3.5,10.2 6.2,9 9Z" fill="rgba(139,80,88,0.65)" transform="rotate(309 9 9)"/><circle cx="9" cy="9" r="1.85" fill="rgba(237,229,216,0.96)"/><circle cx="9" cy="9" r="0.9" fill="rgba(27,58,75,0.82)"/></svg></div>
-
-  <!-- CONTACTS -->
-  <section class="section" id="contacts">
-    <div class="inner-narrow">
-      <h2 class="section-headline">Contacts</h2>
-      <p class="contacts-tag">Available for commissions, exhibitions and collaborations.</p>
-      <div>
-        <div class="contact"><span class="c-label">Mail</span><a href="mailto:studio@annaljung.se" class="c-val">studio@annaljung.se</a></div>
-        <div class="contact"><span class="c-label">Instagram</span><a href="https://www.instagram.com/art_by_anna_ljung" target="_blank" rel="noopener" class="c-val">@art_by_anna_ljung</a></div>
-        <div class="contact"><span class="c-label">Studio</span><span class="c-val">Stockholm, Sweden</span></div>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<!-- MODAL -->
-<div class="modal-bg" id="modalBg">
-  <div class="modal" role="dialog" aria-modal="true">
-    <button class="modal-x" id="modalX">&#215;</button>
-    <div class="modal-layout">
-      <div class="modal-img-col">
-        <div class="modal-img">
-          <img src="" alt="" id="mImg" />
-          <div class="img-placeholder" id="mPh" style="display:none"><span>Artwork</span></div>
-        </div>
-        <div class="modal-img-nav" id="mImgNav" style="display:none">
-          <button class="modal-img-arr" id="mImgPrev">&#8592;</button>
-          <div id="mImgDots" style="display:flex;gap:.45rem;align-items:center;"></div>
-          <button class="modal-img-arr" id="mImgNext">&#8594;</button>
-        </div>
-      </div>
-      <div class="modal-body">
-        <h2 class="modal-title" id="mTitle"></h2>
-        <p class="modal-story" id="mStory"></p>
-        <p class="modal-price" id="mPrice"></p>
-        <a href="#" class="btn-enquire" id="mEnq">Enquire</a>
-      </div>
+      </section>
+      <button class="workshop-side workshop-prev" id="workshopPrev" type="button" aria-label="Previous workshop"><svg viewBox="0 0 18 34" aria-hidden="true"><path d="M15 2 3 17l12 15"/></svg></button>
+      <button class="workshop-side workshop-next" id="workshopNext" type="button" aria-label="Next workshop"><svg viewBox="0 0 18 34" aria-hidden="true"><path d="m3 2 12 15L3 32"/></svg></button>
+      <nav class="workshop-dots" id="workshopDots" aria-label="Workshops"></nav>
+      <span class="sr-only" id="workshopAnnouncement" aria-live="polite"></span>
     </div>
   </div>
-</div>
+  <div class="modal-backdrop" id="courseModal" aria-hidden="true">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="courseModalTitle">
+      <button class="modal-close" id="courseModalClose" type="button" aria-label="Close course details">×</button>
+      <div class="modal-image">
+        <picture class="hdr-picture">
+          <source media="(dynamic-range: high)" type="image/jpeg" srcset="hero-test/course-hdr.jpg">
+          <img id="courseModalImage" src="hero-test/course.webp" alt="Painting course in Anna Ljung’s studio" loading="lazy">
+        </picture>
+      </div>
+      <div class="modal-copy">
+        <p class="eyebrow">Studio courses · Timmermansgatan 8</p>
+        <nav class="course-tabs" id="courseTabs" aria-label="Kurser"><button type="button" data-course-tab="young">Barn och unga</button><button type="button" data-course-tab="adult">Vuxna</button></nav>
+        <h2 id="courseModalTitle" class="script"></h2>
+        <p id="courseModalMeta"></p>
+        <p id="courseModalDetails"></p>
+        <p id="courseModalSchedule"></p>
+        <a class="text-link" id="courseBookingLink" href="./courses/index.html" target="_blank" rel="noopener noreferrer">Visa kursdatum <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="text-link" id="courseEmailLink" href="mailto:hello@annaljung.se">Mejla om kursen <span class="arrow" aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
+  <dialog class="news-dialog" id="newsDialog" aria-labelledby="newsDialogTitle">
+    <form method="dialog"><button class="news-read" id="newsDialogClose" type="submit" aria-label="Close article" autofocus>×</button></form>
+    <div class="news-dialog-layout">
+      <figure class="news-dialog-photo" id="newsDialogPhoto" hidden></figure>
+      <div class="news-dialog-copy"><time id="newsDialogDate"></time><h2 id="newsDialogTitle"></h2><p id="newsDialogBody"></p></div>
+    </div>
+  </dialog>
+  <template id="heroFormsTitleArt">
+    <svg class="hero-title-svg" viewBox="80 178 512 213" role="img" aria-label="Forms shaped by nature">
+    <style>
+    .hero-title-svg .cls-1{font-family:var(--script);font-size:12px;fill:#203946;letter-spacing:-5.28px;font-kerning:none}
+    .hero-title-svg .cls-2{letter-spacing:0;font-kerning:auto}
+    .hero-title-svg .cls-3{letter-spacing:-0.24px}
+    .hero-title-svg .cls-4{letter-spacing:-0.72px}
+    .hero-title-svg .cls-5{letter-spacing:-1.44px}
+    .hero-title-svg .cls-6{font-size:13.353px;fill:#f23350;letter-spacing:0}
+    .hero-title-svg .cls-7{font-size:13.353px;fill:#f23350;letter-spacing:0;font-kerning:auto}
+    .hero-title-svg .cls-8{letter-spacing:0.24px}
 
-  /* ---- Load images from images.json ----
-     lh3-endpoint: funkar med alla källformat (AVIF/PNG/JPEG),
-     serverar WebP i angiven bredd med korrekt content-type.
-     Hero = w2560 (fullskärm), kort/modal = w1200 (räcker för 3-kolumnsgrid + modal) */
-  function driveUrl(id) { return 'https://lh3.googleusercontent.com/d/' + id + '=w1200-rw'; }
-  function heroUrl(id)  { return 'https://lh3.googleusercontent.com/d/' + id + '=w2560-rw'; }
-  fetch('images.json')
-    .then(function(r) { return r.json(); })
-    .then(function(cfg) {
-      (cfg.hero || []).forEach(function(item, i) {
-        var el = document.getElementById('s' + i);
-        if (!el) return;
-        var src = item.drive_id ? heroUrl(item.drive_id) : item.local;
-        if (src) el.style.backgroundImage = "url('" + src + "')";
-      });
-      slideCount = Math.min((cfg.hero || []).length, slides.length) || slides.length;
-      if (cfg.about) {
-        var aImg = document.querySelector('#about .about-img-wrap img');
-        if (aImg) aImg.src = cfg.about.drive_id ? driveUrl(cfg.about.drive_id) : cfg.about.local;
+  </style>
+    <text data-title-language="en" transform="matrix(11.085 0 0 11.085 82.748 313.198)" x="0" y="0" xml:space="preserve" class="cls-1"><tspan x="0" y="0" dy="-0.898">F</tspan><tspan x="2.542" y="0" class="cls-2">orms sha</tspan><tspan x="27.661" y="0" class="cls-3">p</tspan><tspan x="30.662" y="0" dy="-0.18" class="cls-4">e</tspan><tspan x="33.199" y="0" dy="-0.18" class="cls-2">d</tspan><tspan x="0" y="5.74" class="cls-5">b</tspan><tspan x="3.253" y="5.74" dy="-0.541" class="cls-2">y</tspan><tspan x="6.804" y="5.74" class="cls-5"> </tspan><tspan x="8.593" y="5.74" dy="-0.18" class="cls-6">n</tspan><tspan x="13.072" y="5.74" dy="-0.18" class="cls-7">ature</tspan></text>
+    <text data-title-language="sv" transform="matrix(11.085 0 0 11.085 82.748 585.826)" x="0" y="0" xml:space="preserve" class="cls-1"><tspan x="0" y="0" dy="-0.898">F</tspan><tspan x="2.542" y="0" class="cls-2">ormer skapa</tspan><tspan x="36.802" y="0" dy="-0.18" class="cls-2">de</tspan><tspan x="0" y="5.74" class="cls-8">a</tspan><tspan x="3.252" y="5.74" class="cls-5">v  </tspan><tspan x="8.459" y="5.74" dy="-0.18" class="cls-6">n</tspan><tspan x="12.938" y="5.74" dy="-0.18" class="cls-7">aturen</tspan></text>
+    </svg>
+  </template>
+  <script src="studio-config.js"></script>
+  <script src="site-language.js"></script>
+  <script src="hero-test/block-art.js"></script>
+  <script src="hero-test/workshops.js"></script>
+  <script>
+    const products = [
+      { title: "Solistic Summer", id: "1qT9o2TBmGNIiLZnc3io7gc532DF-B5H9" },
+      { title: "Solistic Indigo", id: "115X8HTEwOgycDq77O5-2A0WsJP9583wa" },
+      { title: "Blue Lagoon", id: "1qnp5feYeAWG7qvpY_F8roClk4K8n4DHx" },
+      { title: "Resting in Paris", id: "1ual8ealGzvPTJL76Oo8pLm9IFSVGbpB3" },
+      { title: "Air de Fleur", id: "1EPrglxXiZnVSzhsbf5WQYepve2k-vZE8" },
+      { title: "Between Bloom & Air", id: "15Ze56z-8BzlMFxMYSv6sSHVWIGdR1YlN", price: "16 000 kr" }
+    ];
+    const imageUrl = (id, width = 1000) => `https://lh3.googleusercontent.com/d/${id}=w${width}-rw`;
+    const heroSlides = [
+      {
+        key: "paintings",
+        label: "Paintings",
+        eyebrow: "Painting · Stockholm",
+        title: "A quieter study<br>in <span>colour.</span>",
+        description: "Paintings and studies in colour are taking shape in the studio. New works will be added soon.",
+        action: "Explore paintings",
+        href: "#paintings",
+        note: "Painting · colour · gesture",
+        quote: "Every piece begins with stillness.",
+        imageAlt: "Anna Ljung’s studio, where new paintings are taking shape"
+      },
+      {
+        key: "textile",
+        label: "Textile works",
+        eyebrow: "Textile sculpture · Stockholm",
+        title: "Forms shaped<br>by <span>nature.</span>",
+        description: "Sculptural textile works exploring the quiet relationship between light, movement, and atmosphere.",
+        action: "Explore textile works",
+        href: "#works",
+        note: "Textile · light · movement",
+        quote: "Textile becomes form. Form becomes movement.",
+        photoFocus: "42%",
+        imageAlt: "Anna Ljung among suspended textile forms"
+      },
+      {
+        key: "workshops",
+        label: "Workshops",
+        eyebrow: "Workshops · Stockholm",
+        title: "Good company.<br>Fresh <span>paint.</span>",
+        description: "Come together for a guided painting workshop. Come for a cozy hen party, stag do, team event or just a paint-and-sip with friends.",
+        action: "Explore workshops",
+        href: "#workshops",
+        note: "Painting · friends · company",
+        quote: "Paint, laugh, enjoy. Create memories.",
+        imageAlt: "Participants painting together in the studio"
+      },
+      {
+        key: "courses",
+        label: "Studio courses",
+        eyebrow: "Courses · Stockholm",
+        title: "Find your own<br>visual language.",
+        description: "Small painting groups with room to explore colour, composition, drawing, and collage at your own pace.",
+        action: "Explore courses",
+        href: "#courses",
+        note: "Painting · colour · practice",
+        quote: "Come curious. Leave inspired.",
+        photoFocus: "0%",
+        imageAlt: "Creative materials prepared for a painting course"
       }
-      if (cfg.lessons) {
-        var lImg = document.querySelector('#lessons .lessons-img-wrap img');
-        if (lImg) lImg.src = cfg.lessons.drive_id ? driveUrl(cfg.lessons.drive_id) : cfg.lessons.local;
-      }
-      (cfg.artworks || []).forEach(function(item, i) {
-        var card = document.querySelector('#artworks .grid .card:nth-child(' + (i+1) + ')');
-        if (!card) return;
-        var imgEl = card.querySelector('img');
-        if (imgEl && item.drive_id) {
-          imgEl.src = driveUrl(item.drive_id);
-          imgEl.style.display = 'block';
-          var ph = imgEl.nextElementSibling;
-          if (ph) ph.style.display = 'none';
-        }
-      });
-      (cfg.shop_kb || []).forEach(function(item, i) {
-        var card = document.querySelector('#tp-kinetic .grid .card:nth-child(' + (i+1) + ')');
-        if (!card) return;
-        if (item.images && item.images.length) {
-          var urls = item.images.map(function(img) {
-            return img.drive_id ? driveUrl(img.drive_id) : img.local;
-          });
-          var imgEl = card.querySelector('img');
-          if (imgEl) {
-            imgEl.src = urls[0];
-            imgEl.style.display = 'block';
-            var ph = imgEl.nextElementSibling;
-            if (ph) ph.style.display = 'none';
-          }
-          card.dataset.images = JSON.stringify(urls);
-        } else {
-          var imgEl = card.querySelector('img');
-          if (imgEl && item.drive_id) {
-            imgEl.src = driveUrl(item.drive_id);
-            imgEl.style.display = 'block';
-            var ph = imgEl.nextElementSibling;
-            if (ph) ph.style.display = 'none';
-          }
-        }
-      });
-    })
-    .catch(function() {
-      for (var i = 0; i < 4; i++) {
-        var el = document.getElementById('s' + i);
-        if (el) el.style.backgroundImage = "url('images/slides/slide-" + i + ".jpg')";
-      }
-    });
-
-  /* ---- Cursor ---- */
-  var cur = document.getElementById('cursor');
-  document.addEventListener('mousemove', function(e) {
-    cur.style.left = e.clientX + 'px';
-    cur.style.top  = e.clientY + 'px';
-    cur.classList.add('on');
-  });
-  document.addEventListener('mouseleave', function() { cur.classList.remove('on'); });
-  document.addEventListener('mouseover', function(e) { if(e.target.closest('a,button,.card')) cur.classList.add('hov'); });
-  document.addEventListener('mouseout',  function(e) { if(e.target.closest('a,button,.card')) cur.classList.remove('hov'); });
-  document.documentElement.style.cursor = 'none';
-
-  /* ---- Hero slideshow ---- */
-  var slides = Array.from(document.querySelectorAll('#hero .slide'));
-  var slideCount = slides.length;   // sätts om av images.json-loadern
-  var cur_slide = 0;
-  setInterval(function() {
-    slides[cur_slide].className = 'slide inactive';
-    cur_slide = (cur_slide + 1) % slideCount;
-    slides[cur_slide].className = 'slide active';
-  }, 5000);
-
-  /* ---- Menu open/close ---- */
-  var hamburger = document.getElementById('hamburger');
-  var panel     = document.getElementById('panel');
-  var overlay   = document.getElementById('overlay');
-  var panelClose= document.getElementById('panelClose');
-  var nav       = document.getElementById('nav');
-  var logo      = document.getElementById('logo');
-
-  function openMenu() {
-    panel.classList.add('open');
-    overlay.classList.add('open');
-    hamburger.classList.add('open');
-    hamburger.setAttribute('aria-expanded','true');
-  }
-  function closeMenu() {
-    panel.classList.remove('open');
-    overlay.classList.remove('open');
-    hamburger.classList.remove('open');
-    hamburger.setAttribute('aria-expanded','false');
-  }
-
-  hamburger.addEventListener('click', function() {
-    panel.classList.contains('open') ? closeMenu() : openMenu();
-  });
-  panelClose.addEventListener('click', closeMenu);
-  overlay.addEventListener('click', closeMenu);
-  document.addEventListener('keydown', function(e) { if(e.key==='Escape') { closeMenu(); closeModal(); } });
-
-  /* ---- Nav lit on scroll ---- */
-  function updateNavLit() {
-    nav.classList.toggle('lit', window.scrollY > (window.innerHeight * 0.85));
-  }
-  window.addEventListener('scroll', updateNavLit, { passive: true });
-
-  /* ---- Section fade-in on scroll ---- */
-  var sections = document.querySelectorAll('.section');
-  var sectionObs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        sectionObs.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.07 });
-  sections.forEach(function(s) { sectionObs.observe(s); });
-
-  /* ---- Menu links → smooth scroll ---- */
-  var links = document.querySelectorAll('.menu-link');
-  links.forEach(function(l) {
-    l.addEventListener('click', function(e) {
-      e.preventDefault();
-      var id = this.dataset.s;
-      closeMenu();
-      setTimeout(function() {
-        var target = document.getElementById(id);
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
-      }, 280);
-    });
-  });
-
-  logo.addEventListener('click', function(e) {
-    e.preventDefault();
-    closeMenu();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  document.getElementById('panelLogo').addEventListener('click', function(e) {
-    e.preventDefault();
-    closeMenu();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  /* Hash on load */
-  var hash = location.hash.replace('#','');
-  if (['about','artworks','news','shop','lessons','contacts'].indexOf(hash) > -1) {
-    setTimeout(function() {
-      var target = document.getElementById(hash);
-      if (target) target.scrollIntoView({ behavior: 'smooth' });
-    }, 150);
-  }
-
-  /* ---- Modal ---- */
-  var modalBg  = document.getElementById('modalBg');
-  var modalX   = document.getElementById('modalX');
-  var mImg     = document.getElementById('mImg');
-  var mPh      = document.getElementById('mPh');
-  var mTitle   = document.getElementById('mTitle');
-  var mStory   = document.getElementById('mStory');
-  var mPrice   = document.getElementById('mPrice');
-  var mEnq     = document.getElementById('mEnq');
-  var mImgNav  = document.getElementById('mImgNav');
-  var mImgPrev = document.getElementById('mImgPrev');
-  var mImgNext = document.getElementById('mImgNext');
-  var mImgDots = document.getElementById('mImgDots');
-  var modalImages = [];
-  var modalImgIdx = 0;
-
-  function setModalImage(idx) {
-    modalImgIdx = idx;
-    mImg.src = modalImages[idx];
-    mImg.style.display = 'block'; mPh.style.display = 'none';
-    mImgDots.querySelectorAll('.modal-img-dot').forEach(function(d, i) {
-      d.classList.toggle('on', i === idx);
-    });
-  }
-
-  function openModal(card) {
-    var title  = card.dataset.title  || '';
-    var story  = card.dataset.story  || '';
-    var price  = card.dataset.price  || '';
-    var status = card.dataset.status || '';
-    var img    = card.querySelector('img');
-
-    try { modalImages = card.dataset.images ? JSON.parse(card.dataset.images) : []; }
-    catch(e) { modalImages = []; }
-
-    if (modalImages.length > 1) {
-      mImgNav.style.display = 'flex';
-      mImgDots.innerHTML = '';
-      modalImages.forEach(function(url, i) {
-        var dot = document.createElement('button');
-        dot.className = 'modal-img-dot' + (i === 0 ? ' on' : '');
-        (function(idx) { dot.addEventListener('click', function() { setModalImage(idx); }); })(i);
-        mImgDots.appendChild(dot);
-      });
-      mImg.src = modalImages[0]; mImg.alt = title;
-      mImg.style.display = 'block'; mPh.style.display = 'none';
-      modalImgIdx = 0;
-    } else {
-      mImgNav.style.display = 'none';
-      modalImages = [];
-      if (img && img.complete && img.naturalWidth > 0) {
-        mImg.src = img.src; mImg.alt = title;
-        mImg.style.display = 'block'; mPh.style.display = 'none';
-      } else {
-        mImg.style.display = 'none'; mPh.style.display = 'flex';
-      }
+    ];
+    const heroEyebrow = document.getElementById("heroEyebrow");
+    const heroTitle = document.getElementById("heroTitle");
+    const heroLede = document.getElementById("heroLede");
+    const heroCta = document.getElementById("heroCta");
+    const heroNote = document.getElementById("heroNote");
+    const heroImage = document.getElementById("heroImage");
+    const heroHdrSource = document.getElementById("heroHdrSource");
+    const heroMobileSource = document.getElementById("heroMobileSource");
+    const heroImageLink = document.getElementById("heroImageLink");
+    const heroPagination = document.getElementById("heroPagination");
+    const heroSection = document.querySelector(".hero");
+    const heroSlideCopy = heroSection.querySelector(".hero-slide-copy");
+    const heroMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const slideFadeOut = 180;
+    let currentHeroSlide = 0;
+    let requestedHeroSlide = 0;
+    let slideChanging = false;
+    let heroTimer = null;
+    let pointerInsideSlider = false;
+    let focusInsideSlider = false;
+    let imageRequest = 0;
+    let importedHero = {};
+    const importedHeroImages = new Map();
+    const heroCompact = window.matchMedia("(max-width: 760px)");
+    const heroNext = document.getElementById("heroNext");
+    for (const block of [heroSection, heroNext]) {
+      block.style.setProperty("--slide-fade-out", slideFadeOut + "ms");
     }
 
-    mTitle.textContent = title;
-    mStory.textContent = story;
-    mPrice.textContent = status === 'sold' ? 'Sold' : price;
-    var subj = encodeURIComponent('Enquiry — ' + title);
-    var body = encodeURIComponent('Hello,\n\nI am interested in the work "' + title + '".');
-    mEnq.href = 'mailto:studio@annaljung.se?subject=' + subj + '&body=' + body;
-    mEnq.style.display = status === 'sold' ? 'none' : 'inline-block';
-    modalBg.classList.add('show');
-  }
+    function designSvg(markup) {
+      if (typeof markup !== "string") return null;
+      const svg = new DOMParser().parseFromString(markup,"image/svg+xml").documentElement;
+      if (svg.localName !== "svg" || svg.namespaceURI !== "http://www.w3.org/2000/svg") return null;
+      const imported = document.importNode(svg,true);
+      for (const node of imported.querySelectorAll('[font-family="Tritopani"]')) node.setAttribute("font-family","Tritopani Preview");
+      return imported;
+    }
 
-  function closeModal() { modalBg.classList.remove('show'); }
+    function setHeroImage(slide,request) {
+      const key = slide.key;
+      const fallback = "hero-test/block-" + key;
+      const apply = (src, mobile, hdr) => {
+        if (request !== imageRequest) return;
+        const reveal = () => { if (request === imageRequest) heroImage.style.opacity = "1"; };
+        heroImage.onload = reveal;
+        heroImage.onerror = () => {
+          if (request !== imageRequest) return;
+          if (hdr && heroImage.currentSrc === new URL(hdr, document.baseURI).href) apply(src, mobile);
+          else if (mobile && heroImage.currentSrc === new URL(mobile, document.baseURI).href) apply(src);
+          else reveal();
+        };
+        if (hdr) heroHdrSource.srcset = hdr;
+        else heroHdrSource.removeAttribute("srcset");
+        if (mobile) heroMobileSource.srcset = mobile;
+        else heroMobileSource.removeAttribute("srcset");
+        heroImage.style.setProperty("--hero-photo-focus", slide.photoFocus || "82%");
+        heroImage.src = src;
+        heroImage.alt = t(slide.imageAlt);
+        if (heroImage.complete) heroImage.style.opacity = "1";
+      };
+      const applyLocal = () => apply(fallback + ".webp", fallback + "-mobile.webp", slide.imageHdr);
+      if (!importedHero[key]) { applyLocal(); return; }
+      const size = heroCompact.matches ? "mobile" : "desktop";
+      const cacheKey = key + ":" + size;
+      if (!importedHeroImages.has(cacheKey)) {
+        const url = new URL(contentUrl("hero-image"));
+        url.searchParams.set("slide",key);
+        url.searchParams.set("size",size);
+        const pending = fetch(url).then(response => {
+          if (!response.ok) throw new Error("Hero image unavailable");
+          return response.json();
+        }).then(data => {
+          if (typeof data.image !== "string" || !data.image.startsWith("data:image/webp;base64,")) throw new Error("Invalid hero image");
+          return data.image;
+        }).catch(error => { importedHeroImages.delete(cacheKey); throw error; });
+        importedHeroImages.set(cacheKey,pending);
+      }
+      importedHeroImages.get(cacheKey).then(src => apply(src)).catch(applyLocal);
+    }
 
-  document.querySelectorAll('.card').forEach(function(card) {
-    card.addEventListener('click', function() { openModal(card); });
-    card.setAttribute('tabindex','0'); card.setAttribute('role','button');
-    card.addEventListener('keydown', function(e) {
-      if (e.key==='Enter'||e.key===' ') { e.preventDefault(); openModal(card); }
-    });
-  });
+    function updateHeroTimer() {
+      window.clearInterval(heroTimer);
+      if (heroMotion.matches || pointerInsideSlider || focusInsideSlider || document.hidden || heroSlides.length < 2) return;
+      heroTimer = window.setInterval(() => showHeroSlide(currentHeroSlide + 1), 5000);
+    }
 
-  modalX.addEventListener('click', closeModal);
-  modalBg.addEventListener('click', function(e) { if(e.target===modalBg) closeModal(); });
-  mImgPrev.addEventListener('click', function(e) {
-    e.stopPropagation();
-    if (modalImages.length > 1) setModalImage((modalImgIdx - 1 + modalImages.length) % modalImages.length);
-  });
-  mImgNext.addEventListener('click', function(e) {
-    e.stopPropagation();
-    if (modalImages.length > 1) setModalImage((modalImgIdx + 1) % modalImages.length);
-  });
-
-  /* ── Scroll Snap ──────────────────────────────────────────────────
-     SNAP_THRESHOLD = hur mycket av nästa sektion som måste synas (0–1)
-     innan den snappar dit.  0.5 = 50 % av skärmhöjden.
-     Testa t.ex. 0.3 (snappar tidigare) eller 0.7 (snappar senare).
-  ──────────────────────────────────────────────────────────────────── */
-  var SNAP_THRESHOLD = 0.50;
-  var snapTimer  = null;
-  var snapLock   = false;
-  var prevSnapY  = window.scrollY;
-  var snapDir    = 'down';
-  var NAV_H_PX   = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 72;
-
-  function snapPoints() {
-    var pts = [];
-    document.querySelectorAll('.section').forEach(function(s) {
-      pts.push(Math.max(0, s.offsetTop - NAV_H_PX));
-    });
-    return pts;
-  }
-
-  function fireSnap(y) {
-    snapLock = true;
-    window.scrollTo({ top: y, behavior: 'smooth' });
-    setTimeout(function(){ snapLock = false; }, 850);
-  }
-
-  function resolveSnap() {
-    if (snapLock) return;
-    var sy = window.scrollY;
-    var vh = window.innerHeight;
-    if (snapDir !== 'down') return;   // scroll up är fri
-
-    var pts = snapPoints();
-    for (var i = 0; i < pts.length; i++) {
-      var pt = pts[i];
-      // Snap point är nedanför viewport-toppen OCH har kommit in >= (1-threshold)*vh
-      if (pt > sy && pt <= sy + vh * (1 - SNAP_THRESHOLD)) {
-        fireSnap(pt);
+    function showHeroSlide(index) {
+      requestedHeroSlide = (index + heroSlides.length) % heroSlides.length;
+      if (slideChanging || requestedHeroSlide === currentHeroSlide) return;
+      if (heroMotion.matches) {
+        applyHeroSlide();
         return;
       }
+      slideChanging = true;
+      heroSection.classList.add("is-changing");
+      heroNext.classList.add("is-changing");
+      heroImage.style.opacity = "0";
+      const fadeOuts = [heroCta, heroNext].flatMap(element => element.getAnimations())
+        .filter(animation => animation.transitionProperty === "opacity");
+      Promise.allSettled(fadeOuts.map(animation => animation.finished)).then(applyHeroSlide);
     }
-  }
 
-  window.addEventListener('scroll', function() {
-    if (snapLock) return;
-    var sy = window.scrollY;
-    snapDir   = sy >= prevSnapY ? 'down' : 'up';
-    prevSnapY = sy;
-    clearTimeout(snapTimer);
-    snapTimer = setTimeout(resolveSnap, 110);
-  }, { passive: true });
+    function applyHeroSlide() {
+      slideChanging = false;
+      currentHeroSlide = requestedHeroSlide;
+      const slide = heroSlides[currentHeroSlide];
+      renderHeroLanguage(slide);
+      heroCta.href = slide.href;
+      heroImageLink.href = slide.href;
+      heroSection.classList.remove("is-changing");
+      heroNext.classList.remove("is-changing");
+      setHeroImage(slide, ++imageRequest);
+      heroPagination.querySelectorAll("button").forEach((button, buttonIndex) => {
+        const active = buttonIndex === currentHeroSlide;
+        button.classList.toggle("is-active", active);
+        button.setAttribute("aria-current", String(active));
+      });
+      updateHeroTimer();
+    }
 
-  /* ---- Shop tabs ---- */
-  document.querySelectorAll('.tab-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('on'); });
-      this.classList.add('on');
-      document.getElementById('tp-kinetic').classList.toggle('hidden', this.dataset.tab!=='kinetic');
-      document.getElementById('tp-paintings').classList.toggle('hidden', this.dataset.tab!=='paintings');
+    function renderHeroLanguage(slide) {
+      const managed = importedHero[slide.key];
+      const art = siteLanguage === "en" ? managed || svgBlockArt[slide.key] : null;
+      const managedTitle = designSvg(art?.titleArt);
+      const copy = siteLanguage === "en" ? managed : null;
+      heroEyebrow.textContent = copy?.eyebrow || t(slide.eyebrow);
+      const showTitleArt = Boolean(managedTitle || slide.key === "textile");
+      heroTitle.classList.toggle("has-title-art", showTitleArt);
+      if (managedTitle) {
+        managedTitle.classList.add("hero-title-svg");
+        managedTitle.setAttribute("role","img");
+        managedTitle.setAttribute("aria-label",copy?.title || slide.title.replace(/<br>/g," ").replace(/<[^>]+>/g,""));
+        heroTitle.replaceChildren(managedTitle);
+      } else if (showTitleArt) {
+        const titleArt = document.getElementById("heroFormsTitleArt").content.cloneNode(true);
+        const titleSvg = titleArt.querySelector("svg");
+        const isSwedish = siteLanguage === "sv";
+        titleSvg.querySelector(isSwedish ? '[data-title-language="en"]' : '[data-title-language="sv"]').remove();
+        titleSvg.setAttribute("viewBox", isSwedish ? "80 450.628 512 213" : "80 178 512 213");
+        titleSvg.setAttribute("aria-label", isSwedish ? "Former skapade av naturen" : "Forms shaped by nature");
+        heroTitle.replaceChildren(titleArt);
+      } else {
+        heroTitle.innerHTML = t(slide.title);
+      }
+      heroLede.textContent = copy?.description || t(slide.description);
+      heroCta.firstChild.textContent = (copy?.action || t(slide.action)) + " ";
+      heroNote.textContent = copy?.note || t(slide.note);
+      const quote = designSvg(art?.quoteArt);
+      const quoteText = copy?.quote || t(slide.quote);
+      if (quote) {
+        quote.classList.add("hero-title-svg","manifesto-art");
+        quote.setAttribute("aria-hidden","true");
+        heroNext.replaceChildren(quote);
+      } else {
+        const parts = quoteText.trim().split(/\s+/);
+        const accent = document.createElement("em");
+        accent.textContent = parts.pop();
+        const lines = parts.join(" ").split(/(?<=\.)\s+/);
+        heroNext.replaceChildren();
+        for (const [index,line] of lines.entries()) {
+          if (index) heroNext.append(document.createElement("br"));
+          heroNext.append(line);
+        }
+        heroNext.append(" ", accent);
+      }
+      heroNext.setAttribute("aria-label",quoteText + " " + t("Next slide"));
+      heroImageLink.setAttribute("aria-label", copy?.action || t(slide.action));
+      heroImage.alt = t(slide.imageAlt);
+      heroPagination.querySelectorAll("button").forEach((button, index) => {
+        const label = t(heroSlides[index].label);
+        button.setAttribute("aria-label", siteLanguage === "sv" ? "Visa bild: " + label : "Show slide: " + label);
+      });
+    }
+
+    function sizeHeroSlides() {
+      heroSlideCopy.style.removeProperty("--hero-text-height");
+      heroNext.style.removeProperty("--hero-quote-height");
+      let textHeight = 0;
+      let quoteHeight = 0;
+      for (const slide of heroSlides) {
+        renderHeroLanguage(slide);
+        textHeight = Math.max(textHeight, heroSlideCopy.getBoundingClientRect().height);
+        quoteHeight = Math.max(quoteHeight, heroNext.getBoundingClientRect().height);
+      }
+      renderHeroLanguage(heroSlides[currentHeroSlide]);
+      heroSlideCopy.style.setProperty("--hero-text-height", textHeight + "px");
+      heroNext.style.setProperty("--hero-quote-height", quoteHeight + "px");
+    }
+
+    function renderBlockHeadings() {
+      for (const [key, title] of [
+        ["works","Living forms"],
+        ["coursesSection","Find your own visual language."],
+        ["about","A poetic approach to color, space and material."],
+        ["contact","Let’s make space for something new."]
+      ]) {
+        const heading = document.getElementById((key === "coursesSection" ? "courses" : key) + "Title");
+        const svg = siteLanguage === "en" && (key !== "contact" || !heroCompact.matches) ?
+          designSvg(svgBlockArt[key].titleArt) : null;
+        if (svg) {
+          svg.classList.add("hero-title-svg");
+          svg.setAttribute("aria-hidden","true");
+          heading.replaceChildren(svg);
+          heading.setAttribute("aria-label",title);
+        } else if (key === "coursesSection" && siteLanguage === "sv") {
+          heading.innerHTML = 'Hitta ditt <span class="accent">eget bildspråk</span>';
+          heading.removeAttribute("aria-label");
+        } else if (key === "contact") {
+          heading.innerHTML = t("Let’s make space for <span>something new.</span>");
+          heading.removeAttribute("aria-label");
+        } else {
+          heading.textContent = t(title);
+          heading.removeAttribute("aria-label");
+        }
+      }
+    }
+
+    document.querySelectorAll("[data-course-icon]").forEach(container => {
+      const icon = designSvg(svgBlockArt[container.dataset.courseIcon]?.titleArt);
+      if (icon) {
+        icon.classList.add("hero-title-svg");
+        container.replaceChildren(icon);
+      }
     });
-  });
 
-});
-</script>
+    heroSlides.forEach((slide, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.dataset.slide = String(index);
+      button.setAttribute("aria-label", `Show ${slide.label} slide`);
+      button.setAttribute("aria-controls", "heroTitle");
+      button.setAttribute("aria-current", String(index === 0));
+      if (index === 0) button.classList.add("is-active");
+      heroPagination.appendChild(button);
+    });
+    sizeHeroSlides();
+    document.fonts.ready.then(sizeHeroSlides);
+    let heroResizeFrame;
+    window.addEventListener("resize", () => {
+      window.cancelAnimationFrame(heroResizeFrame);
+      heroResizeFrame = window.requestAnimationFrame(sizeHeroSlides);
+    });
+    renderBlockHeadings();
+    heroCompact.addEventListener("change", renderBlockHeadings);
+    heroSection.querySelectorAll("button[data-slide],button[data-step]").forEach(button => {
+      button.addEventListener("click", event => {
+        const index = button.dataset.slide ?? requestedHeroSlide + Number(button.dataset.step);
+        showHeroSlide(Number(index));
+        if (event.detail > 0) { focusInsideSlider = false; updateHeroTimer(); }
+      });
+    });
+    const trackSliderPointer = inside => { pointerInsideSlider = inside; updateHeroTimer(); };
+    const trackSliderFocus = inside => { focusInsideSlider = inside; updateHeroTimer(); };
+    heroNext.addEventListener("click", () => showHeroSlide(requestedHeroSlide + 1));
+    [heroSection, heroNext].forEach(surface => {
+      surface.addEventListener("pointerenter", () => trackSliderPointer(true));
+      surface.addEventListener("pointerleave", () => trackSliderPointer(false));
+      surface.addEventListener("focusin", () => trackSliderFocus(true));
+      surface.addEventListener("focusout", event => {
+        if (!surface.contains(event.relatedTarget)) trackSliderFocus(false);
+      });
+    });
+    document.addEventListener("visibilitychange", updateHeroTimer);
+    updateHeroTimer();
+
+    let newsItems = [
+      {
+        date: "May 2026",
+        datetime: "2026-05",
+        title: "Nordic Mood, Copenhagen",
+        description: "Anna’s work was shown at Nordic Mood, Copenhagen, from 22 May. A selection of Kinetic Bloom pieces — each unique, each in the room for the first time."
+      },
+      {
+        date: "April 2026",
+        datetime: "2026-04",
+        title: "New works in preparation",
+        description: "The studio has been quiet. New pieces are forming — some already named, some still deciding what colour they want to be."
+      },
+      {
+        date: "March 2026",
+        datetime: "2026-03",
+        title: "A quiet acquisition",
+        description: "A piece found its home with a collector in Stockholm. No announcement — only a note that it has left the studio."
+      }
+    ];
+    const newsPerPage = 3;
+    const newsList = document.getElementById("newsList");
+    const newsPagination = document.getElementById("newsPagination");
+    const newsControls = document.getElementById("newsControls");
+    const newsPrevious = document.getElementById("newsPrevious");
+    const newsNext = document.getElementById("newsNext");
+    let currentNewsPage = 0;
+    let newsPageCount = 0;
+    const newsDialog = document.getElementById("newsDialog");
+    newsPrevious.addEventListener("click", () => renderNewsPage((currentNewsPage - 1 + newsPageCount) % newsPageCount));
+    newsNext.addEventListener("click", () => renderNewsPage((currentNewsPage + 1) % newsPageCount));
+
+    function newsDate(item) {
+      const iso = item.datetime;
+      if (!/^\d{4}-\d{2}(-\d{2})?$/.test(iso)) return item.date;
+      const date = new Date((iso.length === 7 ? iso + "-01" : iso) + "T00:00:00Z");
+      if (Number.isNaN(date.getTime())) return item.date;
+      const options = {month:"long",year:"numeric",timeZone:"UTC"};
+      if (iso.length === 10) options.day = "numeric";
+      return new Intl.DateTimeFormat(siteLanguage === "sv" ? "sv-SE" : "en-GB", options).format(date);
+    }
+
+    function renderNewsPage(page) {
+      currentNewsPage = Math.max(0, Math.min(page, newsPageCount - 1));
+      const start = currentNewsPage * newsPerPage;
+      newsList.replaceChildren();
+      newsItems.slice(start, start + newsPerPage).forEach(item => {
+        const article = document.createElement("article");
+        article.className = "news-entry";
+        const date = document.createElement("time");
+        date.dateTime = item.datetime;
+        date.textContent = newsDate(item);
+        const title = document.createElement("h3");
+        title.textContent = t(item.title);
+        let readMore;
+        if (item.id && window.studioPublicUrl) {
+          readMore = document.createElement("a");
+          readMore.href = window.studioPublicUrl + "?article=" + encodeURIComponent(item.id) + "&lang=" + siteLanguage;
+        } else {
+          readMore = document.createElement("button");
+          readMore.type = "button";
+          readMore.addEventListener("click", () => {
+            const date = document.getElementById("newsDialogDate");
+            date.dateTime = item.datetime;
+            date.textContent = newsDate(item);
+            document.getElementById("newsDialogTitle").textContent = t(item.title);
+            document.getElementById("newsDialogBody").textContent = t(item.body || item.description);
+            const photo = document.getElementById("newsDialogPhoto");
+            photo.replaceChildren();
+            photo.hidden = !item.image && !item.imageLink;
+            newsDialog.classList.toggle("has-photo", !photo.hidden);
+            if (!photo.hidden) {
+              const link = document.createElement("a");
+              link.href = item.imageLink || item.image;
+              link.target = "_blank";
+              link.rel = "noopener";
+              const label = siteLanguage === "sv" ? "Öppna artikelbild" : "Open article image";
+              if (item.image) {
+                const image = document.createElement("img");
+                image.alt = t(item.title);
+                image.addEventListener("error", () => { link.textContent = label; }, {once:true});
+                image.src = item.image;
+                link.append(image);
+              } else {
+                link.textContent = label;
+              }
+              photo.append(link);
+            }
+            newsDialog.showModal();
+          });
+        }
+        readMore.className = "news-read";
+        readMore.textContent = t("Read more");
+        readMore.setAttribute("aria-label", t("Read more") + " – " + t(item.title));
+        const description = document.createElement("p");
+        const summary = t(item.description);
+        description.textContent = summary.length > 165 ? summary.slice(0,165).trimEnd() + "…" : summary;
+        article.append(date, title, description, readMore);
+        newsList.appendChild(article);
+      });
+      newsPagination.querySelectorAll("button").forEach((button, index) => {
+        const active = index === currentNewsPage;
+        button.classList.toggle("is-active", active);
+        button.setAttribute("aria-current", active ? "page" : "false");
+      });
+    }
+
+    function initNews() {
+      newsPageCount = Math.ceil(newsItems.length / newsPerPage);
+      newsPagination.replaceChildren();
+      newsControls.hidden = newsPageCount <= 1;
+      newsPrevious.setAttribute("aria-label",t("Previous news page"));
+      newsNext.setAttribute("aria-label",t("Next news page"));
+      if (newsPageCount > 1) {
+      for (let page = 0; page < newsPageCount; page += 1) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.setAttribute("aria-label", (siteLanguage === "sv" ? "Visa nyhetssida " : "Show news page ") + (page + 1));
+        button.setAttribute("aria-current", page === 0 ? "page" : "false");
+        if (page === 0) button.classList.add("is-active");
+        button.addEventListener("click", () => renderNewsPage(page));
+        newsPagination.appendChild(button);
+      }
+      }
+      renderNewsPage(0);
+    }
+    initNews();
+    if (window.studioPublicUrl) {
+      const subscribe = document.getElementById("newsSubscribe");
+      subscribe.href = window.studioPublicUrl + "?newsletter=1";
+      subscribe.hidden = false;
+      fetch(window.studioPublicUrl + "?feed=news")
+        .then(response => {
+          if (!response.ok) throw new Error("News feed unavailable");
+          return response.json();
+        })
+        .then(items => {
+          if (!Array.isArray(items)) return;
+          newsItems = items.map(item => ({...item, datetime:item.date}));
+          initNews();
+        })
+        .catch(() => {});
+    }
+
+    const shopGrid = document.getElementById("shopGrid");
+    const productModal = document.getElementById("productModal");
+    const modalImage = document.getElementById("modalImage");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalPrice = document.getElementById("modalPrice");
+    const modalEnquire = document.getElementById("modalEnquire");
+    const modalClose = document.getElementById("modalClose");
+    let lastFocused = null;
+    const courseModal = document.getElementById("courseModal");
+    const courseModalClose = document.getElementById("courseModalClose");
+    const courseModalTitle = document.getElementById("courseModalTitle");
+    const courseModalMeta = document.getElementById("courseModalMeta");
+    const courseModalDetails = document.getElementById("courseModalDetails");
+    const courseModalSchedule = document.getElementById("courseModalSchedule");
+    const courseBookingLink = document.getElementById("courseBookingLink");
+    const allCourseBookingLink = document.getElementById("allCourseBookingLink");
+    allCourseBookingLink.addEventListener("click", () => {
+      allCourseBookingLink.href = "./courses/index.html?" + new URLSearchParams({ lang: siteLanguage });
+    });
+    let lastCourseFocused = null;
+
+
+    const workshopModal = document.getElementById("workshopModal");
+    let workshopIndex = 0;
+    let workshopOpener = null;
+    function renderWorkshop(index) {
+      workshopIndex = (index + workshopSlides.length) % workshopSlides.length;
+      const slide = workshopSlides[workshopIndex];
+      const copy = siteLanguage === "sv" ? slide : { ...slide, ...slide.en };
+      document.querySelector(".workshop-copy").style.setProperty("--feature-offset", (slide.featureOffset / 12) + "cqw");
+      const decoration = document.getElementById("workshopDecoration");
+      decoration.innerHTML = slide.decorationArt || "";
+      const ribbonLabel = decoration.querySelector("[data-upcoming-label]");
+      if (ribbonLabel) ribbonLabel.textContent = siteLanguage === "sv" ? "KOMMANDE WEEKEND WORKSHOP" : "UPCOMING WEEKEND WORKSHOP";
+      const mobileDetail = document.getElementById("workshopMobileDetail");
+      mobileDetail.hidden = !slide.mobileDecoration;
+      if (slide.mobileDecoration) mobileDetail.src = slide.mobileDecoration;
+      else mobileDetail.removeAttribute("src");
+      document.querySelector(".workshop-dialog").classList.toggle("is-upcoming", Boolean(slide.upcoming));
+      const title = document.getElementById("workshopModalTitle");
+      title.innerHTML = slide.titleArt;
+      title.setAttribute("aria-label", slide.title);
+      title.querySelector("svg").setAttribute("aria-hidden", "true");
+      title.querySelector("svg").setAttribute("preserveAspectRatio", "xMinYMid meet");
+      document.getElementById("workshopCategory").textContent = copy.category;
+      const subtitle = document.getElementById("workshopSubtitle");
+      subtitle.textContent = copy.subtitle;
+      subtitle.hidden = !copy.subtitle;
+      document.getElementById("workshopCategory").hidden = Boolean(copy.subtitle);
+      document.getElementById("workshopDescription").textContent = copy.description;
+      document.getElementById("workshopFeatures").replaceChildren(...copy.features.map(text => {
+        const li = document.createElement("li"); li.textContent = text; return li;
+      }));
+      document.getElementById("workshopPrice").textContent = copy.price;
+      const ribbon = document.getElementById("workshopRibbon"); ribbon.hidden = !slide.upcoming; ribbon.textContent = siteLanguage === "sv" ? "KOMMANDE WEEKENDWORKSHOP" : "UPCOMING WEEKEND WORKSHOP";
+      const photo = document.getElementById("workshopPhoto");
+      photo.src = slide.image; photo.alt = slide.title;
+      const enquire = document.getElementById("workshopEnquire");
+      enquire.firstElementChild.textContent = slide.upcoming ? (siteLanguage === "sv" ? "Anmäl intresse" : "Register interest") : (siteLanguage === "sv" ? "Boka plats" : "Book a place");
+      enquire.href = "./courses/index.html?" + new URLSearchParams({workshop:slide.key, lang:siteLanguage});
+      if (window.studioTemporaryEmailEnabled && !slide.upcoming) {
+        enquire.firstElementChild.textContent = siteLanguage === "sv" ? "Fråga om plats via mejl" : "Enquire about a place by email";
+        enquire.href = "mailto:hello@annaljung.se?" + new URLSearchParams({subject:(siteLanguage === "sv" ? "Workshopförfrågan – " : "Workshop enquiry – ")+slide.title,body:siteLanguage === "sv" ? "Hej Anna,\nJag är intresserad av " + slide.title + ".\n\nÖnskat datum:\nAntal deltagare:\nNamn:\nTelefon:\n\n" : "Hi Anna,\nI’m interested in " + slide.title + ".\n\nPreferred date:\nNumber of participants:\nName:\nPhone:\n\n"}).toString().replaceAll("+","%20");
+      }
+      document.querySelectorAll("#workshopDots button").forEach((dot, i) => dot.setAttribute("aria-current", String(Number(dot.dataset.index) === workshopIndex)));
+      document.querySelectorAll("#workshopDots button").forEach(dot => { const item=workshopSlides[Number(dot.dataset.index)]; dot.textContent = siteLanguage === "sv" ? item.category : item.en.category; });
+      document.getElementById("workshopAnnouncement").textContent = `${workshopIndex + 1} / ${workshopSlides.length}: ${slide.title}`;
+      document.querySelector(".workshop-dialog").scrollTop = 0;
+    }
+    ["acrylic","botanical","collage","christmas-cards","holiday-studio","archipelago"].forEach(key => {
+      const i = workshopSlides.findIndex(slide => slide.key === key); const slide = workshopSlides[i];
+      const dot = document.createElement("button"); dot.type = "button";
+      dot.dataset.index = i; dot.textContent = slide.category; dot.setAttribute("aria-label", slide.title); dot.addEventListener("click", () => renderWorkshop(i));
+      document.getElementById("workshopDots").append(dot);
+      const image = new Image(); image.src = slide.image;
+    });
+    document.getElementById("selectedWorkshopsLink").addEventListener("click", event => {
+      event.preventDefault(); workshopOpener = event.currentTarget;
+      renderWorkshop(workshopSlides.findIndex(slide => slide.key === "acrylic")); workshopModal.classList.add("is-open");
+      workshopModal.setAttribute("aria-hidden", "false"); document.body.classList.add("modal-open");
+      document.getElementById("workshopClose").focus();
+    });
+    function closeWorkshop() {
+      workshopModal.classList.remove("is-open"); workshopModal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("modal-open"); workshopOpener?.focus();
+    }
+    document.getElementById("workshopClose").addEventListener("click", closeWorkshop);
+    workshopModal.addEventListener("click", event => { if(event.target === workshopModal) closeWorkshop(); });
+    document.getElementById("workshopPrev").addEventListener("click", () => renderWorkshop(workshopIndex - 1));
+    document.getElementById("workshopNext").addEventListener("click", () => renderWorkshop(workshopIndex + 1));
+    document.addEventListener("studio-language-change", () => { if(workshopModal.classList.contains("is-open")) renderWorkshop(workshopIndex); });
+
+    const signupOverlay = document.getElementById("signupOverlay");
+    const signupFrame = document.getElementById("signupFrame");
+    let signupOpener = null; let signupNonce = "";
+    function openSignup(topic, button) {
+      signupOpener = button; signupNonce=crypto.randomUUID();
+      const url = new URL(window.studioInterestUrl || "./signup/index.html", location.href);
+      url.searchParams.set("embedded","1"); url.searchParams.set("nonce",signupNonce); url.searchParams.set("view", "signup"); url.searchParams.set("topic",topic); url.searchParams.set("lang",siteLanguage);
+      signupFrame.src = url.href;
+      signupOverlay.classList.add("is-open"); signupOverlay.setAttribute("aria-hidden","false");
+      workshopModal.inert = true; document.querySelector("main").inert=true; document.querySelector(".site-header").inert=true; document.body.classList.add("modal-open"); signupFrame.focus();
+    }
+    function closeSignup() {
+      signupOverlay.classList.remove("is-open"); signupOverlay.setAttribute("aria-hidden","true");
+      workshopModal.inert = false; document.querySelector("main").inert=false; document.querySelector(".site-header").inert=false;
+      if (!workshopModal.classList.contains("is-open")) document.body.classList.remove("modal-open");
+      signupOpener?.focus(); signupFrame.src="about:blank";
+    }
+    window.addEventListener("message", event => {
+      if(event.data?.type === "anna-signup-close" && event.data.nonce===signupNonce && (event.source===signupFrame.contentWindow || event.origin==="https://script.googleusercontent.com")) closeSignup();
+    });
+    document.getElementById("signupClose").addEventListener("click",closeSignup);
+    signupOverlay.addEventListener("click", event => { if(event.target===signupOverlay) closeSignup(); });
+    document.getElementById("workshopEnquire").addEventListener("click", event => {
+      if (!workshopSlides[workshopIndex].upcoming) return;
+      event.preventDefault();openSignup(workshopSlides[workshopIndex].key,event.currentTarget);
+    });
+    const newsletterLink = document.getElementById("newsSubscribe");
+    newsletterLink.hidden = false; newsletterLink.href="./signup/index.html?topic=newsletter";
+    newsletterLink.addEventListener("click",event => {event.preventDefault();openSignup("newsletter",event.currentTarget);});
+    document.querySelectorAll("[data-signup]").forEach(button=>button.addEventListener("click",event=>{event.preventDefault();openSignup(button.dataset.signup,button);}));
+    document.addEventListener("keydown",event=>{if(event.key==="Escape" && signupOverlay.classList.contains("is-open")){event.preventDefault();event.stopImmediatePropagation();closeSignup();}},true);
+
+    const courseDetails = {
+      young: {
+        title: "Painting for young people",
+        meta: "Ages 10–15 · Five sessions · 2 hours each · 3 600 kr",
+        details: "A small, supportive group for exploring colour, composition, drawing, and collage. All materials are included.",
+        schedule: "Courses take place at Timmermansgatan 8, Stockholm. Ask Anna for the next available dates."
+      },
+      adult: {
+        title: "Explore painting",
+        meta: "Five sessions · 2 hours each · 3 800 kr",
+        details: "A relaxed painting course for beginners and hobby artists. Basic materials are included. Students and pensioners: 2 200 kr.",
+        schedule: "Courses take place at Timmermansgatan 8, Stockholm. Ask Anna for the next available dates."
+      },
+      workshop: {
+        title: "Workshops",
+        meta: "Painting · friends · company",
+        details: "Come together for a guided painting workshop. Come for a cozy hen party, stag do, team event or just a paint-and-sip with friends. We also organize and setup remote events.",
+        schedule: "Ask Anna about dates, group size and a workshop tailored to your occasion."
+      }
+    };
+
+    const coursePhotoSources = {
+      young: "hero-test/course-child.webp",
+      adult: "hero-test/course-adult.webp",
+      workshop: "hero-test/course-workshop.webp"
+    };
+    const courseSectionImage = document.querySelector(".courses-image img");
+    const coursePhotoCache = new Map();
+    let hoveredCourse = "";
+    let focusedCourse = "";
+    let requestedCoursePhoto = 0;
+
+    async function updateCoursePhoto() {
+      const course = hoveredCourse || focusedCourse || "workshop";
+      const source = coursePhotoSources[course];
+      const request = ++requestedCoursePhoto;
+      if (!coursePhotoCache.has(source)) {
+        const image = new Image();
+        image.src = source;
+        coursePhotoCache.set(source, image.decode().catch(error => {
+          coursePhotoCache.delete(source);
+          throw error;
+        }));
+      }
+      try {
+        await coursePhotoCache.get(source);
+        if (request !== requestedCoursePhoto) return;
+        courseSectionImage.src = source;
+        courseSectionImage.alt = t(courseDetails[course].title);
+      } catch {
+        // Keep the current photo if an alternative cannot be loaded.
+      }
+    }
+    document.addEventListener("studio-language-change", updateCoursePhoto);
+
+    let activeCourse = "young";
+    document.querySelectorAll("[data-course-tab]").forEach(tab => tab.addEventListener("click", () => openCourse(tab.dataset.courseTab, lastCourseFocused, true)));
+    document.addEventListener("studio-language-change", () => { if(courseModal.classList.contains("is-open")) openCourse(activeCourse, lastCourseFocused, true); });
+    function openCourse(course, button, switching = false) {
+      const details = courseDetails[course];
+      if (!details) return;
+      lastCourseFocused = button;
+      activeCourse = course;
+      document.getElementById("courseTabs").hidden = course === "workshop";
+      document.querySelectorAll("[data-course-tab]").forEach(tab => {
+        tab.setAttribute("aria-pressed", String(tab.dataset.courseTab === course));
+        tab.textContent = tab.dataset.courseTab === "young" ? (siteLanguage === "sv" ? "Barn och unga" : "Children & young people") : (siteLanguage === "sv" ? "Vuxna" : "Adults");
+      });
+      const popupImage = document.getElementById("courseModalImage");
+      popupImage.parentElement.querySelector("source")?.remove();
+      popupImage.src = coursePhotoSources[course];
+      popupImage.alt = t(details.title);
+      courseModalTitle.textContent = t(details.title);
+      courseModalMeta.textContent = t(details.meta);
+      courseModalDetails.textContent = t(details.details);
+      courseModalSchedule.textContent = t(details.schedule);
+      courseBookingLink.href = course === "workshop" ?
+        "mailto:hello@annaljung.se?subject=" + encodeURIComponent(t("Workshop enquiry")) :
+        "./courses/index.html?" + new URLSearchParams({ course, lang: siteLanguage });
+      if (course !== "workshop" && window.studioBookingEnabled && window.studioBookingUrl) {
+        const booking = new URL(window.studioBookingUrl); booking.searchParams.set("course", course); booking.searchParams.set("lang", siteLanguage);
+        courseBookingLink.href = booking.href;
+      }
+      courseBookingLink.firstChild.textContent = course === "workshop" ? t("Ask about a workshop") + " " : (siteLanguage === "sv" ? "Visa datum och boka plats " : "View dates and book a place ");
+      const email = document.getElementById("courseEmailLink");
+      email.hidden = course === "workshop";
+      email.firstChild.textContent = siteLanguage === "sv" ? "Mejla och fråga om kursen " : "Ask Anna about this course ";
+      email.href = "mailto:hello@annaljung.se?" + new URLSearchParams({subject: (siteLanguage === "sv" ? "Kursförfrågan – " : "Course enquiry – ") + t(details.title)}).toString().replaceAll("+", "%20");
+      courseModal.classList.add("is-open");
+      courseModal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("modal-open");
+      if (!switching) courseModalClose.focus();
+    }
+    function closeCourse() {
+      courseModal.classList.remove("is-open");
+      courseModal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("modal-open");
+      if (lastCourseFocused) lastCourseFocused.focus();
+    }
+    document.querySelectorAll("[data-course]").forEach(button => {
+      button.addEventListener("pointerenter", event => {
+        if (event.pointerType === "touch") return;
+        hoveredCourse = button.dataset.course;
+        updateCoursePhoto();
+      });
+      button.addEventListener("pointerleave", () => {
+        hoveredCourse = "";
+        updateCoursePhoto();
+      });
+      button.addEventListener("focus", () => {
+        focusedCourse = button.dataset.course;
+        updateCoursePhoto();
+      });
+      button.addEventListener("blur", () => {
+        focusedCourse = "";
+        updateCoursePhoto();
+      });
+      button.addEventListener("click", event => {
+        event.preventDefault();
+        openCourse(button.dataset.course, button);
+      });
+    });
+
+    function openProduct(product, button) {
+      lastFocused = button;
+      modalImage.src = product.image || imageUrl(product.id, 1400);
+      modalImage.alt = product.title;
+      modalTitle.textContent = product.title;
+      modalPrice.textContent = product.price || t("Price available on enquiry");
+      modalEnquire.href = `mailto:hello@annaljung.se?subject=${encodeURIComponent(`Enquiry — ${product.title}`)}`;
+      if (window.studioShopUrl) {
+        const enquiryUrl = new URL(window.studioShopUrl);
+        enquiryUrl.searchParams.set("view", "shop-enquiry");
+        enquiryUrl.searchParams.set("work", product.title);
+        enquiryUrl.searchParams.set("lang", siteLanguage);
+        modalEnquire.href = enquiryUrl.href;
+      }
+      productModal.classList.add("is-open");
+      productModal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("modal-open");
+      modalClose.focus();
+    }
+    function closeProduct() {
+      productModal.classList.remove("is-open");
+      productModal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("modal-open");
+      if (lastFocused) lastFocused.focus();
+    }
+    products.forEach(product => {
+      const button = document.createElement("button");
+      button.className = "product";
+      button.type = "button";
+      button.setAttribute("aria-label", (siteLanguage === "sv" ? "Visa " : "View ") + product.title);
+      button.innerHTML = `<span class="product-image"><img src="${imageUrl(product.id)}" alt="" loading="lazy"></span><span class="product-info"><span class="product-name">${product.title}</span><span class="product-price">${product.price || t("Enquire")}</span></span>`;
+      button.addEventListener("click", () => openProduct(product, button));
+      shopGrid.appendChild(button);
+    });
+
+    const parallaxSelector = ".hero-image img, .work-image img, .about-image img, .courses-image img, .product-image img";
+    const reduceMotionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (!reduceMotionPreference.matches && "IntersectionObserver" in window) {
+      const visibleParallaxImages = new Set();
+      let parallaxFrame = 0;
+      const parallaxObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) visibleParallaxImages.add(entry.target);
+          else visibleParallaxImages.delete(entry.target);
+        });
+        updateParallax();
+      }, { rootMargin: "120px 0px" });
+      document.querySelectorAll(parallaxSelector).forEach(image => parallaxObserver.observe(image));
+
+      function updateParallax() {
+        if (parallaxFrame) return;
+        parallaxFrame = window.requestAnimationFrame(() => {
+          parallaxFrame = 0;
+          const viewportCenter = window.innerHeight / 2;
+          visibleParallaxImages.forEach(image => {
+            const rect = image.getBoundingClientRect();
+            const centerOffset = viewportCenter - (rect.top + rect.height / 2);
+            const y = Math.max(-14, Math.min(14, centerOffset * .025));
+            image.style.setProperty("--parallax-y", `${y.toFixed(1)}px`);
+          });
+        });
+      }
+      window.addEventListener("scroll", updateParallax, { passive: true });
+      window.addEventListener("resize", updateParallax);
+    }
+
+    const menuToggle = document.getElementById("menuToggle");
+    const menuPanel = document.getElementById("menuPanel");
+    const menuScrim = document.getElementById("menuScrim");
+    const menuClose = document.getElementById("menuClose");
+    function setMenu(open) {
+      menuToggle.setAttribute("aria-expanded", String(open));
+      menuToggle.setAttribute("aria-label", t(open ? "Close menu" : "Open menu"));
+      menuPanel.classList.toggle("is-open", open);
+      menuPanel.setAttribute("aria-hidden", String(!open));
+      menuPanel.inert = !open;
+      menuScrim.classList.toggle("is-open", open);
+      document.body.classList.toggle("menu-open", open);
+      if (open) menuClose.focus(); else menuToggle.focus();
+    }
+    menuToggle.addEventListener("click", () => setMenu(menuToggle.getAttribute("aria-expanded") !== "true"));
+    menuClose.addEventListener("click", () => setMenu(false));
+    menuScrim.addEventListener("click", () => setMenu(false));
+    menuPanel.querySelectorAll("a").forEach(link => link.addEventListener("click", () => setMenu(false)));
+
+    const sectionNavIds = ["works", "shop", "courses", "news", "about", "contact"];
+    const siteHeader = document.querySelector(".site-header");
+    const sectionNavLinks = [...document.querySelectorAll('.primary-nav a[href^="#"], .menu-links a[href^="#"]')];
+    const sectionNavSections = sectionNavIds.map(id => {
+      const target = document.getElementById(id);
+      return target ? { id, target } : null;
+    }).filter(Boolean);
+    let requestedNavId = "";
+    let navRequestTimeout = null;
+    function updateSectionNavigation() {
+      const activationLine = siteHeader.offsetHeight + 30;
+      let activeId = requestedNavId;
+      if (!activeId) {
+        const passed = sectionNavSections.filter(({target}) =>
+          target.getBoundingClientRect().top <= activationLine);
+        passed.sort((a,b) => b.target.getBoundingClientRect().top - a.target.getBoundingClientRect().top);
+        activeId = passed[0]?.id || "";
+        const atBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 3;
+        const lastSection = sectionNavSections.at(-1);
+        if (atBottom && lastSection && lastSection.target.getBoundingClientRect().top < window.innerHeight) activeId = lastSection.id;
+      }
+      siteHeader.classList.toggle("over-works", activeId === "works");
+      sectionNavLinks.forEach(link => {
+        const active = link.getAttribute("href") === `#${activeId}` && Boolean(activeId);
+        link.classList.toggle("is-active", active);
+        if (active) link.setAttribute("aria-current", "location");
+        else link.removeAttribute("aria-current");
+      });
+    }
+    sectionNavLinks.forEach(link => link.addEventListener("click", () => {
+      requestedNavId = link.getAttribute("href").slice(1);
+      window.clearTimeout(navRequestTimeout);
+      updateSectionNavigation();
+      navRequestTimeout = window.setTimeout(() => {
+        requestedNavId = "";
+        updateSectionNavigation();
+      }, 1400);
+    }));
+    document.addEventListener("studio-language-change", () => {
+      sizeHeroSlides();
+      renderBlockHeadings();
+      const page = currentNewsPage;
+      initNews();
+      if (page) renderNewsPage(page);
+      menuToggle.setAttribute("aria-label", t(menuToggle.getAttribute("aria-expanded") === "true" ? "Close menu" : "Open menu"));
+      shopGrid.querySelectorAll(".product").forEach((button, index) => {
+        const product = products[index] || managedShopProducts[index-products.length];
+        if (!product) return;
+        button.setAttribute("aria-label", (siteLanguage === "sv" ? "Visa " : "View ") + product.title);
+        button.querySelector(".product-price").textContent = product.price || t("Enquire");
+      });
+    });
+    window.addEventListener("scroll", updateSectionNavigation, { passive: true });
+    window.addEventListener("resize", updateSectionNavigation);
+    updateSectionNavigation();
+
+    // Snap only after a manual scroll settles near an anchor in its direction.
+    const sectionSnap = { distance: 200, idleDelay: 180, duration: 460 };
+    let snapFrame = 0;
+    let snapTimer = 0;
+    let manualScroll = false;
+    let lastScrollY = window.scrollY;
+    let scrollDirection = 1;
+
+    function registerScrollIntent() {
+      window.cancelAnimationFrame(snapFrame);
+      window.clearTimeout(snapTimer);
+      snapFrame = 0;
+      manualScroll = true;
+      lastScrollY = window.scrollY;
+    }
+    window.addEventListener("wheel", registerScrollIntent, { passive: true });
+    window.addEventListener("touchmove", registerScrollIntent, { passive: true });
+    window.addEventListener("pointerdown", registerScrollIntent, { passive: true });
+    document.addEventListener("keydown", event => {
+      if (["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " "].includes(event.key) &&
+          !event.target.closest("input,textarea,select,button,a,[contenteditable]")) registerScrollIntent();
+    });
+    const managedShopProducts = [];
+    const managedImages = new Map();
+    let managedSiteBlocks = [];
+    const blockSections = new Map([
+      ["manifesto",document.querySelector("main > .manifesto")],
+      ["works",document.getElementById("works").closest("section")],
+      ["news",document.getElementById("news").closest("section")],
+      ["shop",document.getElementById("shop").closest("section")],
+      ["courses",document.getElementById("courses").closest("section")],
+      ["about",document.getElementById("about").closest("section")],
+      ["contact",document.getElementById("contact").closest("section")]
+    ]);
+    function contentUrl(view,id) {
+      const url = new URL(window.studioContentUrl);
+      url.searchParams.set("view",view);
+      if (id) url.searchParams.set("id",id);
+      return url.href;
+    }
+    async function loadManagedImage(item) {
+      if (!managedImages.has(item.id)) {
+        const pending = fetch(contentUrl("artwork-image",item.id))
+          .then(response => {
+            if (!response.ok) throw new Error("Image unavailable");
+            return response.json();
+          })
+          .then(data => {
+            if (typeof data.image !== "string" || !data.image.startsWith("data:image/jpeg;base64,")) {
+              throw new Error("Invalid artwork image");
+            }
+            return data.image;
+          })
+          .catch(error => { managedImages.delete(item.id); throw error; });
+        managedImages.set(item.id,pending);
+      }
+      return managedImages.get(item.id);
+    }
+    const managedImageObserver = "IntersectionObserver" in window ? new IntersectionObserver(entries => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        managedImageObserver.unobserve(entry.target);
+        revealManagedImage(entry.target);
+      }
+    },{rootMargin:"250px"}) : null;
+    function revealManagedImage(image) {
+      loadManagedImage({id:image.dataset.artworkId}).then(src => { image.src = src; })
+        .catch(() => { image.alt = siteLanguage === "sv" ? "Bilden kunde inte laddas" : "Image could not load"; });
+    }
+    function managedImage(item) {
+      const image = document.createElement("img");
+      image.alt = item.title;
+      image.dataset.artworkId = item.id;
+      image.loading = "lazy";
+      image.decoding = "async";
+      if (managedImageObserver) managedImageObserver.observe(image);
+      else revealManagedImage(image);
+      return image;
+    }
+    function renderManagedArtwork(item) {
+      if (item.selected) {
+        const article = document.createElement("article");
+        article.className = "work-item";
+        const picture = document.createElement("div");
+        picture.className = "work-image";
+        picture.append(managedImage(item));
+        const meta = document.createElement("div");
+        meta.className = "work-meta";
+        const title = document.createElement("h3");
+        title.textContent = item.title;
+        const medium = document.createElement("span");
+        medium.textContent = item.medium;
+        meta.append(title,medium);
+        article.append(picture,meta);
+        document.querySelector(".works-grid").append(article);
+      }
+      if (item.shop) {
+        managedShopProducts.push(item);
+        const button = document.createElement("button");
+        button.className = "product";
+        button.type = "button";
+        button.setAttribute("aria-label",(siteLanguage === "sv" ? "Visa " : "View ")+item.title);
+        const picture = document.createElement("span");
+        picture.className = "product-image";
+        picture.append(managedImage(item));
+        const info = document.createElement("span");
+        info.className = "product-info";
+        const title = document.createElement("span");
+        title.className = "product-name";
+        title.textContent = item.title;
+        const price = document.createElement("span");
+        price.className = "product-price";
+        price.textContent = item.price || t("Enquire");
+        info.append(title,price);
+        button.append(picture,info);
+        button.addEventListener("click", async () => {
+          button.disabled = true;
+          try {
+            item.image = await loadManagedImage(item);
+            openProduct(item,button);
+          } catch {
+            price.textContent = siteLanguage === "sv" ? "Bilden kunde inte laddas. Försök igen." : "Image could not load. Try again.";
+          } finally { button.disabled = false; }
+        });
+        shopGrid.append(button);
+      }
+    }
+    function renderSiteBlocks(blocks) {
+      const main = document.querySelector("main");
+      for (const block of blocks) {
+        let section = blockSections.get(block.id);
+        if (!section && /^text-[a-z0-9-]{1,55}$/.test(block.id)) {
+          section = document.createElement("section");
+          section.className = "section managed-text-block";
+          section.dataset.blockId = block.id;
+          const title = document.createElement("h2");
+          title.className = "script";
+          const body = document.createElement("p");
+          body.style.whiteSpace = "pre-wrap";
+          body.style.maxWidth = "65ch";
+          section.append(title,body);
+          blockSections.set(block.id,section);
+        }
+        if (!section) continue;
+        if (block.id.startsWith("text-")) {
+          section.querySelector("h2").textContent = siteLanguage === "sv" ? block.titleSv || block.title : block.title || block.titleSv;
+          section.querySelector("p").textContent = siteLanguage === "sv" ? block.bodySv || block.body : block.body || block.bodySv;
+        }
+        main.append(section);
+      }
+      updateSectionNavigation();
+    }
+    document.addEventListener("studio-language-change", () => {
+      if (managedSiteBlocks.length) renderSiteBlocks(managedSiteBlocks);
+    });
+    if (window.studioContentUrl) {
+      fetch(contentUrl("hero")).then(response => response.ok ? response.json() : {}).then(data => {
+        if (!data.textile || !data.courses) return;
+        importedHero = data;
+        const slide = heroSlides[currentHeroSlide];
+        sizeHeroSlides();
+        setHeroImage(slide,++imageRequest);
+      }).catch(() => {});
+      fetch(contentUrl("site-content")).then(response => {
+        if (!response.ok) throw new Error("Site content unavailable");
+        return response.json();
+      }).then(data => {
+        if (Array.isArray(data.blocks)) {
+          managedSiteBlocks = data.blocks;
+          renderSiteBlocks(data.blocks);
+        }
+        if (Array.isArray(data.artworks)) data.artworks.forEach(renderManagedArtwork);
+        if (Array.isArray(data.designs)) {
+          const destinations = new Map([
+            ...blockSections,
+            ["popup-product",document.getElementById("productModal").querySelector(".modal-copy")],
+            ["popup-course",document.getElementById("courseModal").querySelector(".modal-copy")],
+            ["popup-news",document.querySelector(".news-dialog-copy")]
+          ]);
+          for (const target of data.designs) {
+            const destination = destinations.get(target);
+            if (!destination) continue;
+            const url = new URL(contentUrl("block-design"));
+            url.searchParams.set("target",target);
+            fetch(url).then(response => response.ok ? response.json() : {}).then(({svg}) => {
+              const art = designSvg(svg);
+              if (!art) return;
+              art.classList.add("managed-design");
+              art.setAttribute("aria-hidden","true");
+              const title = destination.querySelector("h2,blockquote");
+              if (title) title.before(art);
+              else destination.append(art);
+            }).catch(() => {});
+          }
+        }
+        if (Array.isArray(data.news)) {
+          newsItems = data.news.map(item => ({...item,datetime:item.date}));
+          initNews();
+        }
+      }).catch(() => {});
+      heroCompact.addEventListener("change", () => {
+        const slide = heroSlides[currentHeroSlide];
+        if (importedHero[slide.key]) setHeroImage(slide,++imageRequest);
+      });
+    }
+    document.querySelectorAll('a[href^="#"]').forEach(link => link.addEventListener("click", () => {
+      manualScroll = false;
+      window.clearTimeout(snapTimer);
+      window.cancelAnimationFrame(snapFrame);
+      snapFrame = 0;
+    }));
+
+    function snapToNearbySection() {
+      if (!manualScroll || requestedNavId || reduceMotionPreference.matches ||
+          document.body.classList.contains("menu-open") || document.body.classList.contains("modal-open") ||
+          document.querySelector("dialog[open]")) return;
+      manualScroll = false;
+      const start = window.scrollY;
+      const offset = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+      const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+      const destinations = sectionNavSections.map(({ target }) =>
+        Math.min(maxScroll, Math.max(0, target.getBoundingClientRect().top + start - offset)));
+      const nearby = destinations.filter(y => {
+        const distance = (y - start) * scrollDirection;
+        return distance > 2 && distance <= sectionSnap.distance;
+      }).sort((a, b) => Math.abs(a - start) - Math.abs(b - start));
+      if (!nearby.length) return;
+      const destination = nearby[0];
+      const began = performance.now();
+      function animate(now) {
+        const progress = Math.min(1, (now - began) / sectionSnap.duration);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        window.scrollTo({ top: start + (destination - start) * eased, behavior: "instant" });
+        lastScrollY = window.scrollY;
+        if (progress < 1) snapFrame = window.requestAnimationFrame(animate);
+        else snapFrame = 0;
+      }
+      snapFrame = window.requestAnimationFrame(animate);
+    }
+    window.addEventListener("scroll", () => {
+      if (snapFrame) return;
+      const y = window.scrollY;
+      const delta = y - lastScrollY;
+      if (delta) scrollDirection = Math.sign(delta);
+      lastScrollY = y;
+      window.clearTimeout(snapTimer);
+      if (manualScroll) snapTimer = window.setTimeout(snapToNearbySection, sectionSnap.idleDelay);
+    }, { passive: true });
+
+    modalClose.addEventListener("click", closeProduct);
+    courseModalClose.addEventListener("click", closeCourse);
+    productModal.addEventListener("click", event => { if (event.target === productModal) closeProduct(); });
+    courseModal.addEventListener("click", event => { if (event.target === courseModal) closeCourse(); });
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        if (productModal.classList.contains("is-open")) closeProduct();
+        if (courseModal.classList.contains("is-open")) closeCourse();
+        if (workshopModal.classList.contains("is-open")) closeWorkshop();
+        if (menuPanel.classList.contains("is-open")) setMenu(false);
+      }
+      if (!signupOverlay.classList.contains("is-open") && workshopModal.classList.contains("is-open") && ["ArrowLeft", "ArrowRight"].includes(event.key)) {
+        event.preventDefault(); renderWorkshop(workshopIndex + (event.key === "ArrowRight" ? 1 : -1));
+      }
+      const activeModal = signupOverlay.classList.contains("is-open") ? signupOverlay : workshopModal.classList.contains("is-open") ? workshopModal : productModal.classList.contains("is-open") ? productModal : courseModal.classList.contains("is-open") ? courseModal : null;
+      if (event.key === "Tab" && activeModal) {
+        const focusable = [...activeModal.querySelectorAll("button,a[href],iframe")];
+        if (event.shiftKey && document.activeElement === focusable[0]) { event.preventDefault(); focusable.at(-1).focus(); }
+        else if (!event.shiftKey && document.activeElement === focusable.at(-1)) { event.preventDefault(); focusable[0].focus(); }
+      }
+    });
+  </script>
 </body>
 </html>
