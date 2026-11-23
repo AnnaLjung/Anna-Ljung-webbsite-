@@ -298,6 +298,7 @@
     .course-tabs button:hover { background: #fff; }
     .course-tabs button[aria-pressed="true"] { background: var(--blue); color: #fff; }
     #courseBookingLink { width: 100%; display: flex; justify-content: space-between; padding: 14px 16px; border: 0; background: #f2ede5; font-size: 15px; letter-spacing: 0; }
+    #courseBookingLink[hidden], .course-calendar[hidden] { display: none; }
     #courseBookingLink:hover { background: #fff; }
     #courseEmailLink { font-size: 14px; letter-spacing: 0; }
     #courseModal .modal { height: min(88svh,820px); }
@@ -619,7 +620,7 @@
             <span class="course-card-hint"><span>Open course details</span><span aria-hidden="true">↗</span></span>
           </a></article>
         </div>
-        <div class="course-calendar">
+        <div class="course-calendar" hidden>
           <span class="course-icon" data-course-icon="Calendar" aria-hidden="true"></span>
           <a class="text-link" id="allCourseBookingLink" href="./courses/index.html">View all course dates <span class="arrow" aria-hidden="true">↗</span></a>
         </div>
@@ -731,7 +732,7 @@
         <p id="courseModalMeta"></p>
         <p id="courseModalDetails"></p>
         <p id="courseModalSchedule"></p>
-        <a class="text-link" id="courseBookingLink" href="./courses/index.html" target="_blank" rel="noopener noreferrer">Visa kursdatum <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="text-link" id="courseBookingLink" hidden href="./courses/index.html" target="_blank" rel="noopener noreferrer">Visa kursdatum <span class="arrow" aria-hidden="true">↗</span></a>
         <a class="text-link" id="courseEmailLink" href="mailto:hello@annaljung.se">Mejla om kursen <span class="arrow" aria-hidden="true">↗</span></a>
       </div>
     </section>
@@ -1252,6 +1253,7 @@
     const courseModalSchedule = document.getElementById("courseModalSchedule");
     const courseBookingLink = document.getElementById("courseBookingLink");
     const allCourseBookingLink = document.getElementById("allCourseBookingLink");
+    allCourseBookingLink.closest(".course-calendar").hidden = !window.studioEmbeddedBookingEnabled;
     allCourseBookingLink.addEventListener("click", () => {
       allCourseBookingLink.href = "./courses/index.html?" + new URLSearchParams({ lang: siteLanguage });
     });
@@ -1421,6 +1423,8 @@
     function openCourse(course, button, switching = false) {
       const details = courseDetails[course];
       if (!details) return;
+      // Restore these controls when the complete Google booking flow is enabled.
+      courseBookingLink.hidden = course !== "workshop" && !window.studioEmbeddedBookingEnabled;
       lastCourseFocused = button;
       activeCourse = course;
       document.getElementById("courseTabs").hidden = course === "workshop";
